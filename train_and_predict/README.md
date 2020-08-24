@@ -1,6 +1,6 @@
-# AL&L of Orca Sounds' ML Endpoint
+# orcaAL's ML Endpoint
 
-**Active Listening and Learning of Orca Sounds** is an active learning tool that has the objective of labeling orca sounds with the help of humans and machines.
+**orcaAL** is an active learning tool to help an orca detection model perform better.
 
 **The ML Endpoint** is a small flask app that given an h5 file, a labeled dataset and an unlabeled dataset, trains an ML model on the labeled data and predicts on the unlabeled data.
 

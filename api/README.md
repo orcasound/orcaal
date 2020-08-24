@@ -1,6 +1,6 @@
-# AL&L of Orca Sounds' API
+# orcaAL's API
 
-**Active Listening and Learning of Orca Sounds** is an active learning tool that has the objective of labeling orca sounds with the help of humans and machines.
+**orcaAL** is an active learning tool to help an orca detection model perform better.
 
 **This API** serves as an interface between the machine learning model(s) and the webapp. To use it, a postgres db and an ML endpoint are needed.
 

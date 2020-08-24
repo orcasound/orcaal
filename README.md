@@ -1,19 +1,12 @@
-# orcagsoc
+# orcaAL
 
-## Google Summer of Code (GSoC) projects and products related to [Orcasound](http://orcasound.net/support#hack) and orca sounds!
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/orcasound/orcaal/blob/master/LICENSE)
 
-[Orcasound is a mentoring organization](https://summerofcode.withgoogle.com/organizations/5399523129556992/) for [Google Summer of Code (2020)](https://summerofcode.withgoogle.com/). We are an open-source project building cool tech that makes it easy for humans and machines to listen for whales. With the primary goal of helping the endangered orcas of the Pacific Northwest (near Seattle, WA, USA), we are connecting citizen scientists and conservation activists with the amazing sounds these wild killer whales make as they move past our underwater microphones (aka hydrophones) in pursuit of their favorite food -- Pacific salmon.
+> Developed by Diego R. Saltijeral in 2020 and funded by the [Google Summer of Code program](https://summerofcode.withgoogle.com/). The binary classification model and the preprocessing script were developed by Kunal Mehta; the research about it is located in [this repo](https://github.com/orcasound/backend-of-active-learning).
 
-Orcasound aims to recruit talented GSoC students to help us advance the field of bioacoustics with open-source software (and hardware). All code contributed by GSoC students will be shared under open-source licenses and any data products derived from Orcasound data will be shared under [Orcasound's Creative Commons license (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+OrcaAL is an active learning tool to help an orca detection model perform better. A machine learning algorithm can perform better with less training if it is allowed to choose the data from which it learns. The active learner poses queries in the form of unlabeled data instances to be labeled by a human annotator that already understands the nature of the problem.
 
-In the [Issues](https://github.com/orcasound/orcagsoc/issues) section of this repository, we list project ideas from mentors. Orcasound also encourages you -- as a GSoC student -- to propose your own original project ideas (as new issues).
-
-After you [sign up as a GSoC student](https://summerofcode.withgoogle.com/get-started/) please refer to the [Orcasound Contribution Guide](https://github.com/orcasound/orcagsoc/blob/master/STUDENT-contribution-guide.md) and the [Orcasound Proposal Template](https://github.com/orcasound/orcagsoc/blob/master/STUDENT-proposal-template.md) as you draft your proposal.
-
-# AL&L of Orca Sounds
-
-Active Listening and Learning of Orca Sounds is an active learning tool that has the objective of labeling orca sounds with the help of humans and machines.  
-It has been divided into different subprojects:
+The tool has been divided into different subprojects:
 
 -   An API
 -   The preprocessing of the data
@@ -22,10 +15,10 @@ It has been divided into different subprojects:
 
 Visit each subproject to know more about it, and how to get started with it.
 
-**Flowchart of how the application works:**  
+**Flowchart of how the tool works:**  
 ![flowchart](api/assets/flowchart.jpg)
 
-**Architecture of the application:**
+**Architecture of the tool:**
 ![architecture](api/assets/architecture.png)
 
 # Questions?
