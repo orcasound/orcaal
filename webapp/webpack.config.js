@@ -12,7 +12,7 @@ module.exports = (_, argv) => {
         entry: { listen: './src/ts/listen.ts', index: './src/ts/index.ts' },
         output: {
             path: path.resolve(__dirname, 'dist'),
-            publicPath: isProduction ? '/orcagsoc/' : '/',
+            publicPath: isProduction ? '/orcaAL/' : '/',
         },
         devtool: isProduction ? '' : 'eval-cheap-source-map',
         plugins: [
@@ -88,7 +88,7 @@ module.exports = (_, argv) => {
         },
         devServer: {
             open: true,
-            openPage: isProduction ? 'orcagsoc/' : '',
+            openPage: isProduction ? 'orcaAL/' : '',
             contentBase: path.join(__dirname, 'dist'),
             historyApiFallback: {
                 rewrites: [
@@ -97,8 +97,8 @@ module.exports = (_, argv) => {
                         to: '/listen.html',
                     },
                     {
-                        from: /^\/orcagsoc\/listen/,
-                        to: '/orcagsoc/listen.html',
+                        from: /^\/orcaAL\/listen/,
+                        to: '/orcaAL/listen.html',
                     },
                 ],
             },

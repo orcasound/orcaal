@@ -86,18 +86,23 @@ nav {
     display: flex;
     justify-content: center;
     align-items: center;
-    p {
+    .about {
         margin-left: 1rem;
         color: purple;
-        font-size: 2.5rem;
         line-height: 1.25;
         max-width: 50rem;
-        b {
-            font-weight: 500;
-        }
-        @media (min-width: 30em) {
+        font-size: 1.5rem;
+    }
+    .bold {
+        font-size: 2rem;
+    }
+    @media (min-width: 30em) {
+        .about {
             margin-left: 3rem;
-            font-size: 3rem;
+            font-size: 2rem;
+        }
+        .bold {
+            font-size: 2.5rem;
         }
     }
 }
