@@ -1,20 +1,24 @@
 {
     "accuracy": {
-        "test": [0.12, 0.45, 0.67, 0.78, 0.82, 0.89, 0.9, 0.92, 0.925],
-        "train": [0.2, 0.5, 0.7, 0.8, 0.85, 0.9, 0.92, 0.925, 0.93]
+        "train": [0.5986394286155701],
+        "validation": [0.6326530575752258]
     },
-    "confusionMatrix": [
-        [80, 46],
-        [43, 100]
-    ],
-    "modelAccuracy": [
-        ["Wed, 01 Jul 2020 00:00:00 GMT", 0.8],
-        ["Thu, 02 Jul 2020 00:00:00 GMT", 0.85],
-        ["Fri, 03 Jul 2020 00:00:00 GMT", 0.9]
-    ],
-    "validationHistory": [
-        ["Wed, 01 Jul 2020 00:00:00 GMT", 2],
-        ["Thu, 02 Jul 2020 00:00:00 GMT", 4],
-        ["Fri, 03 Jul 2020 00:00:00 GMT", 5]
-    ]
+    "accuracyVLabels": {
+        "accuracies": [0.644444465637207, 0.6326530575752258],
+        "dates": [
+            "Tue, 18 Aug 2020 22:34:32 GMT",
+            "Tue, 18 Aug 2020 22:50:40 GMT"
+        ],
+        "labels": [126, 147]
+    },
+    "confusionMatrix": [9, 11, 7, 22],
+    "loss": {
+        "train": [0.8761522173881531],
+        "validation": [0.7891138195991516]
+    },
+    "retrain": {
+        "goal": 20,
+        "progress": 0
+    },
+    "training": false
 }

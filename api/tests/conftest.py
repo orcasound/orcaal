@@ -1,6 +1,5 @@
 import pytest
 from app import app, db
-from app.models import LabeledFile, ModelAccuracy
 from flask_sqlalchemy import SQLAlchemy
 import os
 import tempfile
@@ -32,14 +31,6 @@ def init_database():
     db.create_all()
 
     # Insert user data
-    labeled_file1 = LabeledFile('sound20.mp3', True, '', 'Beginner')
-    labeled_file2 = LabeledFile('sound30.wav', False, 'Whale', '')
-    accuracy1 = ModelAccuracy(0.82)
-    accuracy2 = ModelAccuracy(0.9)
-    db.session.add(labeled_file1)
-    db.session.add(labeled_file2)
-    db.session.add(accuracy1)
-    db.session.add(accuracy2)
 
     # Commit the changes for the users
     db.session.commit()

@@ -8,13 +8,15 @@ describe('AL&L of Orca Sounds', () => {
         cy.wait('@statistics').should('have.property', 'status', 200)
     })
 
-    it('Visit querier page and stub filenames', () => {
+    it('Visit querier page and stub uncertainties', () => {
         cy.server()
-        cy.route('/filenames', 'fixture:filenames.json').as('filenames')
+        cy.route('/uncertainties', 'fixture:uncertainties.json').as(
+            'uncertainties'
+        )
         cy.route('/mp3/sound1.mp3', 'fixture:sounds/sound1.mp3')
         cy.get('#play').click()
         cy.url().should('eq', Cypress.config().baseUrl + '/listen')
-        cy.wait('@filenames').should('have.property', 'status', 200)
+        cy.wait('@uncertainties').should('have.property', 'status', 200)
     })
 
     it('Click on play/pause button', () => {
