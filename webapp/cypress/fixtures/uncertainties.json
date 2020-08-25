@@ -1,0 +1,47 @@
+[
+    {
+        "audioUrl": "mp3/sound1.mp3",
+        "confidence": 44.9466347694397,
+        "duration": 3.0,
+        "id": 1413,
+        "location": "Haro Strait",
+        "orca": true,
+        "timestamp": "Tue, 07 Jul 2020 15:36:18 GMT"
+    },
+    {
+        "audioUrl": "mp3/sound1.mp3",
+        "confidence": 52.78398394584656,
+        "duration": 3.0,
+        "id": 1577,
+        "location": "Haro Strait",
+        "orca": true,
+        "timestamp": "Tue, 07 Jul 2020 15:46:39 GMT"
+    },
+    {
+        "audioUrl": "mp3/sound1.mp3",
+        "confidence": 53.031569719314575,
+        "duration": 3.0,
+        "id": 1414,
+        "location": "Haro Strait",
+        "orca": true,
+        "timestamp": "Tue, 07 Jul 2020 15:36:27 GMT"
+    },
+    {
+        "audioUrl": "mp3/sound1.mp3",
+        "confidence": 53.46974730491638,
+        "duration": 3.0,
+        "id": 1492,
+        "location": "Haro Strait",
+        "orca": true,
+        "timestamp": "Tue, 07 Jul 2020 15:41:09 GMT"
+    },
+    {
+        "audioUrl": "mp3/sound1.mp3",
+        "confidence": 57.64526724815369,
+        "duration": 3.0,
+        "id": 1409,
+        "location": "Haro Strait",
+        "orca": true,
+        "timestamp": "Tue, 07 Jul 2020 15:36:03 GMT"
+    }
+]
