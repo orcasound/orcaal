@@ -12,6 +12,12 @@
 -   Run `npm start` to start a development server in [http://localhost:8080](http://localhost:8080) (For the app to work correctly, you need to start the API server as well)
 -   We're using ESLint and Prettier, so if you use VSCode, download their extensions so that the tools are run automatically
 
+### Testing
+
+-   Start a development server with `npm start`
+-   Run `npm t`
+-   Once cypress is open, click on `sample.spec.js` to run the integration tests
+
 ### Deployment
 
 -   `npm run build` builds the production code to the `dist` folder
