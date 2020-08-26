@@ -93,21 +93,21 @@ if __name__ == '__main__':
         help=
         'Name of the directory where the mp3 and spectrograms will be stored')
     parser.add_argument(
-        '-d'
+        '-d',
         '--duration',
         default=3,
         type=int,
         help=
         'Duration in seconds of the output mp3 files (default: %(default)s)')
     parser.add_argument(
-        '-l'
+        '-l',
         '--location',
         default='',
         type=str,
         help=
         'Place without spaces where the sounds where detected (default: "")')
     parser.add_argument(
-        '-s'
+        '-s',
         '--starting_timestamp',
         default=0,
         type=int,
