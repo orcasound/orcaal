@@ -220,7 +220,7 @@ ready(() => {
         )
     }
     // --------------------------------------------
-    document.getElementById('next').addEventListener('click', () => {
+    document.getElementById('skip').addEventListener('click', () => {
         currentSample += 1
         loadNextAudio()
     })

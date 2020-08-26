@@ -131,8 +131,8 @@ button {
             width: 5.5rem;
             height: 5.5rem;
             border-radius: 30rem;
-            margin: 0.5rem;
-            margin-bottom: 1rem;
+            // margin-left: -1rem;
+            // margin-bottom: 1rem;
 
             &.playing {
                 #pause {
@@ -171,17 +171,33 @@ button {
             border-radius: 30rem;
         }
 
-        #next {
+        #skip {
+            position: absolute;
+            right: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 0.2rem solid $textColorDark;
             background: none;
-            width: 2rem;
+            border-radius: 30rem;
+            width: 5.1rem;
+            height: 5.1rem;
+            span {
+                display: none;
+            }
             svg {
                 fill: $textColor;
-                width: 3.5rem;
+                width: 3rem;
             }
-        }
-
-        .invisible {
-            width: 2rem;
+            &:hover {
+                border-color: $textColor;
+                span {
+                    color: white;
+                }
+                svg {
+                    fill: white;
+                }
+            }
         }
 
         @media (min-width: 22em) {
@@ -201,17 +217,15 @@ button {
                 height: 7rem;
             }
 
-            #next {
-                width: 4rem;
-                margin-left: 4rem;
-                svg {
-                    width: 4rem;
+            #skip {
+                width: 11.6rem;
+                height: 6.6rem;
+                right: 4rem;
+                span {
+                    display: inline;
+                    color: $textColor;
+                    font-size: 2rem;
                 }
-            }
-
-            .invisible {
-                width: 4rem;
-                margin-right: 4rem;
             }
         }
     }
