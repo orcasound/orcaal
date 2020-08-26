@@ -40,18 +40,7 @@ def get_uncertainties():
     return jsonify(response)
 
 
-# Add new labeled files
-@app.route('/labeledfiles', methods=['POST'])
-def post_labeledfiles():
-    if request.headers['Content-Type'] == 'text/plain;charset=UTF-8':
-        data = json.loads(request.data.decode('utf-8'))
-    elif request.headers['Content-Type'] == 'application/json':
-        data = request.json
-    else:
-        return jsonify({'error': 'Unsupported Media Type'}), 415
-
-    session['cur_labels'] += len(data['labels'])
-
+def update_datasets(data):
     for cur_id in data['unlabeled']:
         prediction = Prediction.query.get(cur_id)
         if prediction is not None:
@@ -71,6 +60,22 @@ def post_labeledfiles():
         db.session.add(newLabeledFile)
 
     db.session.commit()
+
+
+# Add new labeled files
+@app.route('/labeledfiles', methods=['POST'])
+def post_labeledfiles():
+    if request.headers['Content-Type'] == 'text/plain;charset=UTF-8':
+        data = json.loads(request.data.decode('utf-8'))
+    elif request.headers['Content-Type'] == 'application/json':
+        data = request.json
+    else:
+        return jsonify({'error': 'Unsupported Media Type'}), 415
+
+    session['cur_labels'] += len(data['labels'])
+    th = threading.Thread(target=update_datasets, args=[data])
+    th.start()
+
     if not session['training'] and session['cur_labels'] >= session['goal']:
         th = threading.Thread(target=train_and_predict)
         th.start()
