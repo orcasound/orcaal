@@ -21,7 +21,7 @@ window.Apex = {
     },
     yaxis: {
         decimalsInFloat: 2,
-    }
+    },
 }
 
 // --------------------------------------------
@@ -31,6 +31,12 @@ const accuracyOptions = {
     },
     colors: ['#5d99c6', '#C3fDFF'],
     series: [] as ApexAxisChartSeries,
+    xaxis: {
+        type: 'numeric',
+    },
+    stroke: {
+        width: 3,
+    },
 }
 const accuracyChart = new ApexCharts(
     document.getElementById('accuracyChart'),
@@ -45,6 +51,12 @@ const lossOptions = {
     },
     colors: ['#5d99c6', '#C3fDFF'],
     series: [] as ApexAxisChartSeries,
+    xaxis: {
+        type: 'numeric',
+    },
+    stroke: {
+        width: 3,
+    },
 }
 const lossChart = new ApexCharts(
     document.getElementById('lossChart'),
