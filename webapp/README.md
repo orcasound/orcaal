@@ -1,6 +1,6 @@
-# orcaAL's Web App
+# OrcaAL's Web App
 
-**orcaAL** is an active learning tool to help an orca detection model perform better.
+**OrcaAL** is an active learning tool to help an orca detection model perform better.
 
 **The Web App** runs on the client's side and makes use orcaAL's API.
 

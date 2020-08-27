@@ -1,8 +1,8 @@
-# orcaAL
+# OrcaAL
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/orcasound/orcaal/blob/master/LICENSE)
 
-> Developed by Diego R. Saltijeral in 2020 and funded by the [Google Summer of Code program](https://summerofcode.withgoogle.com/). The binary classification model and the preprocessing script were developed by Kunal Mehta; the research about it is located in [this repo](https://github.com/orcasound/backend-of-active-learning).
+> Developed by Diego R. Saltijeral in 2020 and funded by the [Google Summer of Code program](https://summerofcode.withgoogle.com/). The binary classification model and the preprocessing script were developed by Kunal Mehta; the research about it is located in [this repo](https://github.com/orcasound/orcaal-research).
 
 OrcaAL is an active learning tool to help an orca detection model perform better. A machine learning algorithm can perform better with less training if it is allowed to choose the data from which it learns. The active learner poses queries in the form of unlabeled data instances to be labeled by a human annotator that already understands the nature of the problem.
 

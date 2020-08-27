@@ -1,6 +1,6 @@
-# orcaAL's ML Endpoint
+# OrcaAL's ML Endpoint
 
-**orcaAL** is an active learning tool to help an orca detection model perform better.
+**OrcaAL** is an active learning tool to help an orca detection model perform better.
 
 **The ML Endpoint** is a small flask app that given an h5 file, a labeled dataset and an unlabeled dataset, trains an ML model on the labeled data and predicts on the unlabeled data.
 

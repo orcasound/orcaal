@@ -1,6 +1,6 @@
-# orcaAL's API
+# OrcaAL's API
 
-**orcaAL** is an active learning tool to help an orca detection model perform better.
+**OrcaAL** is an active learning tool to help an orca detection model perform better.
 
 **This API** serves as an interface between the machine learning model(s) and the webapp. To use it, a postgres db and an ML endpoint are needed.
 
