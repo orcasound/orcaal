@@ -131,8 +131,6 @@ button {
             width: 5.5rem;
             height: 5.5rem;
             border-radius: 30rem;
-            // margin-left: -1rem;
-            // margin-bottom: 1rem;
 
             &.playing {
                 #pause {
@@ -149,7 +147,7 @@ button {
 
             svg {
                 fill: $textColor;
-                width: 4rem;
+                width: 3rem;
             }
 
             #play {
@@ -210,6 +208,10 @@ button {
             #play-pause {
                 width: 7rem;
                 height: 7rem;
+
+                svg {
+                    width: 4rem;
+                }
             }
             .text-btn {
                 font-size: 2.2rem;
