@@ -220,12 +220,17 @@ button {
             #skip {
                 width: 11.6rem;
                 height: 6.6rem;
-                right: 4rem;
+                right: 1rem;
                 span {
                     display: inline;
                     color: $textColor;
                     font-size: 2rem;
                 }
+            }
+        }
+        @media (min-width: 50em) {
+            #skip {
+                right: 4rem;
             }
         }
     }

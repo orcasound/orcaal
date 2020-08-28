@@ -5,21 +5,25 @@
     width: 8.5rem;
     height: 5.5rem;
 
-    @media (min-width: 30em) {
-        margin: 0 1rem;
-        width: 12rem;
-        height: 7rem;
-    }
-
     &::before {
         content: '.';
         opacity: 0;
         display: block;
-        width: 12rem;
+        width: 8.5rem;
         height: 1rem;
         position: absolute;
         top: -1rem;
         left: 0;
+    }
+
+    @media (min-width: 30em) {
+        margin: 0 1rem;
+        width: 12rem;
+        height: 7rem;
+
+        &::before {
+            width: 12rem;
+        }
     }
 
     .expanded-box {
