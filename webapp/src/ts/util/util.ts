@@ -57,6 +57,7 @@ declare global {
         requestAnimFrame: (callback: () => {}) => void
         Apex: object
         blockMenuHeaderScroll: boolean
+        webkitAudioContext: typeof AudioContext
     }
 }
 

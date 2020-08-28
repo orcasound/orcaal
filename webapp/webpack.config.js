@@ -33,7 +33,7 @@ module.exports = (_, argv) => {
             new webpack.EnvironmentPlugin({
                 API_URL: isProduction
                     ? 'https://d14pgy6pzqfa4g.cloudfront.net'
-                    : 'http://localhost:5000',
+                    : 'http://localhost:80',
             }),
             new WebpackCdnPlugin({
                 modules: [

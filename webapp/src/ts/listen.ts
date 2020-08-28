@@ -167,7 +167,7 @@ ready(() => {
     }
 
     document.querySelectorAll('.expandable').forEach((item) => {
-        let lastTouched = null as Element
+        let lastTouched: any = ''
         item.addEventListener('touchstart', () => {
             window.blockMenuHeaderScroll = true
             item.classList.add('hovered')
@@ -199,7 +199,7 @@ ready(() => {
             const eb = item.querySelector('.expanded-box') as HTMLElement
             eb.style.display = 'none'
             item.classList.remove('hovered')
-            lastTouched = null
+            lastTouched = ''
         })
     })
 

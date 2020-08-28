@@ -131,8 +131,6 @@ button {
             width: 5.5rem;
             height: 5.5rem;
             border-radius: 30rem;
-            // margin-left: -1rem;
-            // margin-bottom: 1rem;
 
             &.playing {
                 #pause {
@@ -149,7 +147,7 @@ button {
 
             svg {
                 fill: $textColor;
-                width: 4rem;
+                width: 3rem;
             }
 
             #play {
@@ -210,6 +208,10 @@ button {
             #play-pause {
                 width: 7rem;
                 height: 7rem;
+
+                svg {
+                    width: 4rem;
+                }
             }
             .text-btn {
                 font-size: 2.2rem;
@@ -220,12 +222,17 @@ button {
             #skip {
                 width: 11.6rem;
                 height: 6.6rem;
-                right: 4rem;
+                right: 1rem;
                 span {
                     display: inline;
                     color: $textColor;
                     font-size: 2rem;
                 }
+            }
+        }
+        @media (min-width: 50em) {
+            #skip {
+                right: 4rem;
             }
         }
     }

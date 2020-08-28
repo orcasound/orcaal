@@ -31,7 +31,7 @@ class Player {
     bandpass: BiquadFilterNode
     constructor() {
         // Create an audio graph.
-        window.AudioContext = window.AudioContext
+        window.AudioContext = window.AudioContext || window.webkitAudioContext
         var context = new AudioContext()
         var analyser = context.createAnalyser()
         //analyser.fftSize = 2048 * 2 * 2
