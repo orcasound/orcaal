@@ -2,18 +2,19 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/orcasound/orcaal/blob/master/LICENSE)
 
-> Developed by Diego R. Saltijeral in 2020 and funded by the [Google Summer of Code program](https://summerofcode.withgoogle.com/). The binary classification model and the preprocessing script were developed by Kunal Mehta; the research about it is located in [this repo](https://github.com/orcasound/orcaal-research).
+> Developed by Diego R. Saltijeral in 2020 and funded by the [Google Summer of Code program](https://summerofcode.withgoogle.com/). The binary classification model and the preprocessing of labeled data were developed by Kunal Mehta; the research about it is located in [this repo](https://github.com/orcasound/orcaal-research).
 
-OrcaAL is an active learning tool to help an orca detection model perform better. A machine learning algorithm can perform better with less training if it is allowed to choose the data from which it learns. The active learner poses queries in the form of unlabeled data instances to be labeled by a human annotator that already understands the nature of the problem.
+OrcaAL is an active learning tool that aims to help an orca detection model perform better. You can access it here: https://orcasound.github.io/orcaal/.  
+A machine learning algorithm can perform better with less training if it is allowed to choose the data from which it learns. The active learner poses queries in the form of unlabeled data instances to be labeled by a human annotator that already understands the nature of the problem.
 
-The tool has been divided into different subprojects:
+The tool has been divided into different modules:
 
--   An API
--   The preprocessing of the data
--   Training and predicting with a Machine Learning model
--   A webapp
+-   **A webapp:** it includes an audio player/visualizer to label sound clips that our model found confusing. When a goal of N labeled instances has been reached, the model will retrain and learn from the recently annotated clips by calling the API, which then calls the ML Endpoint. Users can also view how the model progresses over time and more detailed statistics after each training round.
+-   **An API:** which serves as an interface between the machine learning model and the webapp. Makes use of AWS CLI and PostgreSQL. Both the API and the ML Endpoint are containerized and hosted on AWS Lightsail.
+-   **Preprocessing of unlabeled data:** it contains a python script that generates mp3 files and spectrograms, given a directory containing streamed audio.
+-   **A Machine Learning Endpoint:** which is a small flask app that given an h5 file, a labeled dataset and an unlabeled dataset, trains an ML model on the labeled data and predicts on the unlabeled data.
 
-Visit each subproject to know more about it, and how to get started with it.
+Go into each directory to know more about a module and how to get started with it.
 
 **Flowchart of how the tool works:**  
 ![flowchart](api/assets/flowchart.jpg)
@@ -21,7 +22,12 @@ Visit each subproject to know more about it, and how to get started with it.
 **Architecture of the tool:**
 ![architecture](api/assets/architecture.png)
 
-# Questions?
+## Blog posts about the project and GSoC
+[My Journey as a Google Summer of Code participant with Orcasound](http://www.orcasound.net/2020/08/26/my-journey-as-a-google-summer-of-code-participant-with-orcasound/)  
+[Two months listening and learning about orca sounds](http://www.orcasound.net/2020/08/02/two-months-as-a-gsoc-participant-with-orcasound/)  
+[GSoC’s active learning tool: progress after 1 month](http://www.orcasound.net/2020/07/01/gsocs-active-learning-tool-progress-after-1-month/)  
+
+## Questions?
 
 Ask GSoC-specific questions in the #GSoC channel of the [Orcasound Slack workspace](https://join.slack.com/t/orcasound/shared_invite/zt-bd1jk2q9-FjeWr3OzocDBwDgS0g1FdQ).
 
