@@ -65,11 +65,11 @@ ready(() => {
                 data: [
                     {
                         x: 'Predicted No',
-                        y: FN,
+                        y: FP,
                     },
                     {
                         x: 'Predicted Yes',
-                        y: TP,
+                        y: TN,
                     },
                 ],
             },
@@ -78,11 +78,11 @@ ready(() => {
                 data: [
                     {
                         x: 'Predicted No',
-                        y: TN,
+                        y: TP,
                     },
                     {
                         x: 'Predicted Yes',
-                        y: FP,
+                        y: FN,
                     },
                 ],
             },

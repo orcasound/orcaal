@@ -4,7 +4,7 @@
     "description": "",
     "keywords": [],
     "scripts": {
-        "start": "webpack-dev-server --mode development",
+        "start": "webpack-dev-server --mode production",
         "build": "webpack --mode production",
         "deploy": "gh-pages -d dist",
         "test": "cypress open"
