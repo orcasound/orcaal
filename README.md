@@ -4,17 +4,18 @@
 
 > Developed by Diego R. Saltijeral in 2020 and funded by the [Google Summer of Code program](https://summerofcode.withgoogle.com/). The binary classification model and the preprocessing of labeled data were developed by Kunal Mehta; the research about it is located in [this repo](https://github.com/orcasound/orcaal-research).
 
-OrcaAL is an active learning tool that aims to help an orca detection model perform better. You can access it here: https://orcasound.github.io/orcaal/.  
-A machine learning algorithm can perform better with less training if it is allowed to choose the data from which it learns. The active learner poses queries in the form of unlabeled data instances to be labeled by a human annotator that already understands the nature of the problem.
+OrcaAL is an active learning tool that aims to help an orca detection model perform better. You can access it here: https://orcasound.github.io/orcaal/. 
+
+A machine learning algorithm can perform better with less training if it is allowed to choose the data from which it learns. Such an algorithm, known as an "active learner" poses queries in the form of unlabeled data instances to be labeled by a human annotator that already understands the nature of the problem.
 
 The tool has been divided into different modules:
 
--   **A webapp:** it includes an audio player/visualizer to label sound clips that our model found confusing. When a goal of N labeled instances has been reached, the model will retrain and learn from the recently annotated clips by calling the API, which then calls the ML Endpoint. Users can also view how the model progresses over time and more detailed statistics after each training round.
+-   **A webapp:** it includes an audio player/visualizer and UI for labeling sound clips that our model found confusing. When a goal of N labeled instances has been reached, the model will retrain and learn from the recently annotated clips by calling the API, which then calls the ML Endpoint. Users can also view how the model progresses over time and more detailed statistics after each training round.
 -   **An API:** which serves as an interface between the machine learning model and the webapp. Makes use of AWS CLI and PostgreSQL. Both the API and the ML Endpoint are containerized and hosted on AWS Lightsail.
--   **Preprocessing of unlabeled data:** it contains a python script that generates mp3 files and spectrograms, given a directory containing streamed audio.
--   **A Machine Learning Endpoint:** which is a small flask app that given an h5 file, a labeled dataset and an unlabeled dataset, trains an ML model on the labeled data and predicts on the unlabeled data.
+-   **Preprocessing of unlabeled data:** it contains a Python script that generates mp3 files and spectrograms, given a directory containing audio data.
+-   **A Machine Learning Endpoint:** which is a small flask app that -- given an h5 file, a labeled dataset and an unlabeled dataset -- trains an ML model on the labeled data and predicts on the unlabeled data.
 
-Go into each directory to know more about a module and how to get started with it.
+Go into each directory to learn more about a module and how to get started with it.
 
 **Flowchart of how the tool works:**  
 ![flowchart](api/assets/flowchart.jpg)
