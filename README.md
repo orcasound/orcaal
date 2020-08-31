@@ -28,6 +28,9 @@ Go into each directory to learn more about a module and how to get started with 
 [Two months listening and learning about orca sounds](http://www.orcasound.net/2020/08/02/two-months-as-a-gsoc-participant-with-orcasound/)  
 [GSoC’s active learning tool: progress after 1 month](http://www.orcasound.net/2020/07/01/gsocs-active-learning-tool-progress-after-1-month/)  
 
+## AI for orcas
+This tool is part of the [AI for orcas project](https://www.orcasound.net/portfolio/ai-for-orcas-open-bioacoustic-data-science/), and it aims to solve the problem stated on this [GH issue](https://github.com/orcasound/orcagsoc/issues/2).  
+
 ## Questions?
 
 Ask GSoC-specific questions in the #GSoC channel of the [Orcasound Slack workspace](https://join.slack.com/t/orcasound/shared_invite/zt-bd1jk2q9-FjeWr3OzocDBwDgS0g1FdQ).
