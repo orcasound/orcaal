@@ -255,3 +255,12 @@ This API requires a database and a ML endpoint to run, the easiest way to do tha
 
 Follow the quick start method on your server of choice.  
 Otherwise, to push to a different docker container registry, create an account on https://hub.docker.com, login from the command line `docker login`, build the image with `docker build -t activelearning_api .` from within the project directory, rename it to `docker tag activelearning_api:latest <your-docker-registry-account>/activelearning_api:latest`, push it to the Docker registry `docker push <your-docker-registry-account>/activelearning_api:latest`. Now you can follow the quick start method.
+
+### Database Access
+
+If one wants to access the database seperately to calculate some annotation/performance statistics, one can run 
+
+```
+psql postgresql://postgres:<database-password>@localhost:5432/orcagsoc
+```
+For the current deployment on Lightsail, the database can be accessed by ssh-ing into the Lightsail instance (easiest from the AWS interface), and use password `postgres`.
