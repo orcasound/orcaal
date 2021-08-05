@@ -44,6 +44,7 @@ def main(input_dir, output_dir, trimmed_dur, location, starting_timestamp):
         'ffmpeg', '-i', 'temp/all.ts', '-c:v', 'libx264', '-c:a', 'copy',
         '-bsf:a', 'aac_adtstoasc', 'temp/output.mp4'
     ])
+
     subprocess.run(['ffmpeg', '-i', 'temp/output.mp4', 'temp/output.mp3'])
 
     # Trim audio file to multiple files of duration timmed_dir
@@ -69,10 +70,18 @@ def main(input_dir, output_dir, trimmed_dur, location, starting_timestamp):
     if not os.path.exists(specs_dir):
         os.makedirs(specs_dir)
 
+    """
     select_spec_case(plot_path=specs_dir,
                      folder_path=audios_dir,
                      pcen=True,
                      wavelet=True)
+    """
+    # try embedding extraction
+    select_spec_case_embedding(plot_path=specs_dir,
+                     folder_path=audios_dir,
+                     pcen=True,
+                     wavelet=True,
+                     model='yamnet')
 
     # Delete temporary directory
     rmtree('temp')
