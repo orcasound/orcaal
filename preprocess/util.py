@@ -7,6 +7,11 @@ import numpy as np
 import tensorflow as tf
 import tensorflow_hub as hub
 
+# load models from tensorflow hub
+vggish_model = hub.load('https://tfhub.dev/google/vggish/1')
+yamnet_model = hub.load('https://tfhub.dev/google/yamnet/1')
+humpback_model = hub.load('https://tfhub.dev/google/humpback_whale/1')
+
 
 def apply_per_channel_energy_norm(spectrogram):
     """Apply PCEN.
@@ -84,7 +89,6 @@ def spec_plot_and_save(denoised_data, f_name, output_dir):
     fig.savefig(os.path.join(output_dir, f"{f_name[:-4]}.png"),
                 dpi=80,
                 bbox_inches="tight",
-                quality=95,
                 pad_inches=0.0)
     fig.canvas.draw()
     fig.canvas.flush_events()
