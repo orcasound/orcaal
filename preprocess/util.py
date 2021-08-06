@@ -6,7 +6,6 @@ import os
 import numpy as np
 import tensorflow as tf
 import tensorflow_hub as hub
-import tensorflow_io as tfio
 
 
 def apply_per_channel_energy_norm(spectrogram):
