@@ -162,6 +162,7 @@ def extract_embedding_from_signal(waveform,model):
     
     return embedding
 
+
 def save_embedding(mean_embedding, f_name, output_dir):
     """" Save embedding as tsv file """
     embedding_file = os.path.join(output_dir, f"{f_name[:-4]}.tsv")
@@ -170,7 +171,8 @@ def save_embedding(mean_embedding, f_name, output_dir):
             f.write('{0:.4f}\t'.format(val))
 
 
-def select_spec_case_embedding(plot_path, folder_path, pcen=False, wavelet=False,model='yamnet'):
+
+def select_spec_case_embedding(plot_path, embedding_path, folder_path, pcen=False, wavelet=False,model='yamnet'):
     """Selects the preprocessing steps to be applied to the spectrogram.
 
     Depending upon the choices entered by the user this function would
@@ -201,11 +203,11 @@ def select_spec_case_embedding(plot_path, folder_path, pcen=False, wavelet=False
 
         spectrogram_data = librosa.feature.melspectrogram(data, sr=sr, power=1)
         # compute embedding
-        embedding = extract_embedding_from_signal(data,model)
+        embedding = extract_embedding_from_signal(data, model)
         # aggregate data
-        mean_embedding = tf.reduce_mean(embedding,axis=0)
+        mean_embedding = tf.reduce_mean(embedding, axis=0)
         # save embedding tsv
-        save_embedding(mean_embedding,f_name,plot_path)
+        save_embedding(mean_embedding, f_name, embedding_path)
 
         if pcen and not wavelet:
             pcen_spec = apply_per_channel_energy_norm(spectrogram_data)

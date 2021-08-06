@@ -69,6 +69,10 @@ def main(input_dir, output_dir, trimmed_dur, location, starting_timestamp):
     specs_dir = '%s/spectrograms' % output_dir
     if not os.path.exists(specs_dir):
         os.makedirs(specs_dir)
+    # Store embeddings in directory [output_dir]/embeddings
+    embeddings_dir = '%s/embeddings' % output_dir
+    if not os.path.exists(embeddings_dir):
+        os.makedirs(embeddings_dir)
 
     """
     select_spec_case(plot_path=specs_dir,
@@ -78,6 +82,7 @@ def main(input_dir, output_dir, trimmed_dur, location, starting_timestamp):
     """
     # try embedding extraction
     select_spec_case_embedding(plot_path=specs_dir,
+                     embedding_path=embeddings_dir,
                      folder_path=audios_dir,
                      pcen=True,
                      wavelet=True,
