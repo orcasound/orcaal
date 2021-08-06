@@ -35,17 +35,17 @@ def main(input_dir, output_dir, trimmed_dur, location, starting_timestamp):
 
     # Concatenate them into a single file
     subprocess.run([
-        'ffmpeg', '-f', 'concat', '-safe', '0', '-i', 'temp/mylist.txt', '-c',
+        'ffmpeg', '-hide_banner', '-f', 'concat', '-safe', '0', '-i', 'temp/mylist.txt', '-c',
         'copy', 'temp/all.ts'
     ])
 
     # Convert concatenated ts file to mp3
     subprocess.run([
-        'ffmpeg', '-i', 'temp/all.ts', '-c:v', 'libx264', '-c:a', 'copy',
+        'ffmpeg', '-hide_banner', '-i', 'temp/all.ts', '-c:v', 'libx264', '-c:a', 'copy',
         '-bsf:a', 'aac_adtstoasc', 'temp/output.mp4'
     ])
 
-    subprocess.run(['ffmpeg', '-i', 'temp/output.mp4', 'temp/output.mp3'])
+    subprocess.run(['ffmpeg', '-hide_banner', '-i', 'temp/output.mp4', 'temp/output.mp3'])
 
     # Trim audio file to multiple files of duration timmed_dir
     # Store audios in directory [output_dir]/mp3
@@ -57,7 +57,7 @@ def main(input_dir, output_dir, trimmed_dur, location, starting_timestamp):
 
     for start_time in range(0, input_dur, trimmed_dur):
         subprocess.run([
-            'ffmpeg', '-ss',
+            'ffmpeg', '-hide_banner', '-ss',
             '%d' % start_time, '-t',
             '%d' % trimmed_dur, '-i', 'temp/output.mp3',
             '%s/%s_%d.mp3' %
