@@ -13,7 +13,7 @@ import os
 import argparse
 import subprocess
 import librosa
-from util import select_spec_case
+from util import select_spec_case_embedding
 from shutil import rmtree
 
 
