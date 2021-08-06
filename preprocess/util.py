@@ -8,6 +8,7 @@ import tensorflow as tf
 import tensorflow_hub as hub
 
 # load models from tensorflow hub
+
 vggish_model = hub.load('https://tfhub.dev/google/vggish/1')
 yamnet_model = hub.load('https://tfhub.dev/google/yamnet/1')
 humpback_model = hub.load('https://tfhub.dev/google/humpback_whale/1')
