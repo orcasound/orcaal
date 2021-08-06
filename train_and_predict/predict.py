@@ -51,3 +51,37 @@ def get_predictions_on_unlabeled(s3_model_path, s3_unlabeled_path, img_width,
         predictions_list.append(cur_prediction)
 
     return predictions_list
+
+
+def get_predictions_local(local_model_path, local_unlabeled_path, img_width,
+                        img_height):
+    model = load_model(local_model_path)
+    image_generator = ImageDataGenerator(rescale=1. / 255)
+    data_generator = image_generator.flow_from_directory(
+        '.',
+        # only read images from `unlabeled` directory
+        classes=[local_unlabeled_path],
+        # don't generate labels
+        class_mode=None,
+        # don't shuffle
+        shuffle=False,
+        # use same size as in training
+        target_size=(img_width, img_height),
+        batch_size=64)
+
+    predictions = model.predict(data_generator).tolist()
+
+    predictions_list = []
+    for i in range(len(predictions)):
+        cur_prediction = {}
+        cur_prediction['predicted_value'] = predictions[i][0]
+        cur_file = os.path.split(data_generator.filenames[i])[1].split('.')[0]
+        cur_prediction['audio_path'] = f'{local_unlabeled_path}/mp3/{cur_file}.mp3'
+        location, timestamp = cur_file.split('_')
+        cur_prediction['location'] = locations[location]
+        cur_prediction['duration'] = 3
+        cur_prediction['timestamp'] = datetime.fromtimestamp(int(timestamp))
+        predictions_list.append(cur_prediction)
+
+    return predictions_list
+
