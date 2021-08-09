@@ -53,12 +53,13 @@ def get_predictions_on_unlabeled(s3_model_path, s3_unlabeled_path, img_width,
     return predictions_list
 
 
-def get_predictions_local(local_model_path, local_unlabeled_path, img_width,
+def get_predictions_local(local_model_path, unlabeled_path, img_width,
                         img_height):
     model = load_model(local_model_path)
+    local_unlabeled_path = f'{unlabeled_path}spectrograms/'
     image_generator = ImageDataGenerator(rescale=1. / 255)
     data_generator = image_generator.flow_from_directory(
-        '.',
+        local_unlabeled_path,
         # only read images from `unlabeled` directory
         classes=[local_unlabeled_path],
         # don't generate labels
