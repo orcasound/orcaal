@@ -15,6 +15,7 @@ import subprocess
 import librosa
 from util import select_spec_case_embedding
 from shutil import rmtree
+import tqdm
 
 
 def main(input_dir, output_dir, trimmed_dur, location, starting_timestamp):
@@ -55,9 +56,9 @@ def main(input_dir, output_dir, trimmed_dur, location, starting_timestamp):
     if not os.path.exists(audios_dir):
         os.makedirs(audios_dir)
 
-    for start_time in range(0, input_dur, trimmed_dur):
+    for start_time in tqdm(range(0, input_dur, trimmed_dur)):
         subprocess.run([
-            'ffmpeg', '-hide_banner', '-ss',
+            'ffmpeg', '-hide_banner','-nostats', '-ss',
             '%d' % start_time, '-t',
             '%d' % trimmed_dur, '-i', 'temp/output.mp3',
             '%s/%s_%d.mp3' %
