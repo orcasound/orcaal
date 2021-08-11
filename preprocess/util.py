@@ -6,6 +6,7 @@ import os
 import numpy as np
 import tensorflow as tf
 import tensorflow_hub as hub
+from tqdm import tqdm
 
 # load models from tensorflow hub
 
@@ -97,8 +98,6 @@ def spec_plot_and_save(denoised_data, f_name, output_dir):
     plt.close(fig)
 
 
-
-
 def select_spec_case(plot_path, folder_path, pcen=False, wavelet=False):
     """Selects the preprocessing steps to be applied to the spectrogram.
 
@@ -171,7 +170,6 @@ def save_embedding(mean_embedding, f_name, output_dir):
             f.write('{0:.4f}\t'.format(val))
 
 
-
 def select_spec_case_embedding(plot_path, embedding_path, folder_path, pcen=False, wavelet=False,model='yamnet'):
     """Selects the preprocessing steps to be applied to the spectrogram.
 
@@ -196,7 +194,7 @@ def select_spec_case_embedding(plot_path, embedding_path, folder_path, pcen=Fals
         f for f in os.listdir(folder_path)
         if os.path.isfile(os.path.join(folder_path, f))
     ]
-    for id, file in enumerate(onlyfiles):
+    for id, file in tqdm(enumerate(onlyfiles)):
         fpath = os.path.join(folder_path, file)
         data, sr = librosa.core.load(fpath, res_type="kaiser_best")
         f_name = os.path.basename(file)
