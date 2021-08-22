@@ -3,6 +3,6 @@
 *.jpg
 *unlabeled_data.json
 *.ipynb_checkpoints*
-run.md
+*run.md
 preprocess/1625427019/*
 
