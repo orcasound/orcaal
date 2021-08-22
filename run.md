@@ -9,7 +9,7 @@ secret access
 
 First run ML service
 
-    docker run --name activelearning_ml -d -p 5001:5001 -e AWS_ACCESS_KEY_ID=AKIAZN2WCXIFR6QV7SFN -e AWS_SECRET_ACCESS_KEY=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 --rm jdiegors/activelearning_ml:latest
+docker run --name activelearning_ml -d -p 5001:5001 -e AWS_ACCESS_KEY_ID=AKIAZN2WCXIFR6QV7SFN -e AWS_SECRET_ACCESS_KEY=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 --rm jdiegors/activelearning_ml:latest
 
 
 Start postgres
@@ -22,6 +22,7 @@ docker run --name activelearning_api -d -p 5000:5000 -e S3_LABELED_PATH=s3://orc
 
 Start web app
 
+nvm use 16.6.1
 npm install
 npm start
 
