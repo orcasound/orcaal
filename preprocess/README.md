@@ -11,7 +11,8 @@ To run the script:
 -   Run script: `python preprocess_unlabeled.py [input_dir] [output_dir] [-d duration (default=3)] [-l location] [-s starting timestamp]`
 
 For example, to run the script with test data:
-Run `python preprocess_unlabeled.py testdata unlabeled_test -l orcasoundlab -s 1594150218` and the script would generate an `unlabeled_test` directory with two subdirectories: `mp3` containing the mp3 files, and `spectrograms` containing the spectrograms of the mp3 files.  
+Run `python preprocess_unlabeled.py testdata unlabeled_test -l orcasoundlab -s 1594150218 -m yamnet` and the script would generate an `unlabeled_test` directory with three subdirectories: `mp3` containing the mp3 files,`spectrograms` containing the spectrograms of the mp3 files, and `embeddings` containing a tsv file per each audio_clip.
+
 A testdata folder containing ts files has been provided to test the script.  
 But the objective is to download the ts files from an s3 bucket. For that you would need to install [AWS CLI](https://aws.amazon.com/cli/) and configure it by entering your access keys after the following command `aws configure`. Then you can run `aws s3 sync [remote s3 directory] [local directory]`, e.g. `aws s3 sync s3://streaming-orcasound-net/rpi_orcasound_lab/hls/1594150218/ ts`  
 The preprocessed unlabeled files can then be uploaded to s3 by running `aws s3 sync [local directory] [remote s3 directory]`, e.g. `aws s3 sync unlabeled s3://orcagsoc/unlabeled/`
