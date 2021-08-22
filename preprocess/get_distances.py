@@ -39,7 +39,7 @@ def main(unlabeled_path):
 
     df['representativeness'] = i_metric
     # save concatenated file
-    df.to_csv(os.path.basename(unlabeled_path) + '_embeddings.csv')
+    df.to_csv(os.path.join(unlabeled_path,unlabeled_path + '_embeddings.csv'),index=False)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
@@ -49,7 +49,7 @@ if __name__ == '__main__':
     parser.add_argument(
         'unlabeled_path',
         help=
-        'path of the directory that contains embeddings files'
+        'path of the directory that contains preprocessed data created after preprocess_unlabeled run'
     )
 
     args = parser.parse_args()
