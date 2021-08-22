@@ -2,3 +2,5 @@ package-lock.json
 *.csv
 *.tsv
 *.jpg
+*unlabeled_data.json
+*.ipynb_checkpoints*
