@@ -130,6 +130,7 @@ if __name__ == '__main__':
         'Unix Timestamp that will be the name of the first file (default: %(default)s)'
     )
 
+
     args = parser.parse_args()
 
     main(args.input_dir, args.output_dir, args.duration, args.location,
