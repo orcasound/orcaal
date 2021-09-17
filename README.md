@@ -8,7 +8,7 @@ OrcaAL is an active learning tool that aims to help an orca detection model perf
 
 ![orca-spectrogram](api/assets/orca-spectrogram.jpg)
 
-This tool is part of the [AI for orcas project](https://www.orcasound.net/portfolio/ai-for-orcas-open-bioacoustic-data-science/), and it aims to solve the problem stated on this [GH issue](https://github.com/orcasound/orcagsoc/issues/2).
+This tool is part of the [AI for orcas project](https://www.orcasound.net/portfolio/ai-for-orcas-open-bioacoustic-data-science/), and it aims to solve the problem stated on this [GH issue](https://github.com/orcasound/orcagsoc/issues/2). You can greatly contribute by providing your user experience feedback in this [Google Form](https://forms.gle/oUar3ziijdaR7UGB6), or you can directly add issues [here](https://github.com/orcasound/orcaal/issues).
 
 ## How does it work?
 
