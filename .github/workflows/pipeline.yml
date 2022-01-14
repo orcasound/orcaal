@@ -21,10 +21,10 @@ jobs:
           python-version: '3.8' 
           architecture: 'x64'
           cache: 'pip'
-      - name: Lint with flake8
-        run: |
-          pip install flake8
-          flake8 .
+      - name: flake8 Lint
+        uses: py-actions/flake8@v2
+        with:
+          max-line-length: "100"
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx

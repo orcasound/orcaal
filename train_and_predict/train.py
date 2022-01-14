@@ -1,10 +1,10 @@
-from tensorflow.keras.callbacks import ReduceLROnPlateau, ModelCheckpoint, TensorBoard
+from tensorflow.keras.callbacks import ReduceLROnPlateau, ModelCheckpoint
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.models import load_model
 import os
 import subprocess
 from sklearn.metrics import confusion_matrix
-from time import time
+# from time import time
 
 
 def train(s3_model_path, s3_labeled_path, img_width, img_height, epochs):
@@ -93,4 +93,12 @@ def train(s3_model_path, s3_labeled_path, img_width, img_height, epochs):
     new_s3_model_path = f'{os.path.dirname(s3_model_path)}/{new_model_name}'
     subprocess.run(['aws', 's3', 'cp', new_model_name, new_s3_model_path])
 
-    return acc, val_acc, loss, val_loss, cm, train_generator.n, model_acc, model_loss, new_s3_model_path
+    return (acc,
+            val_acc,
+            loss,
+            val_loss,
+            cm,
+            train_generator.n,
+            model_acc,
+            model_loss,
+            new_s3_model_path)
