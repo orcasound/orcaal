@@ -1,11 +1,13 @@
 from flask import Flask
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, inspect
+# import sqlalchemy as sa
 from flask_migrate import Migrate
 import os
 import logging
 import threading
+
 basedir = os.path.abspath(os.path.dirname(__name__))
 
 # Init app
@@ -37,8 +39,12 @@ if not app.debug or os.environ.get("WERKZEUG_RUN_MAIN") == "true":
     # The app is not in debug mode or we are in the reloaded process
     # Start training if the tables generated after each training round are empty
     engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
-    if engine.dialect.has_table(
-            engine, 'accuracy') and db.session.query(Accuracy).first() is None:
+    # if engine.dialect.has_table(
+    #         engine, 'accuracy') and db.session.query(Accuracy).first() is None:
+    #     th = threading.Thread(target=train_and_predict)
+    #     th.start()
+    if inspect(engine).has_table(
+        'accuracy') and db.session.query(Accuracy).first() is None:
         th = threading.Thread(target=train_and_predict)
         th.start()
 
