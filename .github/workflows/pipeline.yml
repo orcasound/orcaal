@@ -38,7 +38,7 @@ jobs:
       - name: Build and export to Docker
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: "train_and_predict/"
           load: true
           tags: ${{ env.TEST_TAG }}
       - name: Test built image
@@ -47,7 +47,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: "train_and_predict/"
           push: true
           tags: activelearning_ml:latest
 
