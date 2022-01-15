@@ -1,8 +1,3 @@
-# Handle circular imports
-from .active_learning import train_and_predict
-# from app import routes, models
-from app.models import LabeledFile, Model, Prediction, ConfusionMatrix, Accuracy
-
 from flask import Flask
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
@@ -34,6 +29,11 @@ if app.config['LOG_TO_STDOUT']:
 # Init db
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+
+# Handle circular imports
+from .active_learning import train_and_predict
+# from app import routes, models
+from app.models import LabeledFile, Model, Prediction, ConfusionMatrix, Accuracy
 
 if not app.debug or os.environ.get("WERKZEUG_RUN_MAIN") == "true":
     # The app is not in debug mode or we are in the reloaded process

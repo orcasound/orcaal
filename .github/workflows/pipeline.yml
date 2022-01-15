@@ -28,6 +28,7 @@ jobs:
       - name: flake8 Lint
         uses: py-actions/flake8@v2
         with:
+          ignore: "E402"
           max-line-length: "120"
           path: .
       - uses: actions/checkout@v2
@@ -83,9 +84,10 @@ jobs:
           npm install
           npm run build
           npm run deploy
+      - uses: actions/checkout@v2
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@1.33.0
-        if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
+        if: ${{ !contains(join(github.event.commits.*.message, ' '), '#skip') }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch

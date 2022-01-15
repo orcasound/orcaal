@@ -6,7 +6,7 @@
 
 ## Getting Started
 
--   Make sure [Node.js](http://nodejs.org) is installed
+-   Make sure [Node.js v14.x](http://nodejs.org) is installed
 -   Clone the repo and `cd` into the project directory
 -   Run `npm install` to install all the dependencies
 -   Run `npm start` to start a development server in [http://localhost:8080](http://localhost:8080) (For the app to work correctly, you need to start the API server as well)
