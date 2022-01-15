@@ -32,19 +32,19 @@ class Player {
     constructor() {
         // Create an audio graph.
         window.AudioContext = window.AudioContext || window.webkitAudioContext
-        var context = new AudioContext()
-        var analyser = context.createAnalyser()
+        const context = new AudioContext()
+        const analyser = context.createAnalyser()
         //analyser.fftSize = 2048 * 2 * 2
         // analyser.fftSize = (window.isMobile)? 2048 : 8192;
         analyser.fftSize = window.isMobile ? 1024 : 2048
         analyser.smoothingTimeConstant = 0
         // Create a mix.
-        var mix = context.createGain()
+        const mix = context.createGain()
         // Create a bandpass filter.
-        var bandpass = context.createBiquadFilter()
+        const bandpass = context.createBiquadFilter()
         bandpass.Q.value = 10
         bandpass.type = 'bandpass'
-        var filterGain = context.createGain()
+        const filterGain = context.createGain()
         filterGain.gain.value = 1
         // Connect audio processing graph
         mix.connect(analyser)
@@ -61,7 +61,7 @@ class Player {
             this.context,
             'empty.mp3',
             function (buffer: AudioBuffer) {
-                var source = this.createSource_(buffer, true)
+                const source = this.createSource_(buffer, true)
                 source.loop = true
                 source.start(0)
             }.bind(this)
@@ -134,7 +134,7 @@ class Player {
                 this.input = null
                 return
             }
-            var self = this
+            const self = this
             navigator.mediaDevices
                 .getUserMedia({ audio: true })
                 .then(function (stream) {
@@ -147,7 +147,7 @@ class Player {
         }
     }
     onStream_(stream: MediaStream) {
-        var input = this.context.createMediaStreamSource(stream)
+        const input = this.context.createMediaStreamSource(stream)
         input.connect(this.mix)
         this.input = input
         this.stream = stream
@@ -159,7 +159,7 @@ class Player {
         this.loop = loop
     }
     createSource_(buffer: AudioBuffer, loop: boolean) {
-        var source = this.context.createBufferSource()
+        const source = this.context.createBufferSource()
         source.buffer = buffer
         source.loop = loop
         source.connect(this.mix)

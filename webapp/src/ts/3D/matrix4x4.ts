@@ -89,29 +89,27 @@ class Matrix4x4 {
     }
 
     rotate(angle: number, x: number, y: number, z: number) {
-        var mag = Math.sqrt(x * x + y * y + z * z)
-        var sinAngle = Math.sin((angle * Math.PI) / 180.0)
-        var cosAngle = Math.cos((angle * Math.PI) / 180.0)
+        const mag = Math.sqrt(x * x + y * y + z * z)
+        const sinAngle = Math.sin((angle * Math.PI) / 180.0)
+        const cosAngle = Math.cos((angle * Math.PI) / 180.0)
 
         if (mag > 0) {
-            var xx, yy, zz, xy, yz, zx, xs, ys, zs
-            var oneMinusCos
-            var rotMat
+            let rotMat
 
             x /= mag
             y /= mag
             z /= mag
 
-            xx = x * x
-            yy = y * y
-            zz = z * z
-            xy = x * y
-            yz = y * z
-            zx = z * x
-            xs = x * sinAngle
-            ys = y * sinAngle
-            zs = z * sinAngle
-            oneMinusCos = 1.0 - cosAngle
+            const xx = x * x
+            const yy = y * y
+            const zz = z * z
+            const xy = x * y
+            const yz = y * z
+            const zx = z * x
+            const xs = x * sinAngle
+            const ys = y * sinAngle
+            const zs = z * sinAngle
+            const oneMinusCos = 1.0 - cosAngle
 
             rotMat = new Matrix4x4()
 
@@ -150,10 +148,10 @@ class Matrix4x4 {
         nearZ: number,
         farZ: number
     ) {
-        var deltaX = right - left
-        var deltaY = top - bottom
-        var deltaZ = farZ - nearZ
-        var frust
+        const deltaX = right - left
+        const deltaY = top - bottom
+        const deltaZ = farZ - nearZ
+        let frust
 
         if (
             nearZ <= 0.0 ||
@@ -193,8 +191,8 @@ class Matrix4x4 {
     }
 
     perspective(fovy: number, aspect: number, nearZ: number, farZ: number) {
-        var frustumH = Math.tan((fovy / 360.0) * Math.PI) * nearZ
-        var frustumW = frustumH * aspect
+        const frustumH = Math.tan((fovy / 360.0) * Math.PI) * nearZ
+        const frustumW = frustumH * aspect
 
         return this.frustum(
             -frustumW,
@@ -214,11 +212,11 @@ class Matrix4x4 {
         nearZ: number,
         farZ: number
     ) {
-        var deltaX = right - left
-        var deltaY = top - bottom
-        var deltaZ = farZ - nearZ
+        const deltaX = right - left
+        const deltaY = top - bottom
+        const deltaZ = farZ - nearZ
 
-        var ortho = new Matrix4x4()
+        let ortho = new Matrix4x4()
 
         if (deltaX == 0.0 || deltaY == 0.0 || deltaZ == 0.0) return this
 
@@ -236,9 +234,9 @@ class Matrix4x4 {
     }
 
     multiply(right: Matrix4x4) {
-        var tmp = new Matrix4x4()
+        const tmp = new Matrix4x4()
 
-        for (var i = 0; i < 4; i++) {
+        for (let i = 0; i < 4; i++) {
             tmp.elements[i * 4 + 0] =
                 this.elements[i * 4 + 0] * right.elements[0 * 4 + 0] +
                 this.elements[i * 4 + 1] * right.elements[1 * 4 + 0] +
@@ -269,8 +267,8 @@ class Matrix4x4 {
     }
 
     copy() {
-        var tmp = new Matrix4x4()
-        for (var i = 0; i < 16; i++) {
+        const tmp = new Matrix4x4()
+        for (let i = 0; i < 16; i++) {
             tmp.elements[i] = this.elements[i]
         }
         return tmp
@@ -281,53 +279,53 @@ class Matrix4x4 {
     }
 
     invert() {
-        var tmp_0 = this.get(2, 2) * this.get(3, 3)
-        var tmp_1 = this.get(3, 2) * this.get(2, 3)
-        var tmp_2 = this.get(1, 2) * this.get(3, 3)
-        var tmp_3 = this.get(3, 2) * this.get(1, 3)
-        var tmp_4 = this.get(1, 2) * this.get(2, 3)
-        var tmp_5 = this.get(2, 2) * this.get(1, 3)
-        var tmp_6 = this.get(0, 2) * this.get(3, 3)
-        var tmp_7 = this.get(3, 2) * this.get(0, 3)
-        var tmp_8 = this.get(0, 2) * this.get(2, 3)
-        var tmp_9 = this.get(2, 2) * this.get(0, 3)
-        var tmp_10 = this.get(0, 2) * this.get(1, 3)
-        var tmp_11 = this.get(1, 2) * this.get(0, 3)
-        var tmp_12 = this.get(2, 0) * this.get(3, 1)
-        var tmp_13 = this.get(3, 0) * this.get(2, 1)
-        var tmp_14 = this.get(1, 0) * this.get(3, 1)
-        var tmp_15 = this.get(3, 0) * this.get(1, 1)
-        var tmp_16 = this.get(1, 0) * this.get(2, 1)
-        var tmp_17 = this.get(2, 0) * this.get(1, 1)
-        var tmp_18 = this.get(0, 0) * this.get(3, 1)
-        var tmp_19 = this.get(3, 0) * this.get(0, 1)
-        var tmp_20 = this.get(0, 0) * this.get(2, 1)
-        var tmp_21 = this.get(2, 0) * this.get(0, 1)
-        var tmp_22 = this.get(0, 0) * this.get(1, 1)
-        var tmp_23 = this.get(1, 0) * this.get(0, 1)
+        const tmp_0 = this.get(2, 2) * this.get(3, 3)
+        const tmp_1 = this.get(3, 2) * this.get(2, 3)
+        const tmp_2 = this.get(1, 2) * this.get(3, 3)
+        const tmp_3 = this.get(3, 2) * this.get(1, 3)
+        const tmp_4 = this.get(1, 2) * this.get(2, 3)
+        const tmp_5 = this.get(2, 2) * this.get(1, 3)
+        const tmp_6 = this.get(0, 2) * this.get(3, 3)
+        const tmp_7 = this.get(3, 2) * this.get(0, 3)
+        const tmp_8 = this.get(0, 2) * this.get(2, 3)
+        const tmp_9 = this.get(2, 2) * this.get(0, 3)
+        const tmp_10 = this.get(0, 2) * this.get(1, 3)
+        const tmp_11 = this.get(1, 2) * this.get(0, 3)
+        const tmp_12 = this.get(2, 0) * this.get(3, 1)
+        const tmp_13 = this.get(3, 0) * this.get(2, 1)
+        const tmp_14 = this.get(1, 0) * this.get(3, 1)
+        const tmp_15 = this.get(3, 0) * this.get(1, 1)
+        const tmp_16 = this.get(1, 0) * this.get(2, 1)
+        const tmp_17 = this.get(2, 0) * this.get(1, 1)
+        const tmp_18 = this.get(0, 0) * this.get(3, 1)
+        const tmp_19 = this.get(3, 0) * this.get(0, 1)
+        const tmp_20 = this.get(0, 0) * this.get(2, 1)
+        const tmp_21 = this.get(2, 0) * this.get(0, 1)
+        const tmp_22 = this.get(0, 0) * this.get(1, 1)
+        const tmp_23 = this.get(1, 0) * this.get(0, 1)
 
-        var t0 =
+        const t0 =
             tmp_0 * this.get(1, 1) +
             tmp_3 * this.get(2, 1) +
             tmp_4 * this.get(3, 1) -
             (tmp_1 * this.get(1, 1) +
                 tmp_2 * this.get(2, 1) +
                 tmp_5 * this.get(3, 1))
-        var t1 =
+        const t1 =
             tmp_1 * this.get(0, 1) +
             tmp_6 * this.get(2, 1) +
             tmp_9 * this.get(3, 1) -
             (tmp_0 * this.get(0, 1) +
                 tmp_7 * this.get(2, 1) +
                 tmp_8 * this.get(3, 1))
-        var t2 =
+        const t2 =
             tmp_2 * this.get(0, 1) +
             tmp_7 * this.get(1, 1) +
             tmp_10 * this.get(3, 1) -
             (tmp_3 * this.get(0, 1) +
                 tmp_6 * this.get(1, 1) +
                 tmp_11 * this.get(3, 1))
-        var t3 =
+        const t3 =
             tmp_5 * this.get(0, 1) +
             tmp_8 * this.get(1, 1) +
             tmp_11 * this.get(2, 1) -
@@ -335,19 +333,19 @@ class Matrix4x4 {
                 tmp_9 * this.get(1, 1) +
                 tmp_10 * this.get(2, 1))
 
-        var d =
+        const d =
             1.0 /
             (this.get(0, 0) * t0 +
                 this.get(1, 0) * t1 +
                 this.get(2, 0) * t2 +
                 this.get(3, 0) * t3)
 
-        var out_00 = d * t0
-        var out_01 = d * t1
-        var out_02 = d * t2
-        var out_03 = d * t3
+        const out_00 = d * t0
+        const out_01 = d * t1
+        const out_02 = d * t2
+        const out_03 = d * t3
 
-        var out_10 =
+        const out_10 =
             d *
             (tmp_1 * this.get(1, 0) +
                 tmp_2 * this.get(2, 0) +
@@ -355,7 +353,7 @@ class Matrix4x4 {
                 (tmp_0 * this.get(1, 0) +
                     tmp_3 * this.get(2, 0) +
                     tmp_4 * this.get(3, 0)))
-        var out_11 =
+        const out_11 =
             d *
             (tmp_0 * this.get(0, 0) +
                 tmp_7 * this.get(2, 0) +
@@ -363,7 +361,7 @@ class Matrix4x4 {
                 (tmp_1 * this.get(0, 0) +
                     tmp_6 * this.get(2, 0) +
                     tmp_9 * this.get(3, 0)))
-        var out_12 =
+        const out_12 =
             d *
             (tmp_3 * this.get(0, 0) +
                 tmp_6 * this.get(1, 0) +
@@ -371,7 +369,7 @@ class Matrix4x4 {
                 (tmp_2 * this.get(0, 0) +
                     tmp_7 * this.get(1, 0) +
                     tmp_10 * this.get(3, 0)))
-        var out_13 =
+        const out_13 =
             d *
             (tmp_4 * this.get(0, 0) +
                 tmp_9 * this.get(1, 0) +
@@ -380,7 +378,7 @@ class Matrix4x4 {
                     tmp_8 * this.get(1, 0) +
                     tmp_11 * this.get(2, 0)))
 
-        var out_20 =
+        const out_20 =
             d *
             (tmp_12 * this.get(1, 3) +
                 tmp_15 * this.get(2, 3) +
@@ -388,7 +386,7 @@ class Matrix4x4 {
                 (tmp_13 * this.get(1, 3) +
                     tmp_14 * this.get(2, 3) +
                     tmp_17 * this.get(3, 3)))
-        var out_21 =
+        const out_21 =
             d *
             (tmp_13 * this.get(0, 3) +
                 tmp_18 * this.get(2, 3) +
@@ -396,7 +394,7 @@ class Matrix4x4 {
                 (tmp_12 * this.get(0, 3) +
                     tmp_19 * this.get(2, 3) +
                     tmp_20 * this.get(3, 3)))
-        var out_22 =
+        const out_22 =
             d *
             (tmp_14 * this.get(0, 3) +
                 tmp_19 * this.get(1, 3) +
@@ -404,7 +402,7 @@ class Matrix4x4 {
                 (tmp_15 * this.get(0, 3) +
                     tmp_18 * this.get(1, 3) +
                     tmp_23 * this.get(3, 3)))
-        var out_23 =
+        const out_23 =
             d *
             (tmp_17 * this.get(0, 3) +
                 tmp_20 * this.get(1, 3) +
@@ -413,7 +411,7 @@ class Matrix4x4 {
                     tmp_21 * this.get(1, 3) +
                     tmp_22 * this.get(2, 3)))
 
-        var out_30 =
+        const out_30 =
             d *
             (tmp_14 * this.get(2, 2) +
                 tmp_17 * this.get(3, 2) +
@@ -421,7 +419,7 @@ class Matrix4x4 {
                 (tmp_16 * this.get(3, 2) +
                     tmp_12 * this.get(1, 2) +
                     tmp_15 * this.get(2, 2)))
-        var out_31 =
+        const out_31 =
             d *
             (tmp_20 * this.get(3, 2) +
                 tmp_12 * this.get(0, 2) +
@@ -429,7 +427,7 @@ class Matrix4x4 {
                 (tmp_18 * this.get(2, 2) +
                     tmp_21 * this.get(3, 2) +
                     tmp_13 * this.get(0, 2)))
-        var out_32 =
+        const out_32 =
             d *
             (tmp_18 * this.get(1, 2) +
                 tmp_23 * this.get(3, 2) +
@@ -437,7 +435,7 @@ class Matrix4x4 {
                 (tmp_22 * this.get(3, 2) +
                     tmp_14 * this.get(0, 2) +
                     tmp_19 * this.get(1, 2)))
-        var out_33 =
+        const out_33 =
             d *
             (tmp_22 * this.get(2, 2) +
                 tmp_16 * this.get(0, 2) +
@@ -466,12 +464,12 @@ class Matrix4x4 {
     }
 
     inverse() {
-        var tmp = this.copy()
+        const tmp = this.copy()
         return tmp.invert()
     }
 
     transpose() {
-        var tmp = this.elements[0 * 4 + 1]
+        let tmp = this.elements[0 * 4 + 1]
         this.elements[0 * 4 + 1] = this.elements[1 * 4 + 0]
         this.elements[1 * 4 + 0] = tmp
 
@@ -499,7 +497,7 @@ class Matrix4x4 {
     }
 
     loadIdentity() {
-        for (var i = 0; i < 16; i++) this.elements[i] = 0
+        for (let i = 0; i < 16; i++) this.elements[i] = 0
         this.elements[0 * 4 + 0] = 1.0
         this.elements[1 * 4 + 1] = 1.0
         this.elements[2 * 4 + 2] = 1.0
