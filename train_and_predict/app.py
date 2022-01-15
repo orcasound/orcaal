@@ -27,7 +27,7 @@ def train_model():
     img_width = int(request.args['img_width'])
     img_height = int(request.args['img_height'])
     epochs = int(request.args['epochs'])
-    (acc, val_acc, loss, val_loss, cm, labeled_files, model_acc, model_loss, model_url) = train(
+    acc, val_acc, loss, val_loss, cm, labeled_files, model_acc, model_loss, model_url = train(
         model_url, labeled_url, img_width, img_height, epochs)
     return {
         "acc": acc,

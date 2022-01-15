@@ -14,6 +14,9 @@ jobs:
     defaults:
       run:
         working-directory: train_and_predict/
+    env:
+      TEST_TAG: user/myapp:test
+      WORKING_DIRECTORY: train_and_predict/
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
@@ -25,7 +28,7 @@ jobs:
         uses: py-actions/flake8@v2
         with:
           max-line-length: "100"
-          path: "train_and_predict/"
+          path: ${{ env.WORKING_DIRECTORY }}
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
@@ -38,7 +41,7 @@ jobs:
       - name: Build and export to Docker
         uses: docker/build-push-action@v2
         with:
-          context: "train_and_predict/"
+          context: ${{ env.WORKING_DIRECTORY }}
           load: true
           tags: ${{ env.TEST_TAG }}
       - name: Test built image
@@ -47,7 +50,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: "train_and_predict/"
+          context: ${{ env.WORKING_DIRECTORY }}
           push: true
           tags: activelearning_ml:latest
 
