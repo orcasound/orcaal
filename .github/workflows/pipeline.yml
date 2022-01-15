@@ -9,14 +9,13 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  ml_endpoint:
+  python_backend:
     runs-on: ubuntu-18.04
-    defaults:
-      run:
-        working-directory: train_and_predict/
     env:
-      TEST_TAG: user/myapp:test
-      WORKING_DIRECTORY: train_and_predict/
+      ML_TEST_TAG: activelearning_ml:test
+      API_TEST_TAG: activelearning_api:test
+      ML_ENDPOINT: train_and_predict/
+      API: api/
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
@@ -28,7 +27,7 @@ jobs:
         uses: py-actions/flake8@v2
         with:
           max-line-length: "100"
-          path: ${{ env.WORKING_DIRECTORY }}
+          path: .
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
@@ -38,52 +37,40 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and export to Docker
+      - name: Build and export ML endpoint to Docker
         uses: docker/build-push-action@v2
         with:
-          context: ${{ env.WORKING_DIRECTORY }}
+          context: ${{ env.ML_ENDPOINT }}
           load: true
-          tags: ${{ env.TEST_TAG }}
-      - name: Test built image
-        run: |
-          docker run --rm ${{ env.TEST_TAG }}
+          tags: ${{ env.ML_TEST_TAG }}
+          outputs: type=docker,dest=/tmp/activelearning_ml.tar
+      # - name: Build and export API to Docker
+      #   uses: docker/build-push-action@v2
+      #   with:
+      #     context: ${{ env.API }}
+      #     load: true
+      #     tags: ${{ env.API_TEST_TAG }}
+      #     outputs: type=docker,dest=/tmp/activelearning_api.tar
+      # - name: Test built image
+      #   run:
+      #     docker run ${{ env.ML_TEST_TAG }}
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: myimage
+          path: /tmp/activelearning_ml.tar
       - name: Build and push
+        if: ${{ github.event_name == 'push' }}
         uses: docker/build-push-action@v2
         with:
-          context: ${{ env.WORKING_DIRECTORY }}
+          context: ${{ env.ML_ENDPOINT }}
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: activelearning_ml:latest
 
-  
-  # api:
-  #   runs-on: ubuntu-18.04
-  #   needs: ml_endpoint
-  #   defaults:
-  #     run:
-  #       working-directory: api/
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: actions/setup-python@v2
-  #       with:
-  #         python-version: '3.8' 
-  #         architecture: 'x64'
-  #         cache: 'pip'
-  #     - name: Install dependencies
-  #       run: pip install -r requirements.txt
-  #     - name: Lint with flake8
-  #       run: |
-  #         pip install flake8
-  #         flake8 .
-  #     # - name: Test python scripts # to-do because scripts are a bit outdated
-  #     #   run: python -m pytest
-  #     - name: Build with docker
-
   # web_app:
   #   runs-on: ubuntu-18.04
-  #   needs: [ml_endpoint, api]
-  #   defaults:
-  #     run:
-  #       working-directory: webapp/
+  #   needs: python_backend
   #   steps:
   #     - uses: actions/checkout@v2
   #     - uses: actions/setup-node@v2
@@ -91,6 +78,17 @@ jobs:
   #         node-version: '14'
   #     - name: Install dependencies
   #       run: npm install
+  #     - name: Set up Docker Buildx
+  #       uses: docker/setup-buildx-action@v1
+  #     - name: Download artifact
+  #       uses: actions/download-artifact@v2
+  #       with:
+  #         name: myimage
+  #         path: /tmp
+  #     - name: Load image
+  #       run: |
+  #         docker load --input /tmp/myimage.tar
+  #         docker image ls -a
   #     - name: e2e tests
   #       uses: cypress-io/github-action@v2
   #       with:
