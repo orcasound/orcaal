@@ -76,6 +76,7 @@ jobs:
       - name: Build and push web app to GH pages
         working-directory: ${{ env.WEBAPP }}
         run: |
+          npm rebuild node-sass
           npm install
           npm run build
           npm run deploy
