@@ -59,15 +59,15 @@ jobs:
       - name: Build and export API image to Docker
         uses: docker/build-push-action@v2
         with:
-          context: ${{ env.API }}
+          context: ${{ env.ML_ENDPOINT }}
           load: true
-          tags: ${{ env.API_IMAGE_TAG }}
+          tags: ${{ env.ML_IMAGE_TAG }}
       - name: Build and push
         if: ${{ github.event_name == 'push' }}
         uses: docker/build-push-action@v2
         with:
-          context: ${{ env.API }}
+          context: ${{ env.ML_ENDPOINT }}
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.API_IMAGE_TAG }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.ML_IMAGE_TAG }}
 
