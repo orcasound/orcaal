@@ -16,36 +16,36 @@ env:
   WEBAPP: webapp/
 
 jobs:
-  # linting:
-  #   runs-on: ubuntu-18.04
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: actions/setup-python@v2
-  #       with:
-  #         python-version: '3.8' 
-  #         architecture: 'x64'
-  #         cache: 'pip'
-  #     - name: flake8 Lint
-  #       uses: py-actions/flake8@v2
-  #       with:
-  #         max-line-length: "120"
-  #         path: .
-  #     - uses: actions/checkout@v2
-  #     - uses: actions/setup-node@v1
-  #       with:
-  #         node-version: '14.x'
-  #     - name: eslint lint
-  #       working-directory: ${{ env.WEBAPP }}
-  #       run: |
-  #         npm install eslint
-  #         npm install @typescript-eslint/eslint-plugin@latest --save-dev
-  #         npm install @typescript-eslint/parser --save-dev
-  #         npm run lint
+  linting:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.8' 
+          architecture: 'x64'
+          cache: 'pip'
+      - name: flake8 Lint
+        uses: py-actions/flake8@v2
+        with:
+          max-line-length: "120"
+          path: .
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - name: eslint lint
+        working-directory: ${{ env.WEBAPP }}
+        run: |
+          npm install eslint
+          npm install @typescript-eslint/eslint-plugin@latest --save-dev
+          npm install @typescript-eslint/parser --save-dev
+          npm run lint
 
 
   deployment:
     runs-on: ubuntu-18.04
-    # needs: [linting]
+    needs: [linting]
     steps:
       - uses: actions/checkout@v2
       - name: Set up QEMU
@@ -57,13 +57,15 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and export API image to Docker
+      - name: Build and push ML_ENDPOINT image
+        if: ${{ github.event_name == 'push' }}
         uses: docker/build-push-action@v2
         with:
-          context: ${{ env.API }}
-          load: true
-          tags: ${{ env.API_IMAGE_TAG }}
-      - name: Build and push
+          context: ${{ env.ML_ENDPOINT }}
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.ML_IMAGE_TAG }}
+      - name: Build and push API image
         if: ${{ github.event_name == 'push' }}
         uses: docker/build-push-action@v2
         with:
@@ -71,4 +73,8 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.API_IMAGE_TAG }}
-
+      - name: Build and push web app to GH pages
+        working-directory: ${{ env.WEBAPP }}
+        run: |
+          npm run build
+          npm run deploy
