@@ -13,6 +13,7 @@
         "SharedArrayBuffer": "readonly"
     },
     "plugins": ["@typescript-eslint"],
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": 11,
         "sourceType": "module"

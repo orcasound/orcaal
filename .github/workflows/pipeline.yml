@@ -39,6 +39,7 @@ jobs:
         run: |
           npm install eslint
           npm install @typescript-eslint/eslint-plugin@latest --save-dev
+          npm install @typescript-eslint/parser --save-dev
           npm run lint
 
 
