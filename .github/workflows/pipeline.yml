@@ -47,6 +47,7 @@ jobs:
     runs-on: ubuntu-18.04
     # needs: [linting]
     steps:
+      - uses: actions/checkout@v2
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
@@ -59,15 +60,15 @@ jobs:
       - name: Build and export API image to Docker
         uses: docker/build-push-action@v2
         with:
-          context: ${{ env.ML_ENDPOINT }}
+          context: ${{ env.API }}
           load: true
-          tags: ${{ env.ML_IMAGE_TAG }}
+          tags: ${{ env.API_IMAGE_TAG }}
       - name: Build and push
         if: ${{ github.event_name == 'push' }}
         uses: docker/build-push-action@v2
         with:
-          context: ${{ env.ML_ENDPOINT }}
+          context: ${{ env.API }}
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.ML_IMAGE_TAG }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.API_IMAGE_TAG }}
 
