@@ -16,64 +16,58 @@ env:
   WEBAPP: webapp/
 
 jobs:
-  linting:
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        with:
-          python-version: '3.8' 
-          architecture: 'x64'
-          cache: 'pip'
-      - name: flake8 Lint
-        uses: py-actions/flake8@v2
-        with:
-          max-line-length: "120"
-          path: .
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '14.x'
-      - name: eslint lint
-        working-directory: ${{ env.WEBAPP }}
-        run: |
-          npm install eslint
-          npm install @typescript-eslint/eslint-plugin@latest --save-dev
-          npm install @typescript-eslint/parser --save-dev
-          npm run lint
-
-
-  # deployment:
+  # linting:
   #   runs-on: ubuntu-18.04
-  #   needs: [linting]
   #   steps:
-  #     - name: Set up QEMU
-  #       uses: docker/setup-qemu-action@v1
-  #     - name: Set up Docker Buildx
-  #       uses: docker/setup-buildx-action@v1
-  #     - name: Login to DockerHub
-  #       uses: docker/login-action@v1
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-python@v2
   #       with:
-  #         username: ${{ secrets.DOCKERHUB_USERNAME }}
-  #         password: ${{ secrets.DOCKERHUB_TOKEN }}
-  #     - name: Build and export ML endpoint to Docker
-  #       uses: docker/build-push-action@v2
+  #         python-version: '3.8' 
+  #         architecture: 'x64'
+  #         cache: 'pip'
+  #     - name: flake8 Lint
+  #       uses: py-actions/flake8@v2
   #       with:
-  #         context: ${{ env.ML_ENDPOINT }}
-  #         load: true
-  #         tags: ${{ env.ML_TEST_TAG }}
-  #         outputs: type=docker,dest=/tmp/activelearning_ml.tar
-  #     - name: Upload artifact
-  #       uses: actions/upload-artifact@v2
+  #         max-line-length: "120"
+  #         path: .
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-node@v1
   #       with:
-  #         name: myimage
-  #         path: /tmp/activelearning_ml.tar
-  #     - name: Build and push
-  #       if: ${{ github.event_name == 'push' }}
-  #       uses: docker/build-push-action@v2
-  #       with:
-  #         context: ${{ env.ML_ENDPOINT }}
-  #         platforms: linux/amd64,linux/arm64
-  #         push: true
-  #         tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.ML_IMAGE_TAG }}
+  #         node-version: '14.x'
+  #     - name: eslint lint
+  #       working-directory: ${{ env.WEBAPP }}
+  #       run: |
+  #         npm install eslint
+  #         npm install @typescript-eslint/eslint-plugin@latest --save-dev
+  #         npm install @typescript-eslint/parser --save-dev
+  #         npm run lint
+
+
+  deployment:
+    runs-on: ubuntu-18.04
+    # needs: [linting]
+    steps:
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build and export API image to Docker
+        uses: docker/build-push-action@v2
+        with:
+          context: ${{ env.API }}
+          load: true
+          tags: ${{ env.API_IMAGE_TAG }}
+      - name: Build and push
+        if: ${{ github.event_name == 'push' }}
+        uses: docker/build-push-action@v2
+        with:
+          context: ${{ env.API }}
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.API_IMAGE_TAG }}
 
