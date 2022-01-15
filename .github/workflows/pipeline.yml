@@ -38,6 +38,7 @@ jobs:
         working-directory: ${{ env.WEBAPP }}
         run: |
           npm install eslint
+          npm install @typescript-eslint/eslint-plugin@latest --save-dev
           npm run lint
 
 
