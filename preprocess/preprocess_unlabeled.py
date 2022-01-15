@@ -85,34 +85,32 @@ if __name__ == '__main__':
 
     parser.add_argument(
         'input_dir',
-        help=
-        'Name of the directory inside containing audios in transport stream (ts) format'
+        help='Name of the directory inside containing audios in transport stream (ts) format'
     )
     parser.add_argument(
         'output_dir',
-        help=
-        'Name of the directory where the mp3 and spectrograms will be stored')
+        help='Name of the directory where the mp3 and spectrograms will be stored'
+    )
     parser.add_argument(
         '-d',
         '--duration',
         default=3,
         type=int,
-        help=
-        'Duration in seconds of the output mp3 files (default: %(default)s)')
+        help='Duration in seconds of the output mp3 files (default: %(default)s)'
+    )
     parser.add_argument(
         '-l',
         '--location',
         default='',
         type=str,
-        help=
-        'Place without spaces where the sounds where detected (default: "")')
+        help='Place without spaces where the sounds where detected (default: "")'
+    )
     parser.add_argument(
         '-s',
         '--starting_timestamp',
         default=0,
         type=int,
-        help=
-        'Unix Timestamp that will be the name of the first file (default: %(default)s)'
+        help='Unix Timestamp that will be the name of the first file (default: %(default)s)'
     )
 
     args = parser.parse_args()

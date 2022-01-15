@@ -1,3 +1,8 @@
+# Handle circular imports
+from .active_learning import train_and_predict
+# from app import routes, models
+from app.models import LabeledFile, Model, Prediction, ConfusionMatrix, Accuracy
+
 from flask import Flask
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
@@ -30,11 +35,6 @@ if app.config['LOG_TO_STDOUT']:
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-# Handle circular imports
-from .active_learning import train_and_predict
-from app import routes, models
-from app.models import LabeledFile, Model, Prediction, ConfusionMatrix, Accuracy
-
 if not app.debug or os.environ.get("WERKZEUG_RUN_MAIN") == "true":
     # The app is not in debug mode or we are in the reloaded process
     # Start training if the tables generated after each training round are empty
@@ -43,8 +43,8 @@ if not app.debug or os.environ.get("WERKZEUG_RUN_MAIN") == "true":
     #         engine, 'accuracy') and db.session.query(Accuracy).first() is None:
     #     th = threading.Thread(target=train_and_predict)
     #     th.start()
-    if inspect(engine).has_table(
-        'accuracy') and db.session.query(Accuracy).first() is None:
+    if inspect(engine).has_table('accuracy') and \
+            db.session.query(Accuracy).first() is None:
         th = threading.Thread(target=train_and_predict)
         th.start()
 

@@ -1,9 +1,8 @@
 name: Scheduled Check
 
 on:
-  push:
-    branches:
-      - master
+  schedule:
+    - cron:  '30 5,17 * * *'
 
 jobs:
   scheduled_check:
