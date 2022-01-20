@@ -39,9 +39,9 @@ def train_and_predict():
     url = (
         f'{ml_endpoint_url}/train?model_url={latest_model.url}'
         f'&labeled_url={s3_labeled_path}&'
-        'img_width={img_width}&'
-        'img_height={img_height}&'
-        'epochs={epochs}'
+        f'img_width={img_width}&'
+        f'img_height={img_height}&'
+        f'epochs={epochs}'
     )
 
     r = requests.get(url).json()
