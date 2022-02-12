@@ -1,8 +1,15 @@
 #common
 .vscode/
 __pycache__/
-venv/
+
+#environments
 .env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
 
 #train_and_predict
 labeled*/
