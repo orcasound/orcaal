@@ -81,7 +81,7 @@ jobs:
           npm run build
           npm run deploy
       - name: Bump version and push tag
-        uses: anothrNick/github-tag-action@1
+        uses: anothrNick/github-tag-action@master
         if: ${{ !contains(join(github.event.commits.*.message, ' '), '#skip') }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
