@@ -23,7 +23,8 @@ from util import select_spec_case
 def main(input_dir, output_dir, trimmed_dur, location, starting_timestamp):
     # Write a file with the name of the ts files for ffmpeg
     ts_files = [
-        f for f in os.listdir(input_dir) if os.path.isfile(os.path.join(input_dir, f))
+        f for f in os.listdir(input_dir)
+        if os.path.isfile(os.path.join(input_dir, f))
     ]
 
     # Create temp folder to help with preprocessing
@@ -107,7 +108,8 @@ def main(input_dir, output_dir, trimmed_dur, location, starting_timestamp):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter
     )
 
     parser.add_argument(
@@ -117,21 +119,24 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "output_dir",
-        help="Name of the directory where the mp3 and spectrograms" "will be stored",
+        help=("Name of the directory where the mp3 and spectrograms "
+              "will be stored"),
     )
     parser.add_argument(
         "-d",
         "--duration",
         default=3,
         type=int,
-        help="Duration in seconds of the output mp3 files" "(default: %(default)s)",
+        help=("Duration in seconds of the output "
+              "mp3 files (default: %(default)s)"),
     )
     parser.add_argument(
         "-l",
         "--location",
         default="",
         type=str,
-        help="Place without spaces where the sounds where detected" "(default: " ")",
+        help=("Place without spaces where the sounds "
+              "where detected (default: " ")"),
     )
     parser.add_argument(
         "-s",

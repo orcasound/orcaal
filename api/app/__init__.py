@@ -47,10 +47,8 @@ if not app.debug or os.environ.get("WERKZEUG_RUN_MAIN") == "true":
     # Start training if the tables generated after each training round
     # are empty
     engine = create_engine(app.config["SQLALCHEMY_DATABASE_URI"])
-    if (
-        inspect(engine).has_table("accuracy")
-        and db.session.query(Accuracy).first() is None
-    ):
+    if inspect(engine).has_table(
+       "accuracy") and db.session.query(Accuracy).first() is None:
         th = threading.Thread(target=train_and_predict)
         th.start()
 

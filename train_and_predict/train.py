@@ -12,7 +12,8 @@ def train(s3_model_path, s3_labeled_path, img_width, img_height, epochs):
     local_model_path = os.path.basename(s3_model_path)
     model_version = local_model_path.split("_")[-1].split(".")[0]
     new_model_version = str(int(model_version) + 1)
-    new_model_name = "_".join(local_model_path.split("_")[:-1] + [new_model_version])
+    new_model_name = "_".join(local_model_path.split("_")[:-1] +
+                              [new_model_version])
     new_model_name = f"{new_model_name}.h5"
     if not os.path.isfile(local_model_path):
         subprocess.run(["aws", "s3", "cp", s3_model_path, "."])
@@ -29,7 +30,10 @@ def train(s3_model_path, s3_labeled_path, img_width, img_height, epochs):
 
     # Train the Detection model
     checkpoint = ModelCheckpoint(
-        filepath=new_model_name, monitor="val_loss", verbose=0, save_best_only=True
+        filepath=new_model_name,
+        monitor="val_loss",
+        verbose=0,
+        save_best_only=True
     )
 
     reduce_lr = ReduceLROnPlateau(

@@ -80,7 +80,6 @@ jobs:
           npm install
           npm run build
           npm run deploy
-      - uses: actions/checkout@v2
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@1
         if: ${{ !contains(join(github.event.commits.*.message, ' '), '#skip') }}
