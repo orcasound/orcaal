@@ -1,10 +1,4 @@
-from app.models import (
-    Accuracy,
-    ConfusionMatrix,
-    LabeledFile,
-    Model,
-    Prediction,
-)
+from app.models import LabeledFile, Model, Prediction, ConfusionMatrix, Accuracy
 
 
 def test_new_labeled_file():
@@ -14,11 +8,11 @@ def test_new_labeled_file():
     THEN check the audio_url, orca, extra_label, and expertise_level fields
     are defined correctly
     """
-    new_labeled_file = LabeledFile("test.mp3", True, "", "Beginner")
-    assert new_labeled_file.audio_url == "test.mp3"
+    new_labeled_file = LabeledFile('test.mp3', True, '', 'Beginner')
+    assert new_labeled_file.audio_url == 'test.mp3'
     assert new_labeled_file.orca
     assert not new_labeled_file.extra_label
-    assert new_labeled_file.expertise_level == "Beginner"
+    assert new_labeled_file.expertise_level == 'Beginner'
 
 
 def test_new_model():
@@ -27,10 +21,10 @@ def test_new_model():
     WHEN a new model is added
     THEN check the model is defined correctly
     """
-    new_model = Model("srkw_cnn", 0, "srkw_cnn_0.h5", 0.82, 0.07, 120)
-    assert new_model.name == "srkw_cnn"
+    new_model = Model('srkw_cnn', 0, 'srkw_cnn_0.h5', 0.82, 0.07, 120)
+    assert new_model.name == 'srkw_cnn'
     assert new_model.version == 0
-    assert new_model.url == "srkw_cnn_0.h5"
+    assert new_model.url == 'srkw_cnn_0.h5'
     assert new_model.accuracy == 0.82
     assert new_model.loss == 0.07
     assert new_model.labeled_files == 120
@@ -42,14 +36,13 @@ def test_new_prediction():
     WHEN a new prediction is added
     THEN check the prediction is defined correctly
     """
-    new_prediction = Prediction(
-        0.6, "test.mp3", "Haro Strait", 3, "Tue, 07 Jul 2020 15:36:27 GMT"
-    )
+    new_prediction = Prediction(0.6, 'test.mp3', 'Haro Strait', 3,
+                                'Tue, 07 Jul 2020 15:36:27 GMT')
     assert new_prediction.predicted_value == 0.6
-    assert new_prediction.audio_url == "test.mp3"
-    assert new_prediction.location == "Haro Strait"
+    assert new_prediction.audio_url == 'test.mp3'
+    assert new_prediction.location == 'Haro Strait'
     assert new_prediction.duration == 3
-    assert new_prediction.timestamp == "Tue, 07 Jul 2020 15:36:27 GMT"
+    assert new_prediction.timestamp == 'Tue, 07 Jul 2020 15:36:27 GMT'
     assert not new_prediction.labeling
 
 

@@ -1,13 +1,11 @@
-from datetime import datetime
-
 from app import db
+from datetime import datetime
 
 
 class LabeledFile(db.Model):
-    """Label for an audio file made by a human annotator.
+    ''' Label for an audio file made by a human annotator.
     All the labeled files then conform the labeled dataset used by the ML model
-    """
-
+    '''
     id = db.Column(db.Integer, primary_key=True)
     audio_url = db.Column(db.String(100))
     orca = db.Column(db.Boolean)
@@ -22,12 +20,11 @@ class LabeledFile(db.Model):
         self.expertise_level = expertise_level
 
     def __repr__(self):
-        return f"<LabeledFile {self.audio_url}>"
+        return '<LabeledFile {}>'.format(self.audio_url)
 
 
 class Model(db.Model):
-    """ML Model saved after each training round."""
-
+    '''ML Model saved after each training round.'''
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30))
     version = db.Column(db.Integer)
@@ -46,12 +43,11 @@ class Model(db.Model):
         self.labeled_files = labeled_files
 
     def __repr__(self):
-        return f"<Model {self.name}>"
+        return '<Model {}>'.format(self.name)
 
 
 class Prediction(db.Model):
-    """Unlabeled file predicted by an ML model"""
-
+    '''Unlabeled file predicted by an ML model'''
     id = db.Column(db.Integer, primary_key=True)
     predicted_value = db.Column(db.Float)
     audio_url = db.Column(db.String(100))
@@ -60,7 +56,8 @@ class Prediction(db.Model):
     timestamp = db.Column(db.DateTime)
     labeling = db.Column(db.Boolean)
 
-    def __init__(self, predicted_value, audio_url, location, duration, timestamp):
+    def __init__(self, predicted_value, audio_url, location, duration,
+                 timestamp):
         self.predicted_value = predicted_value
         self.audio_url = audio_url
         self.location = location
@@ -69,12 +66,11 @@ class Prediction(db.Model):
         self.labeling = False
 
     def __repr__(self):
-        return f"<Prediction {self.audio_url}>"
+        return '<Prediction {}>'.format(self.audio_url)
 
 
 class ConfusionMatrix(db.Model):
-    """Last training round's confusion matrix"""
-
+    '''Last training round's confusion matrix'''
     id = db.Column(db.Integer, primary_key=True)
     tn = db.Column(db.Integer)
     fp = db.Column(db.Integer)
@@ -89,8 +85,7 @@ class ConfusionMatrix(db.Model):
 
 
 class Accuracy(db.Model):
-    """Last training round's losses and accuracies"""
-
+    '''Last training round's losses and accuracies'''
     id = db.Column(db.Integer, primary_key=True)
     acc = db.Column(db.Float)
     val_acc = db.Column(db.Float)
