@@ -178,8 +178,8 @@ ready(() => {
             if (window.blockMenuHeaderScroll) {
                 e.preventDefault()
             }
-            let xPos = e.touches[0].pageX
-            let yPos = e.touches[0].pageY
+            const xPos = e.touches[0].pageX
+            const yPos = e.touches[0].pageY
             const hoveredEl = document.elementFromPoint(xPos, yPos)
             if (hoveredEl.classList.contains('label-btn')) {
                 if (lastTouched !== hoveredEl) {

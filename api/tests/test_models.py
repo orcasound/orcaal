@@ -1,5 +1,4 @@
 from app.models import LabeledFile, Model, Prediction, ConfusionMatrix, Accuracy
-from datetime import datetime
 
 
 def test_new_labeled_file():

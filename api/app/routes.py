@@ -1,10 +1,8 @@
 from flask import jsonify, request
-from app import app, db, models
+from app import app, db
 from app.models import LabeledFile, Model, Prediction, Accuracy, ConfusionMatrix
-import itertools
 import json
-import datetime
-from .active_learning import update_s3_dir, train_and_predict, session
+from .active_learning import session, train_and_predict, update_s3_dir
 import threading
 
 
@@ -131,6 +129,6 @@ def get_statistics():
             'labels': labeled_files,
             'dates': timestamps
         },
-        'training': session['training']
+        'training': session['training'],
     }
     return data

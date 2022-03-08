@@ -21,7 +21,7 @@ export const loadTrackSrc = function (
     opt_progressCallback?: (percent: number) => void
 ) {
     const loadingEl = document.getElementById('loadingSound')
-    var request = new XMLHttpRequest()
+    const request = new XMLHttpRequest()
     request.open('GET', src, true)
     request.responseType = 'arraybuffer'
 
@@ -40,7 +40,7 @@ export const loadTrackSrc = function (
     }
     if (opt_progressCallback) {
         request.onprogress = function (e) {
-            var percent = e.loaded / e.total
+            const percent = e.loaded / e.total
             opt_progressCallback(percent)
         }
     }

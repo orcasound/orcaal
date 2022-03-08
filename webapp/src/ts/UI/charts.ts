@@ -69,7 +69,7 @@ const confusionOptions = {
     chart: {
         type: 'heatmap',
         events: {
-            dataPointSelection: function ({}, {}, config: any) {
+            dataPointSelection: function ({_a = {}}, {_b = {}}, config: any) {
                 console.log(config.seriesIndex, config.dataPointIndex)
             },
         },

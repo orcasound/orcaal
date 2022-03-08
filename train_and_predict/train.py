@@ -1,10 +1,9 @@
-from tensorflow.keras.callbacks import ReduceLROnPlateau, ModelCheckpoint, TensorBoard
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.callbacks import ModelCheckpoint, ReduceLROnPlateau
 from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import os
 import subprocess
 from sklearn.metrics import confusion_matrix
-from time import time
 
 
 def train(s3_model_path, s3_labeled_path, img_width, img_height, epochs):
@@ -35,10 +34,9 @@ def train(s3_model_path, s3_labeled_path, img_width, img_height, epochs):
                                  verbose=0,
                                  save_best_only=True)
 
-    reduce_lr = ReduceLROnPlateau(monitor='val_loss',
-                                  factor=0.1,
-                                  patience=100,
-                                  min_lr=1e-8)
+    reduce_lr = ReduceLROnPlateau(
+        monitor="val_loss", factor=0.1, patience=100, min_lr=1e-8
+    )
 
     # tensorboard = TensorBoard(log_dir='log_dir',
     #                           histogram_freq=1,
@@ -62,8 +60,9 @@ def train(s3_model_path, s3_labeled_path, img_width, img_height, epochs):
         validation_data_path,
         target_size=(img_width, img_height),
         batch_size=batch_size,
-        class_mode='binary',
-        shuffle=False)
+        class_mode="binary",
+        shuffle=False,
+    )
 
     history = model.fit(train_generator,
                         epochs=epochs,
@@ -93,4 +92,12 @@ def train(s3_model_path, s3_labeled_path, img_width, img_height, epochs):
     new_s3_model_path = f'{os.path.dirname(s3_model_path)}/{new_model_name}'
     subprocess.run(['aws', 's3', 'cp', new_model_name, new_s3_model_path])
 
-    return acc, val_acc, loss, val_loss, cm, train_generator.n, model_acc, model_loss, new_s3_model_path
+    return (acc,
+            val_acc,
+            loss,
+            val_loss,
+            cm,
+            train_generator.n,
+            model_acc,
+            model_loss,
+            new_s3_model_path)

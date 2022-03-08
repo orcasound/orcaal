@@ -74,10 +74,10 @@ const spec3D = {
 
     init_: function () {
         // Initialize everything.
-        var player = new Player()
-        var analyserNode = player.getAnalyserNode()
+        const player = new Player()
+        const analyserNode = player.getAnalyserNode()
 
-        var analyserView = new AnalyserView(this.canvas)
+        const analyserView = new AnalyserView(this.canvas)
         analyserView.setAnalyserNode(analyserNode)
         analyserView.initByteBuffer()
 
@@ -110,8 +110,8 @@ const spec3D = {
 
     drawLegend_: function () {
         // Draw a simple legend.
-        var ctx = legend.getContext('2d')
-        var x = legend.width - 10
+        const ctx = legend.getContext('2d')
+        const x = legend.width - 10
 
         ctx.fillStyle = '#FFFFFF'
         ctx.font = '14px Roboto'
@@ -133,8 +133,8 @@ const spec3D = {
     freqEnd: 20000,
     padding: 30,
     yToFreq: function (y: number) {
-        var padding = spec3D.padding
-        var height = spectrogram.height
+        const padding = spec3D.padding
+        const height = spectrogram.height
 
         if (
             height < 2 * padding || // The spectrogram isn't tall enough
@@ -144,22 +144,22 @@ const spec3D = {
             // Y is out of bounds on the bottom.
             return null
         }
-        var percentFromBottom = 1 - (y - padding) / (height - padding)
-        var freq =
+        const percentFromBottom = 1 - (y - padding) / (height - padding)
+        const freq =
             spec3D.freqStart +
             (spec3D.freqEnd - spec3D.freqStart) * percentFromBottom
-        let log = A * Math.exp(B * freq)
+        const log = A * Math.exp(B * freq)
         return log
     },
 
     // Just an inverse of yToFreq.
     freqToY: function (logFreq: number) {
         // Go from logarithmic frequency to linear.
-        var freq = Math.log(logFreq / A) / B
-        var height = spectrogram.height
-        var padding = spec3D.padding
+        const freq = Math.log(logFreq / A) / B
+        const height = spectrogram.height
+        const padding = spec3D.padding
         // Get the frequency percentage.
-        var percent =
+        const percent =
             (freq - spec3D.freqStart) / (spec3D.freqEnd - spec3D.freqStart)
         // Apply padding, etc.
         return spec3D.padding + percent * (height - 2 * padding)

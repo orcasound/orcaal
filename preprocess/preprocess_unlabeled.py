@@ -1,8 +1,10 @@
 """Preprocess unlabeled data from a directory.
 
 This module takes a directory containing ts audiofiles,
-generates mp3 files of a specified duration. Then for each audio, its mel spectrogram is computed,
-and per-channel energy normalization and wavelet denoising are applied to the spectrograms.
+generates mp3 files of a specified duration.
+Then for each audio, its mel spectrogram is computed,
+and per-channel energy normalization and
+wavelet denoising are applied to the spectrograms.
 
 Example:
     $ python preprocess_unlabeled.py testdata
@@ -31,7 +33,7 @@ def main(input_dir, output_dir, trimmed_dur, location, starting_timestamp):
     with open('temp/mylist.txt', 'w') as output:
         for f in ts_files:
             if f[-2:] == 'ts':
-                output.write("file ../%s/%s \n" % (input_dir, f))
+                output.write(f'file ../{input_dir}/{f} \n')
 
     # Concatenate them into a single file
     subprocess.run([
@@ -85,34 +87,34 @@ if __name__ == '__main__':
 
     parser.add_argument(
         'input_dir',
-        help=
-        'Name of the directory inside containing audios in transport stream (ts) format'
+        help='Name of the directory inside containing audios'
+        'in transport stream (ts) format',
     )
     parser.add_argument(
         'output_dir',
-        help=
-        'Name of the directory where the mp3 and spectrograms will be stored')
+        help='Name of the directory where the mp3 and spectrograms will be stored',
+    )
     parser.add_argument(
         '-d',
         '--duration',
         default=3,
         type=int,
-        help=
-        'Duration in seconds of the output mp3 files (default: %(default)s)')
+        help='Duration in seconds of the output mp3 files (default: %(default)s)',
+    )
     parser.add_argument(
         '-l',
         '--location',
-        default='',
+        default="",
         type=str,
-        help=
-        'Place without spaces where the sounds where detected (default: "")')
+        help='Place without spaces where the sounds where detected (default: "")',
+    )
     parser.add_argument(
         '-s',
         '--starting_timestamp',
         default=0,
         type=int,
-        help=
-        'Unix Timestamp that will be the name of the first file (default: %(default)s)'
+        help='Unix Timestamp that will be the name of the'
+        'first file (default: %(default)s)',
     )
 
     args = parser.parse_args()
