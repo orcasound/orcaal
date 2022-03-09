@@ -45,7 +45,7 @@ More questions about being a GSoC mentor or student? Check out the [GSoC mentor 
 
 ## Open-source tools we used and value:
 
-* [Chrome Experiments (3D spectrogram)](https://musiclab.chromeexperiments.com)
+* [Chrome Experiments](https://musiclab.chromeexperiments.com) -- [3D spectrogram](https://musiclab.chromeexperiments.com/Spectrogram/)
 * (Docker](https://github.com/topics/docker)
 * (PostgreSQL](https://www.postgresql.org)
 * (Flask](https://flask.palletsprojects.com/en/1.1.x/)
