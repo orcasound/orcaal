@@ -42,3 +42,11 @@ Ask GSoC-specific questions in the #GSoC channel of the [Orcasound Slack workspa
 Discuss more general software and hardware development questions within the [Orcasound dev email distribution list](http://lists.orcasound.net/listinfo.cgi/dev-orcasound.net).
 
 More questions about being a GSoC mentor or student? Check out the [GSoC mentor & student guides](https://google.github.io/gsocguides/).
+
+## Open-source tools we used and value:
+
+* [Chrome Experiments (3D spectrogram)](https://musiclab.chromeexperiments.com)
+* (Docker](https://github.com/topics/docker)
+* (PostgreSQL](https://www.postgresql.org)
+* (Flask](https://flask.palletsprojects.com/en/1.1.x/)
+
