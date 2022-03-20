@@ -7,6 +7,8 @@ on:
   pull_request:
     branches: [test_CI]
     types: [opened, synchronize]
+  workflow_dispatch:
+  
 
 env:
   ML_IMAGE_TAG: activelearning_ml:test
