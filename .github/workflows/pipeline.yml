@@ -3,9 +3,9 @@ name: Pipeline deployment
 on:
   push:
     branches:
-      - master
+      - test_CI
   pull_request:
-    branches: [master]
+    branches: [test_CI]
     types: [opened, synchronize]
 
 env:
