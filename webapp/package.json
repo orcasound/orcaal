@@ -6,7 +6,7 @@
     "scripts": {
         "start": "webpack-dev-server --mode production",
         "build": "webpack --mode production",
-        "deploy": "gh-pages-CI -d dist",
+        "deploy": "gh-pages -d dist -b gh-pages-CI",
         "lint": "eslint './src/ts/**/*.ts'",
         "test": "cypress open"
     },
