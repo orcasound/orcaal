@@ -46,7 +46,7 @@ jobs:
   deployment:
     runs-on: ubuntu-20.04
     needs: [linting]
-    if: ${{ github.event_name == 'push' }}
+    # if: ${{ github.event_name == 'push' }}
     steps:
       - uses: actions/checkout@v2
         with:
