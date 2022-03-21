@@ -80,11 +80,10 @@ jobs:
           npm install
           npm run build
       - name: Push web app to GH pages
-        working-directory: ${{ env.WEBAPP }}
         uses: JamesIves/github-pages-deploy-action@v4.2.5
         with:
           branch: gh-pages
-          folder: dist       
+          folder: ${{ env.WEBAPP }}/dist       
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@1.38.0
         if: ${{ !contains(join(github.event.commits.*.message, ' '), '#skip') }}
