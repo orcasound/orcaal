@@ -85,7 +85,7 @@ jobs:
           branch: gh-pages
           folder: ${{ env.WEBAPP }}/dist       
       - name: Bump version and push tag
-        uses: anothrNick/github-tag-action@1.38.0
+        uses: anothrNick/github-tag-action@1.36.0
         if: ${{ !contains(join(github.event.commits.*.message, ' '), '#skip') }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
