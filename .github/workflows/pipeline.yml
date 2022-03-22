@@ -92,3 +92,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
+          DRY_RUN: true
+          RELEASE_BRANCH: gh-pages-CI
