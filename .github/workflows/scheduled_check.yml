@@ -3,6 +3,8 @@ name: Scheduled Check
 on:
   schedule:
     - cron:  '30 17 * * 3,6'
+    
+  pull_request:
 
 jobs:
   scheduled_check:

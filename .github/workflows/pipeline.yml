@@ -3,10 +3,12 @@ name: Pipeline deployment
 on:
   push:
     branches:
-      - master
+      - test_CI
   pull_request:
-    branches: [master]
+    branches: [test_CI]
     types: [opened, synchronize]
+  workflow_dispatch:
+  
 
 env:
   ML_IMAGE_TAG: activelearning_ml:test
@@ -44,7 +46,7 @@ jobs:
   deployment:
     runs-on: ubuntu-20.04
     needs: [linting]
-    if: ${{ github.event_name == 'push' }}
+    # if: ${{ github.event_name == 'push' }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -73,16 +75,22 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14.x'
-      - name: Build and push web app to GH pages
+      - name: Build web app
         working-directory: ${{ env.WEBAPP }}
         run: |
           npm rebuild node-sass
           npm install
           npm run build
-          npm run deploy
+      - name: Push web app to GH pages
+        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        with:
+          branch: gh-pages-CI
+          folder: ${{ env.WEBAPP }}/dist    
       - name: Bump version and push tag
-        uses: anothrNick/github-tag-action@1.38.0
+        uses: anothrNick/github-tag-action@1.36.0
         if: ${{ !contains(join(github.event.commits.*.message, ' '), '#skip') }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
+          # DRY_RUN: true
+
