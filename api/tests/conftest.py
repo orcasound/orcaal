@@ -1,8 +1,7 @@
 import pytest
 from app import app, db
-from flask_sqlalchemy import SQLAlchemy
 import os
-import tempfile
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 

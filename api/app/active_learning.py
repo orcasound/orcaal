@@ -38,7 +38,10 @@ def train_and_predict():
 
     url = (
         f'{ml_endpoint_url}/train?model_url={latest_model.url}'
-        f'&labeled_url={s3_labeled_path}&img_width={img_width}&img_height={img_height}&epochs={epochs}'
+        f'&labeled_url={s3_labeled_path}&'
+        f'img_width={img_width}&'
+        f'img_height={img_height}&'
+        f'epochs={epochs}'
     )
 
     r = requests.get(url).json()
@@ -69,7 +72,8 @@ def train_and_predict():
     print('Predicting...')
     url = (
         f'{ml_endpoint_url}/predict?model_url={latest_model.url}'
-        f'&unlabeled_url={s3_unlabeled_path}&img_width={img_width}&img_height={img_height}'
+        f'&unlabeled_url={s3_unlabeled_path}&img_width={img_width}'
+        f'&img_height={img_height}'
     )
 
     predictions = requests.get(url).json()

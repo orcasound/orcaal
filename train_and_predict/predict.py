@@ -4,13 +4,14 @@ import subprocess
 from datetime import datetime
 import os
 
-locations = {'orcasoundlab': 'Haro Strait'}
+locations = {"orcasoundlab": "Haro Strait"}
 
 
 def get_predictions_on_unlabeled(s3_model_path, s3_unlabeled_path, img_width,
                                  img_height):
     local_unlabeled_path = s3_unlabeled_path.split('/')[-2]
-    s3_url = f'https://{s3_unlabeled_path.split("/")[2]}.s3.amazonaws.com/{local_unlabeled_path}'
+    s3_url = f'https://{s3_unlabeled_path.split("/")[2]}.s3.amazonaws.com/'
+    f'{local_unlabeled_path}'
 
     local_model_path = os.path.basename(s3_model_path)
     if not os.path.isfile(local_model_path):

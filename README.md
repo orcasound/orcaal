@@ -21,7 +21,7 @@ The tool has been divided into different modules:
 -   **Preprocessing of unlabeled data:** it contains a Python script that generates mp3 files and spectrograms, given a directory containing audio data.
 -   **A Machine Learning Endpoint:** which is a small flask app that -- given an h5 file, a labeled dataset and an unlabeled dataset -- trains an ML model on the labeled data and predicts on the unlabeled data.
 
-Go into each directory to learn how to get started with it.
+Go into each directory to learn how to get started with it. You will want to visit the directories in this order: preprocess --> train_and_predict --> api --> webapp.
 
 **Flowchart of how the tool works:**  
 ![flowchart](api/assets/flowchart.jpg)

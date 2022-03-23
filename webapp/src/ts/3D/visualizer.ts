@@ -32,9 +32,9 @@ const ANALYSISTYPE_3D_SONOGRAM = 2
 const ANALYSISTYPE_WAVEFORM = 3
 
 // The "model" matrix is the "world" matrix in Standard Annotations and Semantics
-var model: Matrix4x4 = null
-var view: Matrix4x4 = null
-var projection: Matrix4x4 = null
+let model: Matrix4x4 = null
+let view: Matrix4x4 = null
+let projection: Matrix4x4 = null
 
 /**
  * Class AnalyserView
@@ -106,14 +106,14 @@ class AnalyserView {
         view = new Matrix4x4()
         projection = new Matrix4x4()
         // ________________________________________
-        var sonogram3DWidth = this.sonogram3DWidth
-        var sonogram3DHeight = this.sonogram3DHeight
-        var sonogram3DGeometrySize = this.sonogram3DGeometrySize
-        var backgroundColor = this.backgroundColor
+        const sonogram3DWidth = this.sonogram3DWidth
+        const sonogram3DHeight = this.sonogram3DHeight
+        const sonogram3DGeometrySize = this.sonogram3DGeometrySize
+        const backgroundColor = this.backgroundColor
         // ________________________________________
-        var canvas = this.canvas
+        const canvas = this.canvas
         // ________________________________________
-        var gl = this.getAvailableContext(canvas)
+        const gl = this.getAvailableContext(canvas)
         this.gl = gl
         // If we're missing this shader feature, then we can't do the 3D visualization.
         this.has3DVisualizer =
@@ -123,7 +123,7 @@ class AnalyserView {
             this.analysisType == ANALYSISTYPE_3D_SONOGRAM
         )
             this.analysisType = ANALYSISTYPE_FREQUENCY
-        var cameraController = new CameraController(canvas)
+        const cameraController = new CameraController(canvas)
         this.cameraController = cameraController
         cameraController.xRot = -180
         cameraController.yRot = 270
@@ -141,7 +141,7 @@ class AnalyserView {
         )
         gl.enable(gl.DEPTH_TEST)
         // Initialization for the 2D visualizations
-        var vertices = new Float32Array([
+        let vertices = new Float32Array([
             1.0,
             1.0,
             0.0,
@@ -161,7 +161,7 @@ class AnalyserView {
             -1.0,
             0.0,
         ])
-        var texCoords = new Float32Array([
+        let texCoords = new Float32Array([
             1.0,
             1.0,
             0.0,
@@ -175,10 +175,10 @@ class AnalyserView {
             1.0,
             0.0,
         ])
-        var vboTexCoordOffset = vertices.byteLength
+        const vboTexCoordOffset = vertices.byteLength
         this.vboTexCoordOffset = vboTexCoordOffset
         // Create the vertices and texture coordinates
-        var vbo = gl.createBuffer()
+        const vbo = gl.createBuffer()
         this.vbo = vbo
         gl.bindBuffer(gl.ARRAY_BUFFER, vbo)
         gl.bufferData(
@@ -189,14 +189,14 @@ class AnalyserView {
         gl.bufferSubData(gl.ARRAY_BUFFER, 0, vertices)
         gl.bufferSubData(gl.ARRAY_BUFFER, vboTexCoordOffset, texCoords)
         // Initialization for the 3D visualizations
-        var numVertices = sonogram3DWidth * sonogram3DHeight
+        const numVertices = sonogram3DWidth * sonogram3DHeight
         if (numVertices > 65536) {
             throw 'Sonogram 3D resolution is too high: can only handle 65536 vertices max'
         }
         vertices = new Float32Array(numVertices * 3)
         texCoords = new Float32Array(numVertices * 2)
-        for (var z = 0; z < sonogram3DHeight; z++) {
-            for (var x = 0; x < sonogram3DWidth; x++) {
+        for (let z = 0; z < sonogram3DHeight; z++) {
+            for (let x = 0; x < sonogram3DWidth; x++) {
                 // Generate a reasonably fine mesh in the X-Z plane
                 vertices[3 * (sonogram3DWidth * z + x) + 0] =
                     (sonogram3DGeometrySize * (x - sonogram3DWidth / 2)) /
@@ -211,10 +211,10 @@ class AnalyserView {
                     z / (sonogram3DHeight - 1)
             }
         }
-        var vbo3DTexCoordOffset = vertices.byteLength
+        const vbo3DTexCoordOffset = vertices.byteLength
         this.vbo3DTexCoordOffset = vbo3DTexCoordOffset
         // Create the vertices and texture coordinates
-        var sonogram3DVBO = gl.createBuffer()
+        const sonogram3DVBO = gl.createBuffer()
         this.sonogram3DVBO = sonogram3DVBO
         gl.bindBuffer(gl.ARRAY_BUFFER, sonogram3DVBO)
         gl.bufferData(
@@ -225,15 +225,15 @@ class AnalyserView {
         gl.bufferSubData(gl.ARRAY_BUFFER, 0, vertices)
         gl.bufferSubData(gl.ARRAY_BUFFER, vbo3DTexCoordOffset, texCoords)
         // Now generate indices
-        var sonogram3DNumIndices =
+        const sonogram3DNumIndices =
             (sonogram3DWidth - 1) * (sonogram3DHeight - 1) * 6
         this.sonogram3DNumIndices = sonogram3DNumIndices - 6 * 600
-        var indices = new Uint16Array(sonogram3DNumIndices)
+        const indices = new Uint16Array(sonogram3DNumIndices)
         // We need to use TRIANGLES instead of for example TRIANGLE_STRIP
         // because we want to make one draw call instead of hundreds per
         // frame, and unless we produce degenerate triangles (which are very
         // ugly) we won't be able to split the rows.
-        var idx = 0
+        let idx = 0
         for (let z = 0; z < sonogram3DHeight - 1; z++) {
             for (let x = 0; x < sonogram3DWidth - 1; x++) {
                 indices[idx++] = z * sonogram3DWidth + x
@@ -244,7 +244,7 @@ class AnalyserView {
                 indices[idx++] = (z + 1) * sonogram3DWidth + x
             }
         }
-        var sonogram3DIBO = gl.createBuffer()
+        const sonogram3DIBO = gl.createBuffer()
         this.sonogram3DIBO = sonogram3DIBO
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, sonogram3DIBO)
         gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW)
@@ -274,20 +274,20 @@ class AnalyserView {
         }
     }
     initByteBuffer() {
-        var gl = this.gl
-        var TEXTURE_HEIGHT = this.TEXTURE_HEIGHT
+        const gl = this.gl
+        const TEXTURE_HEIGHT = this.TEXTURE_HEIGHT
         if (
             !this.freqByteData ||
             this.freqByteData.length != this.analyser.frequencyBinCount
         ) {
-            var freqByteData = new Uint8Array(this.analyser.frequencyBinCount)
+            const freqByteData = new Uint8Array(this.analyser.frequencyBinCount)
             this.freqByteData = freqByteData
             // (Re-)Allocate the texture object
             if (this.texture) {
                 gl.deleteTexture(this.texture)
                 this.texture = null
             }
-            var texture = gl.createTexture()
+            const texture = gl.createTexture()
             this.texture = texture
             gl.bindTexture(gl.TEXTURE_2D, texture)
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
@@ -295,7 +295,7 @@ class AnalyserView {
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
             // TODO(kbr): WebGL needs to properly clear out the texture when null is specified
-            var tmp = new Uint8Array(freqByteData.length * TEXTURE_HEIGHT)
+            const tmp = new Uint8Array(freqByteData.length * TEXTURE_HEIGHT)
             gl.texImage2D(
                 gl.TEXTURE_2D,
                 0,
@@ -315,7 +315,7 @@ class AnalyserView {
         this.analysisType = type
     }
     doFrequencyAnalysis() {
-        var freqByteData = this.freqByteData
+        const freqByteData = this.freqByteData
         switch (this.analysisType) {
             case ANALYSISTYPE_FREQUENCY:
                 this.analyser.smoothingTimeConstant = 0.75
@@ -334,22 +334,22 @@ class AnalyserView {
         this.drawGL()
     }
     drawGL() {
-        var canvas = this.canvas
-        var gl = this.gl
-        var vbo = this.vbo
-        var vboTexCoordOffset = this.vboTexCoordOffset
-        var sonogram3DVBO = this.sonogram3DVBO
-        var vbo3DTexCoordOffset = this.vbo3DTexCoordOffset
-        var sonogram3DGeometrySize = this.sonogram3DGeometrySize
-        var sonogram3DNumIndices = this.sonogram3DNumIndices
-        var sonogram3DHeight = this.sonogram3DHeight
-        var freqByteData = this.freqByteData
-        var texture = this.texture
-        var TEXTURE_HEIGHT = this.TEXTURE_HEIGHT
-        var frequencyShader = this.frequencyShader
-        var waveformShader = this.waveformShader
-        var sonogramShader = this.sonogramShader
-        var sonogram3DShader = this.sonogram3DShader
+        const canvas = this.canvas
+        const gl = this.gl
+        const vbo = this.vbo
+        const vboTexCoordOffset = this.vboTexCoordOffset
+        const sonogram3DVBO = this.sonogram3DVBO
+        const vbo3DTexCoordOffset = this.vbo3DTexCoordOffset
+        const sonogram3DGeometrySize = this.sonogram3DGeometrySize
+        const sonogram3DNumIndices = this.sonogram3DNumIndices
+        const sonogram3DHeight = this.sonogram3DHeight
+        const freqByteData = this.freqByteData
+        const texture = this.texture
+        const TEXTURE_HEIGHT = this.TEXTURE_HEIGHT
+        const frequencyShader = this.frequencyShader
+        const waveformShader = this.waveformShader
+        const sonogramShader = this.sonogramShader
+        const sonogram3DShader = this.sonogram3DShader
         gl.bindTexture(gl.TEXTURE_2D, texture)
         gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1)
         if (
@@ -375,20 +375,20 @@ class AnalyserView {
         ) {
             this.yoffset = (this.yoffset + 1) % TEXTURE_HEIGHT
         }
-        var yoffset = this.yoffset
+        const yoffset = this.yoffset
         // Point the frequency data texture at texture unit 0 (the default),
         // which is what we're using since we haven't called activeTexture
         // in our program
-        var vertexLoc
-        var texCoordLoc
-        var frequencyDataLoc
-        var foregroundColorLoc
-        var backgroundColorLoc
-        var texCoordOffset
-        var currentShader
+        let vertexLoc
+        let texCoordLoc
+        let frequencyDataLoc
+        let foregroundColorLoc
+        let backgroundColorLoc
+        let texCoordOffset
+        let currentShader
         switch (this.analysisType) {
             case ANALYSISTYPE_FREQUENCY:
-            case ANALYSISTYPE_WAVEFORM:
+            case ANALYSISTYPE_WAVEFORM: {
                 gl.bindBuffer(gl.ARRAY_BUFFER, vbo)
                 currentShader =
                     this.analysisType == ANALYSISTYPE_FREQUENCY
@@ -406,7 +406,8 @@ class AnalyserView {
                 )
                 texCoordOffset = vboTexCoordOffset
                 break
-            case ANALYSISTYPE_SONOGRAM:
+            }
+            case ANALYSISTYPE_SONOGRAM: {
                 gl.bindBuffer(gl.ARRAY_BUFFER, vbo)
                 sonogramShader.bind()
                 vertexLoc = sonogramShader.gPositionLoc
@@ -420,7 +421,8 @@ class AnalyserView {
                 )
                 texCoordOffset = vboTexCoordOffset
                 break
-            case ANALYSISTYPE_3D_SONOGRAM:
+            }
+            case ANALYSISTYPE_3D_SONOGRAM: {
                 gl.bindBuffer(gl.ARRAY_BUFFER, sonogram3DVBO)
                 sonogram3DShader.bind()
                 vertexLoc = sonogram3DShader.gPositionLoc
@@ -429,9 +431,9 @@ class AnalyserView {
                 foregroundColorLoc = sonogram3DShader.foregroundColorLoc
                 backgroundColorLoc = sonogram3DShader.backgroundColorLoc
                 gl.uniform1i(sonogram3DShader.vertexFrequencyDataLoc, 0)
-                var normalizedYOffset = this.yoffset / (TEXTURE_HEIGHT - 1)
+                const normalizedYOffset = this.yoffset / (TEXTURE_HEIGHT - 1)
                 gl.uniform1f(sonogram3DShader.yoffsetLoc, normalizedYOffset)
-                var discretizedYOffset =
+                const discretizedYOffset =
                     Math.floor(normalizedYOffset * (sonogram3DHeight - 1)) /
                     (sonogram3DHeight - 1)
                 gl.uniform1f(
@@ -463,7 +465,7 @@ class AnalyserView {
                     this.cameraController.zT
                 )
                 // Compute necessary matrices
-                var mvp = new Matrix4x4()
+                const mvp = new Matrix4x4()
                 mvp.multiply(model)
                 mvp.multiply(view)
                 mvp.multiply(projection)
@@ -474,6 +476,7 @@ class AnalyserView {
                 )
                 texCoordOffset = vbo3DTexCoordOffset
                 break
+            }
         }
         if (frequencyDataLoc) {
             gl.uniform1i(frequencyDataLoc, 0)

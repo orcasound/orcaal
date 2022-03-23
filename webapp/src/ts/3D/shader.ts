@@ -42,13 +42,13 @@ class Shader {
     constructor(gl: WebGLRenderingContext, vertex: string, fragment: string) {
         this.program = gl.createProgram()
         this.gl = gl
-        var vs = this.loadShader(this.gl.VERTEX_SHADER, vertex)
+        const vs = this.loadShader(this.gl.VERTEX_SHADER, vertex)
         if (vs == null) {
             return
         }
         this.gl.attachShader(this.program, vs)
         this.gl.deleteShader(vs)
-        var fs = this.loadShader(this.gl.FRAGMENT_SHADER, fragment)
+        const fs = this.loadShader(this.gl.FRAGMENT_SHADER, fragment)
         if (fs == null) {
             return
         }
@@ -57,24 +57,24 @@ class Shader {
         this.gl.linkProgram(this.program)
         this.gl.useProgram(this.program)
         // Check the link status
-        var linked = this.gl.getProgramParameter(
+        const linked = this.gl.getProgramParameter(
             this.program,
             this.gl.LINK_STATUS
         )
         if (!linked) {
-            var infoLog = this.gl.getProgramInfoLog(this.program)
+            const infoLog = this.gl.getProgramInfoLog(this.program)
             console.log('Error linking program:\n' + infoLog)
             this.gl.deleteProgram(this.program)
             this.program = null
             return
         }
         // find uniforms and attributes
-        var re = /(uniform|attribute)\s+\S+\s+(\S+)\s*;/g
-        var match = null
+        const re = /(uniform|attribute)\s+\S+\s+(\S+)\s*;/g
+        let match = null
         while ((match = re.exec(vertex + '\n' + fragment)) != null) {
-            var glslName = match[2]
-            var jsName = glslNameToJs_(glslName)
-            var loc = -1
+            const glslName = match[2]
+            const jsName = glslNameToJs_(glslName)
+            const loc = -1
             if (match[1] == 'uniform') {
                 this[jsName + 'Loc'] = this.getUniform(glslName)
             } else if (match[1] == 'attribute') {
@@ -96,7 +96,7 @@ class Shader {
      * @private
      */
     loadShader(type: number, shaderSrc: string) {
-        var shader = this.gl.createShader(type)
+        const shader = this.gl.createShader(type)
         if (shader == null) {
             return null
         }
@@ -106,7 +106,7 @@ class Shader {
         this.gl.compileShader(shader)
         // Check the compile status
         if (!this.gl.getShaderParameter(shader, this.gl.COMPILE_STATUS)) {
-            var infoLog = this.gl.getShaderInfoLog(shader)
+            const infoLog = this.gl.getShaderInfoLog(shader)
             console.log('Error compiling shader:\n' + infoLog)
             this.gl.deleteShader(shader)
             return null

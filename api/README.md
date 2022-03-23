@@ -215,7 +215,7 @@ headers: {
 
 # Getting Started
 
-This API requires a database and a ML endpoint to run, the easiest way to do that would be run the ML endpoint's docker container by following the [train_and_predict quick method](../train_and_predict/README.md#quick-method), and to start a docker postgres database with the following command: `docker run --name postgres -p 5432:5432 -e POSTGRES_DB=orcagsoc -e POSTGRES_PASSWORD=<database-password> -d postgres`.
+This API requires a database and a ML endpoint to run, the easiest way to do that would be run the ML endpoint's docker container by following the [train_and_predict quick method](../train_and_predict/README.md#quick-method), and to start a docker postgres database with the following command: `docker run --name postgres -p 5432:5432 -e POSTGRES_DB=orcagsoc -e POSTGRES_PASSWORD=<database-password> -d postgres`. After these steps, choose either the quick method or flexible method to proceed.
 
 ### Quick Method
 
@@ -236,7 +236,7 @@ This API requires a database and a ML endpoint to run, the easiest way to do tha
     ML_ENDPOINT_URL=http://127.0.0.1:5001
     S3_LABELED_PATH=s3://orcagsoc/labeled_test/
     S3_UNLABELED_PATH=s3://orcagsoc/unlabeled_test/
-    S3_MODEL_PATH=s3://orcagsoc/models/srkw_cnn_0.h5
+    S3_MODEL_PATH=s3://orcagsoc/models/srkw_0.h5
     RETRAIN_TARGET=20
     IMG_WIDTH=607
     IMG_HEIGHT=617
@@ -246,6 +246,7 @@ This API requires a database and a ML endpoint to run, the easiest way to do tha
 -   Run `flask db upgrade` to update the tables of the database
 -   `flask run` starts a development server in http://localhost:5000
 -   If you plan to contribute, please configure your text editor / IDE to use Flake8 to lint and YAPF to format Python code
+-   N.B. If pipenv does not work for you, a requirements.txt file has been provided which you can use with pip to install packages instead
 
 ### Testing
 
