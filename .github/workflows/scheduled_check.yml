@@ -20,8 +20,8 @@ jobs:
           retry-delay: 5s
           retry-all: false
       - name: Check lightsail instance
-        run: curl {{ secrets.LIGHTSAIL_IP }}
+        run: curl ${{ secrets.LIGHTSAIL_IP }}
       - name: Check postgres database
         run: |
           sudo apt-get install -y nmap
-          nmap -p {{ secrets.POSTGRES_PORT }} {{ secrets.LIGHTSAIL_IP }}
+          nmap -p ${{ secrets.POSTGRES_PORT }} ${{ secrets.LIGHTSAIL_IP }}
