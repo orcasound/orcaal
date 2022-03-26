@@ -1,6 +1,9 @@
 name: Scheduled Check
 
 on:
+  push:
+    branches:
+      - improve-healthcheck
   schedule:
     - cron:  '30 17 * * 3,6'
 
@@ -8,7 +11,7 @@ jobs:
   scheduled_check:
     runs-on: ubuntu-latest
     steps:
-      - name: Check the deployed service URL
+      - name: Check the github actions 
         uses: jtalk/url-health-check-action@v2
         with:
           url: https://orcasound.github.io/orcaal/
@@ -16,3 +19,9 @@ jobs:
           max-attempts: 3
           retry-delay: 5s
           retry-all: false
+      - name: Check lightsail instance
+        run: curl {{ secrets.LIGHTSAIL_IP }}
+      - name: Check postgres database
+        run: |
+          sudo apt-get install -y nmap
+          nmap -p {{ secrets.POSTGRES_PORT }} {{ secrets.LIGHTSAIL_IP }}
