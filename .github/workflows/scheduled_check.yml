@@ -19,14 +19,10 @@ jobs:
           max-attempts: 3
           retry-delay: 5s
           retry-all: false
-      - name: "grep matching pattern"
-        run: |
-         # Everything works fine
-          echo "foo" | grep "foo"
       - name: Check postgres database
         run: |
           sudo apt-get install -y nmap
-          echo $(nmap -p ${{ secrets.POSTGRES_PORT }} ${{ secrets.LIGHTSAIL_IP }}) | grep postgresql
+          echo $(nmap -p 777 ${{ secrets.LIGHTSAIL_IP }}) | grep postgresql
       - name: Check lightsail instance
         run: |
           echo $(curl ${{ secrets.LIGHTSAIL_IP }}) | grep "Active Learning API is running!"
