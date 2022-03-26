@@ -26,7 +26,7 @@ jobs:
       - name: Check postgres database
         run: |
           sudo apt-get install -y nmap
-          nmap -p ${{ secrets.POSTGRES_PORT }} ${{ secrets.LIGHTSAIL_IP }} | grep postgresql
+          echo $(nmap -p ${{ secrets.POSTGRES_PORT }} ${{ secrets.LIGHTSAIL_IP }}) | grep postgresql
       - name: Check lightsail instance
         run: |
-          curl ${{ secrets.LIGHTSAIL_IP }} | grep "Active Learning API is running!"
+          echo $(curl ${{ secrets.LIGHTSAIL_IP }}) | grep "Active Learning API is running!"
