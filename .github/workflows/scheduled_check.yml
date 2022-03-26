@@ -1,9 +1,6 @@
 name: Scheduled Check
 
 on:
-  push:
-    branches:
-      - improve-healthcheck
   schedule:
     - cron:  '30 17 * * 3,6'
 
@@ -19,10 +16,10 @@ jobs:
           max-attempts: 3
           retry-delay: 5s
           retry-all: false
+      - name: Check lightsail instance
+        run: |
+          echo $(curl ${{ secrets.LIGHTSAIL_IP }}) | grep "Active Learning API is running!"
       - name: Check postgres database
         run: |
           sudo apt-get install -y nmap
           echo $(nmap -p 777 ${{ secrets.LIGHTSAIL_IP }}) | grep postgresql
-      - name: Check lightsail instance
-        run: |
-          echo $(curl ${{ secrets.LIGHTSAIL_IP }}) | grep "Active Learning API is running!"
