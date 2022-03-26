@@ -8,7 +8,7 @@ jobs:
   scheduled_check:
     runs-on: ubuntu-latest
     steps:
-      - name: Check the github actions 
+      - name: Check the github pages site
         uses: jtalk/url-health-check-action@v2
         with:
           url: https://orcasound.github.io/orcaal/
