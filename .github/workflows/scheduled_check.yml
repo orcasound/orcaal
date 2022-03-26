@@ -21,8 +21,8 @@ jobs:
           retry-all: false
       - name: Check lightsail instance
         run: |
-          curl ${{ secrets.LIGHTSAIL_IP }} | grep "Active Learning API is running!"
+          curl "${{ secrets.LIGHTSAIL_IP }}" | grep "Active Learning API is running!"
       - name: Check postgres database
         run: |
           sudo apt-get install -y nmap
-          nmap -p 777 ${{ secrets.LIGHTSAIL_IP }} | grep postgresql
+          nmap -p 777 "${{ secrets.LIGHTSAIL_IP }}" | grep postgresql
