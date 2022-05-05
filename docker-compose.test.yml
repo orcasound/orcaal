@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  ml-endpoint:
+    image: ml-endpoint
+    build:
+      context: ./train_and_predict
+      dockerfile: Dockerfile
+    environment:
+      
+    ports:
+      - 5001:5001
+
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: orcagsoc
+      POSTGRES_PASSWORD: password
+    ports:
+      - 5432:5432
+    
+
+  api:
+    image: api
+    ports:
+      - 5000:5000

@@ -4,6 +4,8 @@ COPY Pipfile Pipfile
 COPY Pipfile.lock Pipfile.lock
 RUN pip install pipenv
 RUN pipenv install --deploy --ignore-pipfile
+COPY requirements.txt .
+RUN pip install -r requirements.txt
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 RUN apt install unzip
 RUN unzip awscliv2.zip
