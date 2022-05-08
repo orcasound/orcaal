@@ -25,6 +25,7 @@ unlabeled*/
 node_modules/
 dist/
 .DS_Store
+videos/
 
 #api
 app.db

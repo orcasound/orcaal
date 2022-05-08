@@ -90,6 +90,7 @@ module.exports = (_, argv) => {
             open: true,
             openPage: isProduction ? 'orcaal/' : '',
             host: '0.0.0.0',
+            disableHostCheck: true,
             contentBase: path.join(__dirname, 'dist'),
             historyApiFallback: {
                 rewrites: [
