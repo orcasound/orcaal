@@ -1,0 +1,29 @@
+version: '3.8'
+
+x-common-variables: &api-common-variables
+  S3_LABELED_PATH: s3://acoustic-sandbox/orcaal-dev/labeled_test/
+  S3_UNLABELED_PATH: s3://acoustic-sandbox/orcaal-dev/unlabeled_test/
+  RETRAIN_TARGET: 20
+  S3_MODEL_PATH: s3://acoustic-sandbox/orcaal-dev/models/srkw_0.h5
+  IMG_WIDTH: 607
+  IMG_HEIGHT: 617
+  EPOCHS: 1
+  DATABASE_URL: postgresql+psycopg2://postgres:password@dbserver/orcagsoc
+  ML_ENDPOINT_URL: http://ml:5001
+
+services:
+    ml-endpoint-dev:
+      image: ml-endpoint-dev
+      container_name: ml-endpoint-dev
+      restart: on-failure
+      build:
+        context: ./train_and_predict
+        dockerfile: Dockerfile
+        target: dev
+      environment:
+        AWS_ACCESS_KEY_ID: AKIAZN2WCXIFT2PS3XEI
+        AWS_SECRET_ACCESS_KEY: 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
+      ports:
+        - 5001:5001
+      volumes:
+        - ./train_and_predict:/orcagsoc

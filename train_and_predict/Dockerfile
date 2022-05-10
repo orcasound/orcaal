@@ -1,7 +1,7 @@
-FROM tensorflow/tensorflow:latest-gpu
-
+FROM python:3.8 as base
 WORKDIR /orcagsoc
-
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
 COPY requirements.txt requirements.txt
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
@@ -11,9 +11,17 @@ RUN apt install unzip
 RUN unzip awscliv2.zip
 RUN ./aws/install
 
+FROM python:3.8 as base_dependencies
+WORKDIR /orcagsoc
+COPY --from=base /usr/local/bin/aws /usr/local/bin/aws
+COPY --from=base /opt/venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
 COPY app.py train.py predict.py ./
-
 ENV FLASK_APP app.py
-
 EXPOSE 5001
+
+FROM base_dependencies as dev
+CMD flask run --host 0.0.0.0
+
+FROM python:3.8 as prod
 CMD gunicorn -b :5001 --access-logfile - --error-logfile - app:app --timeout 100000

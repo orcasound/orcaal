@@ -19,6 +19,7 @@ services:
     build:
       context: ./train_and_predict
       dockerfile: Dockerfile
+      target: prod
     environment:
       AWS_ACCESS_KEY_ID: AKIAZN2WCXIFT2PS3XEI
       AWS_SECRET_ACCESS_KEY: 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
