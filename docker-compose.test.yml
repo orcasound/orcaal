@@ -1,10 +1,21 @@
 version: '3.8'
 
+x-common-variables: &api-common-variables
+  S3_LABELED_PATH: s3://acoustic-sandbox/orcaal-dev/labeled_test/
+  S3_UNLABELED_PATH: s3://acoustic-sandbox/orcaal-dev/unlabeled_test/
+  RETRAIN_TARGET: 20
+  S3_MODEL_PATH: s3://acoustic-sandbox/orcaal-dev/models/srkw_0.h5
+  IMG_WIDTH: 607
+  IMG_HEIGHT: 617
+  EPOCHS: 1
+  DATABASE_URL: postgresql+psycopg2://postgres:password@dbserver/orcagsoc
+  ML_ENDPOINT_URL: http://ml:5001
+
 services:
-  ml-endpoint:
-    image: ml-endpoint
+  ml-endpoint-test:
+    image: ml-endpoint-test
+    container_name: ml-endpoint-test
     restart: on-failure
-    container_name: ml-endpoint-prod
     build:
       context: ./train_and_predict
       dockerfile: Dockerfile
@@ -14,9 +25,9 @@ services:
     ports:
       - 5001:5001
 
-  postgres:
+  postgres-test:
     image: postgres
-    container_name: postgres
+    container_name: postgres-test
     restart: on-failure
     environment:
       POSTGRES_DB: orcagsoc
@@ -30,31 +41,23 @@ services:
       retries: 3
       start_period: 10s
 
-  api:
-    image: api
-    container_name: api-prod
+  api-endpoint-test:
+    image: api-endpoint-test
+    container_name: api-endpoint-test
+    restart: on-failure
     build:
       context: ./api
       dockerfile: Dockerfile
       target: dev
     restart: on-failure
     links:
-      - postgres:dbserver
-      - ml-endpoint:ml
-    environment:
-      S3_LABELED_PATH: s3://acoustic-sandbox/orcaal-dev/labeled_test/
-      S3_UNLABELED_PATH: s3://acoustic-sandbox/orcaal-dev/unlabeled_test/
-      RETRAIN_TARGET: 20
-      S3_MODEL_PATH: s3://acoustic-sandbox/orcaal-dev/models/srkw_0.h5
-      IMG_WIDTH: 607
-      IMG_HEIGHT: 617
-      EPOCHS: 1
-      DATABASE_URL: postgresql+psycopg2://postgres:password@dbserver/orcagsoc
-      ML_ENDPOINT_URL: http://ml:5001
+      - postgres-test:dbserver
+      - ml-endpoint-test:ml
+    environment: *api-common-variables
     depends_on:
-      postgres:
+      postgres-test:
         condition: service_healthy
-      ml-endpoint: 
+      ml-endpoint-test: 
         condition: service_started
     healthcheck:
       test: ["CMD", "curl", "-f", "http://host.docker.internal:5000/statistics"]
@@ -65,53 +68,38 @@ services:
     ports:
       - 5000:5000
 
-  webapp:
-    image: webapp
-    container_name: webapp
-    restart: always
+  pytest:
+    image: pytest
+    container_name: pytest
+    restart: on-failure
+    build: 
+      context: ./api
+      dockerfile: Dockerfile      
+      target: test
+    environment: *api-common-variables
+    depends_on:
+      api-endpoint-test: 
+        condition: service_healthy 
+
+  webapp-test:
+    image: webapp-test
+    container_name: webapp-test
+    restart: on-failure
     build:
       context: ./webapp
       dockerfile: Dockerfile
-      target: dev
+      target: prod
     ports:
       - 8080:8080
-    depends_on:
-      api: 
-        condition: service_healthy
 
   cypress:
     image: "cypress/included:4.10.0"
     container_name: cypress
     restart: on-failure
     environment:
-      - CYPRESS_baseUrl=http://webapp:8080
+      - CYPRESS_baseUrl=http://webapp-test:8080/orcaal
     depends_on:
-      - webapp
+      - webapp-test
     working_dir: /e2e
     volumes:
       - ./webapp:/e2e
-
-  pytest:
-    image: api-test
-    container_name: api-test
-    restart: on-failure
-    build: 
-      context: ./api
-      dockerfile: Dockerfile      
-      target: test
-    links:
-      - postgres:dbserver
-      - ml-endpoint:ml
-    environment:
-      S3_LABELED_PATH: s3://acoustic-sandbox/orcaal-dev/labeled_test/
-      S3_UNLABELED_PATH: s3://acoustic-sandbox/orcaal-dev/unlabeled_test/
-      RETRAIN_TARGET: 20
-      S3_MODEL_PATH: s3://acoustic-sandbox/orcaal-dev/models/srkw_0.h5
-      IMG_WIDTH: 607
-      IMG_HEIGHT: 617
-      EPOCHS: 1
-      DATABASE_URL: postgresql+psycopg2://postgres:password@dbserver/orcagsoc
-      ML_ENDPOINT_URL: http://ml:5001
-    depends_on:
-      cypress:
-        condition: service_completed_successfully    
