@@ -72,6 +72,9 @@ services:
     image: pytest
     container_name: pytest
     restart: on-failure
+    links:
+      - postgres-test:dbserver
+      - ml-endpoint-test:ml
     build: 
       context: ./api
       dockerfile: Dockerfile      
@@ -91,6 +94,8 @@ services:
       target: prod
     ports:
       - 8080:8080
+    volumes:
+      - ./webapp:/webapp
 
   cypress:
     image: "cypress/included:4.10.0"
