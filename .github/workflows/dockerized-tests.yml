@@ -1,12 +1,16 @@
 name: Dockerized tests
 
 on:
-  workflow-dispatch:
+  push:
+    branches:
+      - docker-compose-for-dev
+  workflow_dispatch:
 
 jobs:
-  runs-on: ubuntu-20.04
-  steps:
-    - uses: actions/checkout@v2
-    - name: run docker compose 
-      run: docker-compose -f docker-compose.test.yml up --build
-      
+  testing:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: run docker compose 
+        run: docker-compose -f docker-compose.test.yml up --build
+    
