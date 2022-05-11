@@ -15,5 +15,5 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: run docker compose 
-        run: docker-compose --verbose -f docker-compose.dev.yml up --build
+        run: docker-compose -f docker-compose.dev.yml up --build
     
