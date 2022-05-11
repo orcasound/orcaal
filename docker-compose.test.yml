@@ -61,10 +61,10 @@ services:
         condition: service_started
     healthcheck:
       test: ["CMD", "curl", "-f", "http://host.docker.internal:5000/statistics"]
-      interval: 15s
+      interval: 30s
       timeout: 3s
-      retries: 8
-      start_period: 30s
+      retries: 20
+      start_period: 3m
     ports:
       - 5000:5000
 
