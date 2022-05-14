@@ -92,7 +92,7 @@ services:
     build:
       context: ./webapp
       dockerfile: Dockerfile
-      target: prod
+      target: dev
     ports:
       - 8080:8080
     volumes:
@@ -103,7 +103,7 @@ services:
     container_name: cypress
     restart: on-failure
     environment:
-      - CYPRESS_baseUrl=http://webapp-test:8080/orcaal
+      - CYPRESS_baseUrl=http://webapp-test:8080
     depends_on:
       - webapp-test
     working_dir: /e2e
