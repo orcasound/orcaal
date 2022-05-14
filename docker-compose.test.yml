@@ -12,79 +12,79 @@ x-common-variables: &api-common-variables
   ML_ENDPOINT_URL: http://ml:5001
 
 services:
-#   ml-endpoint-test:
-#     image: ml-endpoint-test
-#     container_name: ml-endpoint-test
-#     restart: on-failure
-#     build:
-#       context: ./train_and_predict
-#       dockerfile: Dockerfile
-#       target: prod
-#     environment:
-#       AWS_ACCESS_KEY_ID: AKIAZN2WCXIFT2PS3XEI
-#       AWS_SECRET_ACCESS_KEY: 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
-#       AWS_REGION: eu-west-1
-#     ports:
-#       - 5001:5001
+  ml-endpoint-test:
+    image: ml-endpoint-test
+    container_name: ml-endpoint-test
+    restart: on-failure
+    build:
+      context: ./train_and_predict
+      dockerfile: Dockerfile
+      target: prod
+    environment:
+      AWS_ACCESS_KEY_ID: AKIAZN2WCXIFT2PS3XEI
+      AWS_SECRET_ACCESS_KEY: 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
+      AWS_REGION: eu-west-1
+    ports:
+      - 5001:5001
 
-#   postgres-test:
-#     image: postgres
-#     container_name: postgres-test
-#     restart: on-failure
-#     environment:
-#       POSTGRES_DB: orcagsoc
-#       POSTGRES_PASSWORD: password
-#     ports:
-#       - 5432:5432
-#     healthcheck:
-#       test: ["CMD-SHELL", "pg_isready -U postgres"]
-#       interval: 5s
-#       timeout: 3s
-#       retries: 3
-#       start_period: 10s
+  postgres-test:
+    image: postgres
+    container_name: postgres-test
+    restart: on-failure
+    environment:
+      POSTGRES_DB: orcagsoc
+      POSTGRES_PASSWORD: password
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
 
-#   api-endpoint-test:
-#     image: api-endpoint-test
-#     container_name: api-endpoint-test
-#     restart: on-failure
-#     build:
-#       context: ./api
-#       dockerfile: Dockerfile
-#       target: dev
-#     restart: on-failure
-#     links:
-#       - postgres-test:dbserver
-#       - ml-endpoint-test:ml
-#     environment: *api-common-variables
-#     depends_on:
-#       postgres-test:
-#         condition: service_healthy
-#       ml-endpoint-test: 
-#         condition: service_started
-#     healthcheck:
-#       test: ["CMD", "curl", "-f", "http://api-endpoint-test:5000/statistics"]
-#       interval: 30s
-#       timeout: 3s
-#       retries: 12
-#       start_period: 1m
-#     ports:
-#       - 5000:5000
+  api-endpoint-test:
+    image: api-endpoint-test
+    container_name: api-endpoint-test
+    restart: on-failure
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+      target: dev
+    restart: on-failure
+    links:
+      - postgres-test:dbserver
+      - ml-endpoint-test:ml
+    environment: *api-common-variables
+    depends_on:
+      postgres-test:
+        condition: service_healthy
+      ml-endpoint-test: 
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://api-endpoint-test:5000/statistics"]
+      interval: 30s
+      timeout: 3s
+      retries: 12
+      start_period: 30s
+    ports:
+      - 5000:5000
 
-#   pytest:
-#     image: pytest
-#     container_name: pytest
-#     restart: on-failure
-#     links:
-#       - postgres-test:dbserver
-#       - ml-endpoint-test:ml
-#     build: 
-#       context: ./api
-#       dockerfile: Dockerfile      
-#       target: test
-#     environment: *api-common-variables
-#     depends_on:
-#       api-endpoint-test: 
-#         condition: service_healthy 
+  pytest:
+    image: pytest
+    container_name: pytest
+    restart: on-failure
+    links:
+      - postgres-test:dbserver
+      - ml-endpoint-test:ml
+    build: 
+      context: ./api
+      dockerfile: Dockerfile      
+      target: test
+    environment: *api-common-variables
+    depends_on:
+      api-endpoint-test: 
+        condition: service_healthy 
 
   webapp-test:
     image: webapp-test
