@@ -1,11 +1,13 @@
-FROM node:14 as dev
-WORKDIR /webapp
+FROM node:14 as base
+WORKDIR /orcagsoc
 COPY package.json package-lock.json ./
-RUN npm install
+RUN ls
+RUN npm ci
 
-# FROM node:14 as dev
-# WORKDIR /webapp
-# COPY --from=base /webapp/node_modules /webapp/node_modules
+FROM node:14 as dev
+WORKDIR /orcagsoc
+COPY --from=base /node_modules /orcagsoc/node_modules
+RUN ls
 EXPOSE 8080
 CMD npm start
 
