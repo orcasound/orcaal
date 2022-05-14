@@ -89,7 +89,7 @@ services:
   webapp-test:
     image: webapp-test
     container_name: webapp-test
-    restart: always
+    restart: on-failure
     build:
       context: ./webapp
       dockerfile: Dockerfile
@@ -97,14 +97,14 @@ services:
     ports:
       - 8080:8080
 
-#   cypress:
-#     image: "cypress/included:4.10.0"
-#     container_name: cypress
-#     restart: on-failure
-#     environment:
-#       - CYPRESS_baseUrl=http://webapp-test:8080/orcaal
-#     depends_on:
-#       - webapp-test
-#     working_dir: /e2e
-#     volumes:
-#       - ./webapp:/e2e
+  cypress:
+    image: "cypress/included:4.10.0"
+    container_name: cypress
+    restart: on-failure
+    environment:
+      - CYPRESS_baseUrl=http://webapp-test:8080/orcaal
+    depends_on:
+      - webapp-test
+    working_dir: /e2e
+    volumes:
+      - ./webapp:/e2e
