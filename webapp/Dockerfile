@@ -6,8 +6,7 @@ RUN npm ci
 FROM node:14 as base_dependencies
 WORKDIR /orcagsoc
 COPY --from=base /orcagsoc/node_modules /orcagsoc/node_modules
-COPY . .
-RUN ls
+COPY src/ package.json package-lock.json tsconfig.json webpack.config.json ./
 EXPOSE 8080
 
 FROM base_dependencies as dev
