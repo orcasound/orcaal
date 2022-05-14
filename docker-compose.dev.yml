@@ -64,7 +64,7 @@ services:
       ml-endpoint-dev: 
         condition: service_started
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://host-gateway:5000/statistics"]
+      test: ["CMD", "curl", "-f", "http://api-endpoint-dev:5000/statistics"]
       interval: 15s
       timeout: 3s
       retries: 8
