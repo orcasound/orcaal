@@ -23,6 +23,7 @@ services:
     environment:
       AWS_ACCESS_KEY_ID: AKIAZN2WCXIFT2PS3XEI
       AWS_SECRET_ACCESS_KEY: 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
+      AWS_REGION=eu-west-1
     ports:
       - 5001:5001
     volumes:
