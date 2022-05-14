@@ -1,13 +1,13 @@
 FROM node:14 as dev
 WORKDIR /webapp
 COPY package.json package-lock.json ./
-RUN npm ci
+RUN npm install
 
 # FROM node:14 as dev
 # WORKDIR /webapp
 # COPY --from=base /webapp/node_modules /webapp/node_modules
 EXPOSE 8080
-CMD npm run dev
+CMD npm start
 
 # FROM base_dependencies as dev
 # CMD npm run dev
