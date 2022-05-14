@@ -61,12 +61,12 @@ services:
         condition: service_healthy
       ml-endpoint-test: 
         condition: service_started
-#     healthcheck:
-#       test: ["CMD", "curl", "-f", "http://host.docker.internal:5000/statistics"]
-#       interval: 30s
-#       timeout: 3s
-#       retries: 12
-#       start_period: 1m
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://api-endpoint-test:5000/statistics"]
+      interval: 30s
+      timeout: 3s
+      retries: 12
+      start_period: 1m
     ports:
       - 5000:5000
 
@@ -82,9 +82,9 @@ services:
       dockerfile: Dockerfile      
       target: test
     environment: *api-common-variables
-#     depends_on:
-#       api-endpoint-test: 
-#         condition: service_healthy 
+    depends_on:
+      api-endpoint-test: 
+        condition: service_healthy 
 
   webapp-test:
     image: webapp-test
