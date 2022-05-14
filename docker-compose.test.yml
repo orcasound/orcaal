@@ -97,7 +97,7 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - $(PWD)/webapp:/webapp
+      - ${PWD-.}/webapp:/webapp
 
 #   cypress:
 #     image: "cypress/included:4.10.0"
