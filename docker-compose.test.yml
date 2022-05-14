@@ -88,15 +88,13 @@ services:
   webapp-test:
     image: webapp-test
     container_name: webapp-test
-    restart: on-failure
+    restart: always
     build:
       context: ./webapp
       dockerfile: Dockerfile
-      target: dev
+      target: prod
     ports:
       - 8080:8080
-    volumes:
-      - ./webapp:/orcagsoc
 
 #   cypress:
 #     image: "cypress/included:4.10.0"
