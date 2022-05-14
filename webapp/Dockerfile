@@ -3,10 +3,12 @@ WORKDIR /orcagsoc
 COPY package.json package-lock.json ./
 RUN ls
 RUN npm ci
+RUN ls
 
 FROM node:14 as dev
 WORKDIR /orcagsoc
-COPY --from=base /node_modules /orcagsoc/node_modules
+RUN ls
+COPY --from=base /orcagsoc/node_modules /orcagsoc/node_modules
 RUN ls
 EXPOSE 8080
 CMD npm start
