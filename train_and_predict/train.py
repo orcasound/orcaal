@@ -15,10 +15,10 @@ def train(s3_model_path, s3_labeled_path, img_width, img_height, epochs):
     new_model_name = '_'.join(
         local_model_path.split('_')[:-1] + [new_model_version])
     new_model_name = f'{new_model_name}.h5'
-    print(f"Before: {os.listdir()}")
+    subprocess.run(['ls'])
     if not os.path.isfile(local_model_path):
         subprocess.run(['aws', 's3', 'cp', s3_model_path, '.'])
-    print(f"After: {os.listdir()}")
+    subprocess.run(['ls'])
     model = load_model(local_model_path)
     # Download data from s3 to `labeled` directory
     subprocess.run(['aws', 's3', 'sync', s3_labeled_path, local_labeled_path])
