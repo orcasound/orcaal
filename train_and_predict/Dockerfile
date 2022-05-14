@@ -10,11 +10,7 @@ RUN pip install gunicorn
 FROM python:3.8 as base_dependencies
 WORKDIR /orcagsoc
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-RUN unzip awscliv2.zip && \
-    ./aws/install && \
-    rm -rf /var/lib/apt/lists/* awscliv2.zip aws/ && \
-    apt-get purge -y --auto-remove curl unzip && \
-    apt-get clean
+RUN unzip awscliv2.zip && ./aws/install
 COPY --from=base /opt/venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 COPY app.py train.py predict.py ./
