@@ -63,29 +63,29 @@ services:
         condition: service_healthy
       ml-endpoint-dev: 
         condition: service_started
-#     healthcheck:
-#       test: ["CMD", "curl", "-f", "http://host.docker.internal:5000/statistics"]
-#       interval: 15s
-#       timeout: 3s
-#       retries: 12
-#       start_period: 30s
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://host.docker.internal:5000/statistics"]
+      interval: 15s
+      timeout: 3s
+      retries: 12
+      start_period: 30s
     ports:
       - 5000:5000
     volumes:
       - ./api:/orcagsoc
 
-#   webapp-dev:
-#     image: webapp-dev
-#     container_name: webapp-dev
-#     restart: on-failure
-#     build:
-#       context: ./webapp
-#       dockerfile: Dockerfile
-#       target: dev
-#     ports:
-#       - 8080:8080
-#     depends_on:
-#       api-endpoint-dev:
-#         condition: service_healthy 
-#     volumes:
-#       - ./webapp:/webapp
+  webapp-dev:
+    image: webapp-dev
+    container_name: webapp-dev
+    restart: on-failure
+    build:
+      context: ./webapp
+      dockerfile: Dockerfile
+      target: dev
+    ports:
+      - 8080:8080
+    depends_on:
+      api-endpoint-dev:
+        condition: service_healthy 
+    volumes:
+      - ./webapp:/webapp
