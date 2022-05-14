@@ -5,7 +5,7 @@ RUN npm ci
 
 FROM node:14 as base_dependencies
 WORKDIR /webapp
-COPY --from=base /orcagsoc/node_modules /orcagsoc/node_modules
+COPY --from=base /webapp/node_modules /webapp/node_modules
 COPY . .
 EXPOSE 8080
 
