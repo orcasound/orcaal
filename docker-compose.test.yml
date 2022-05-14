@@ -23,6 +23,7 @@ services:
     environment:
       AWS_ACCESS_KEY_ID: AKIAZN2WCXIFT2PS3XEI
       AWS_SECRET_ACCESS_KEY: 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
+      AWS_REGION: eu-west-1
     ports:
       - 5001:5001
 
@@ -63,8 +64,8 @@ services:
       test: ["CMD", "curl", "-f", "http://host.docker.internal:5000/statistics"]
       interval: 30s
       timeout: 3s
-      retries: 20
-      start_period: 3m
+      retries: 12
+      start_period: 1m
     ports:
       - 5000:5000
 
