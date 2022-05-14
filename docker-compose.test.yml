@@ -98,14 +98,14 @@ services:
     volumes:
       - ./webapp:/webapp
 
-  cypress:
-    image: "cypress/included:4.10.0"
-    container_name: cypress
-    restart: on-failure
-    environment:
-      - CYPRESS_baseUrl=http://webapp-test:8080
-    depends_on:
-      - webapp-test
-    working_dir: /e2e
-    volumes:
-      - ./webapp:/e2e
+#   cypress:
+#     image: "cypress/included:4.10.0"
+#     container_name: cypress
+#     restart: on-failure
+#     environment:
+#       - CYPRESS_baseUrl=http://webapp-test:8080/orcaal
+#     depends_on:
+#       - webapp-test
+#     working_dir: /e2e
+#     volumes:
+#       - ./webapp:/e2e
