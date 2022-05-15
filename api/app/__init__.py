@@ -40,7 +40,7 @@ if not app.debug or os.environ.get("WERKZEUG_RUN_MAIN") == "true":
     # The app is not in debug mode or we are in the reloaded process
     # Start training if the tables generated after each training round
     # are empty
-    engine = create_engine(app.config["SQLALCHEMY_DATABASE_URI"], connect_args={'connect_timeout': 15})
+    engine = create_engine(app.config["SQLALCHEMY_DATABASE_URI"])
     if inspect(engine).has_table('accuracy') and \
             db.session.query(Accuracy).first() is None:
         th = threading.Thread(target=train_and_predict)
