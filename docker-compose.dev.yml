@@ -48,12 +48,11 @@ services:
   api-endpoint-dev:
     image: api-endpoint-dev
     container_name: api-endpoint-dev
-    restart: always
+    restart: on-failure
     build:
       context: ./api
       dockerfile: Dockerfile
       target: dev
-    restart: on-failure
     links:
       - postgres-dev:dbserver
       - ml-endpoint-dev:ml
