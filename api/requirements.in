@@ -3,6 +3,5 @@ flask-sqlalchemy
 flask-cors
 python-dotenv
 flask-migrate
-gunicorn
 requests
 psycopg2-binary
