@@ -11,6 +11,11 @@ x-common-variables: &api-common-variables
   DATABASE_URL: postgresql+psycopg2://postgres:password@dbserver/orcagsoc
   ML_ENDPOINT_URL: http://ml:5001
 
+x-aws-credentials: &aws-credentials
+  AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+  AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+  AWS_REGION: ${AWS_REGION}
+
 services:
   ml-endpoint-dev:
     image: ml-endpoint-dev
@@ -20,10 +25,7 @@ services:
       context: ./train_and_predict
       dockerfile: Dockerfile
       target: dev
-    environment:
-      AWS_ACCESS_KEY_ID: AKIAZN2WCXIFT2PS3XEI
-      AWS_SECRET_ACCESS_KEY: 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
-      AWS_REGION: eu-west-1
+    environment: *aws-credentials
     ports:
       - 5001:5001
     volumes:
