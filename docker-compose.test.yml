@@ -12,9 +12,9 @@ x-api-common-variables: &api-common-variables
   ML_ENDPOINT_URL: http://ml:5001
 
 x-aws-credentials: &aws-credentials
-  AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
-  AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
-  AWS_REGION: ${AWS_REGION}
+  AWS_ACCESS_KEY_ID: AKIAZN2WCXIFT2PS3XEI
+  AWS_SECRET_ACCESS_KEY: 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
+  AWS_REGION: eu-west-1
 
 services:
   ml-endpoint-test:
@@ -87,6 +87,7 @@ services:
     restart: on-failure
     environment:
       - CYPRESS_baseUrl=http://webapp-test:8080/orcaal
+      - CYPRESS_VIDEO=false
     depends_on:
       - webapp-test
     working_dir: /e2e
