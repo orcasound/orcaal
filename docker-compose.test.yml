@@ -1,6 +1,6 @@
 version: '3.8'
 
-x-common-variables: &api-common-variables
+x-api-common-variables: &api-common-variables
   S3_LABELED_PATH: s3://acoustic-sandbox/orcaal-dev/labeled_test/
   S3_UNLABELED_PATH: s3://acoustic-sandbox/orcaal-dev/unlabeled_test/
   RETRAIN_TARGET: 20
@@ -11,6 +11,11 @@ x-common-variables: &api-common-variables
   DATABASE_URL: postgresql+psycopg2://postgres:password@dbserver/orcagsoc
   ML_ENDPOINT_URL: http://ml:5001
 
+x-aws-credentials: &aws-credentials
+  AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+  AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+  AWS_REGION: ${AWS_REGION}
+
 services:
   ml-endpoint-test:
     image: ml-endpoint-test
@@ -20,10 +25,7 @@ services:
       context: ./train_and_predict
       dockerfile: Dockerfile
       target: prod
-    environment:
-      AWS_ACCESS_KEY_ID: AKIAZN2WCXIFT2PS3XEI
-      AWS_SECRET_ACCESS_KEY: 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
-      AWS_REGION: eu-west-1
+    environment: *aws-credentials
     ports:
       - 5001:5001
 
@@ -49,9 +51,7 @@ services:
     restart: on-failure
     build:
       context: ./api
-      dockerfile: Dockerfile
       target: dev
-    restart: on-failure
     links:
       - postgres-test:dbserver
       - ml-endpoint-test:ml
@@ -69,22 +69,6 @@ services:
       start_period: 30s
     ports:
       - 5000:5000
-
-  pytest:
-    image: pytest
-    container_name: pytest
-    restart: on-failure
-    links:
-      - postgres-test:dbserver
-      - ml-endpoint-test:ml
-    build: 
-      context: ./api
-      dockerfile: Dockerfile      
-      target: test
-    environment: *api-common-variables
-    depends_on:
-      api-endpoint-test: 
-        condition: service_healthy 
 
   webapp-test:
     image: webapp-test
@@ -108,3 +92,21 @@ services:
     working_dir: /e2e
     volumes:
       - ./webapp:/e2e
+
+  pytest:
+    image: pytest
+    container_name: pytest
+    restart: on-failure
+    links:
+      - postgres-test:dbserver
+      - ml-endpoint-test:ml
+    build: 
+      context: ./api
+      dockerfile: Dockerfile      
+      target: test
+    environment: *api-common-variables
+    depends_on:
+      api-endpoint-test: 
+        condition: service_healthy 
+      cypress:
+        condition: service_completed_successfully
