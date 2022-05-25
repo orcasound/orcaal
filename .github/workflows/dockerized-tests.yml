@@ -2,11 +2,6 @@ name: Dockerized tests
 
 on:
   push:
-    branches:
-      - docker-compose-for-dev
-  pull_request:
-    branches: [docker-compose-for-dev]
-    types: [opened, synchronize]
   workflow_dispatch:
 
 env:
