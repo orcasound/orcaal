@@ -1,7 +1,8 @@
+import os
+
 import librosa
 import matplotlib.pyplot as plt
 from skimage.restoration import denoise_wavelet
-import os
 
 
 def apply_per_channel_energy_norm(spectrogram):
@@ -50,11 +51,13 @@ def wavelet_denoising(spectrogram):
     Returns:
         Denoised spectrogram data in the form of numpy array.
     """
-    im_bayes = denoise_wavelet(spectrogram,
-                               multichannel=False,
-                               convert2ycbcr=False,
-                               method="BayesShrink",
-                               mode="soft")
+    im_bayes = denoise_wavelet(
+        spectrogram,
+        multichannel=False,
+        convert2ycbcr=False,
+        method="BayesShrink",
+        mode="soft",
+    )
     return im_bayes
 
 
@@ -77,11 +80,13 @@ def spec_plot_and_save(denoised_data, f_name, output_dir):
     ax.get_yaxis().set_visible(False)
     fig.set_size_inches(10, 10)
     # os.chdir(plotPath)
-    fig.savefig(os.path.join(output_dir, f"{f_name[:-4]}.png"),
-                dpi=80,
-                bbox_inches="tight",
-                quality=95,
-                pad_inches=0.0)
+    fig.savefig(
+        os.path.join(output_dir, f"{f_name[:-4]}.png"),
+        dpi=80,
+        bbox_inches="tight",
+        quality=95,
+        pad_inches=0.0,
+    )
     fig.canvas.draw()
     fig.canvas.flush_events()
     i += 1
@@ -107,7 +112,8 @@ def select_spec_case(plot_path, folder_path, pcen=False, wavelet=False):
         None.
     """
     onlyfiles = [
-        f for f in os.listdir(folder_path)
+        f
+        for f in os.listdir(folder_path)
         if os.path.isfile(os.path.join(folder_path, f))
     ]
     for id, file in enumerate(onlyfiles):

@@ -59,7 +59,7 @@ services:
     depends_on:
       postgres-test:
         condition: service_healthy
-      ml-endpoint-test: 
+      ml-endpoint-test:
         condition: service_started
     healthcheck:
       test: ["CMD", "curl", "-f", "http://api-endpoint-test:5000/statistics"]
@@ -101,13 +101,13 @@ services:
     links:
       - postgres-test:dbserver
       - ml-endpoint-test:ml
-    build: 
+    build:
       context: ./api
-      dockerfile: Dockerfile      
+      dockerfile: Dockerfile
       target: test
     environment: *api-common-variables
     depends_on:
-      api-endpoint-test: 
-        condition: service_healthy 
+      api-endpoint-test:
+        condition: service_healthy
       cypress:
         condition: service_completed_successfully

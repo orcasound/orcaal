@@ -62,7 +62,7 @@ services:
     depends_on:
       postgres-dev:
         condition: service_healthy
-      ml-endpoint-dev: 
+      ml-endpoint-dev:
         condition: service_started
     healthcheck:
       test: ["CMD", "curl", "-f", "http://api-endpoint-dev:5000/statistics"]
@@ -87,6 +87,6 @@ services:
       - 8080:8080
     depends_on:
       api-endpoint-dev:
-        condition: service_healthy 
+        condition: service_healthy
     volumes:
       - ./webapp:/webapp

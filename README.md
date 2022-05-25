@@ -23,7 +23,7 @@ The tool has been divided into different modules:
 
 ## Installation and local setup:
 
-We highly recommend that you use [Docker](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/install/) to setup the environment, as it will save you a lot of trouble with resolving dependency conflicts and updates. 
+We highly recommend that you use [Docker](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/install/) to setup the environment, as it will save you a lot of trouble with resolving dependency conflicts and updates.
 
 To run the services in development mode:
 
@@ -35,7 +35,7 @@ To run testing for the services:
 
 If you still wish to setup each individual service locally, you can find more instructions by going into each directory to learn how to get started. You will want to visit the directories in this order: preprocess --> train_and_predict --> api --> webapp. Do note that some of the instructions might also be outdated so you'll likely need to fix them yourself.
 
-**Flowchart of how the tool works:**  
+**Flowchart of how the tool works:**
 ![flowchart](api/assets/flowchart.jpg)
 
 **Architecture of the tool:**
@@ -43,8 +43,8 @@ If you still wish to setup each individual service locally, you can find more in
 
 ## Blog posts about the project and GSoC
 
-[My Journey as a Google Summer of Code participant with Orcasound](http://www.orcasound.net/2020/08/26/my-journey-as-a-google-summer-of-code-participant-with-orcasound/)  
-[Two months listening and learning about orca sounds](http://www.orcasound.net/2020/08/02/two-months-as-a-gsoc-participant-with-orcasound/)  
+[My Journey as a Google Summer of Code participant with Orcasound](http://www.orcasound.net/2020/08/26/my-journey-as-a-google-summer-of-code-participant-with-orcasound/)
+[Two months listening and learning about orca sounds](http://www.orcasound.net/2020/08/02/two-months-as-a-gsoc-participant-with-orcasound/)
 [GSoC’s active learning tool: progress after 1 month](http://www.orcasound.net/2020/07/01/gsocs-active-learning-tool-progress-after-1-month/)
 
 ## Questions?
@@ -61,4 +61,3 @@ More questions about being a GSoC mentor or student? Check out the [GSoC mentor 
 * [Docker](https://github.com/topics/docker)
 * [PostgreSQL](https://www.postgresql.org)
 * [Flask](https://flask.palletsprojects.com/en/1.1.x/)
-
