@@ -28,3 +28,29 @@ repos:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: fix-byte-order-marker
+
+  - repo: https://github.com/pre-commit/mirrors-eslint
+    rev: "v8.16.0"
+    hooks:
+      - id: eslint
+        files: \.[jt]s?$
+        types: [file]
+        exclude: live\S*\.ts
+        additional_dependencies:
+          - eslint@latest
+          - "@typescript-eslint/eslint-plugin@latest"
+          - "@typescript-eslint/parser@latest"
+          - "eslint-plugin-cypress@latest"
+  # - repo: local
+  #   hooks:
+  #     - id: eslint
+  #       name: eslint
+  #       entry: bash -c "cd webapp && npm run lint"
+  #       language: node
+  #       files: \.[jt]s?$
+  #       types: [file]
+  #       additional_dependencies:
+  #         - eslint@latest
+  #         - "@typescript-eslint/eslint-plugin@latest"
+  #         - "@typescript-eslint/parser@latest"
+  #         - "eslint-plugin-cypress@latest"

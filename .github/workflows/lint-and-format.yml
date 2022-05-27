@@ -20,6 +20,7 @@ jobs:
             "trailing-whitespace",
             "end-of-file-fixer",
             "fix-byte-order-marker",
+            "eslint"
           ]
     steps:
       - uses: actions/checkout@v2
