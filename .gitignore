@@ -25,7 +25,7 @@ unlabeled*/
 node_modules/
 dist/
 .DS_Store
-videos/
+webapp/cypress/videos/
 
 #api
 app.db
