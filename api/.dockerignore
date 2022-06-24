@@ -1,0 +1,19 @@
+#common
+.vscode/
+__pycache__/
+.gitignore
+.dockerignore
+Dockerfile
+
+#environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+#api related
+.pytest_cache/
+assets/

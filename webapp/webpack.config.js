@@ -33,7 +33,7 @@ module.exports = (_, argv) => {
             new webpack.EnvironmentPlugin({
                 API_URL: isProduction
                     ? 'https://d14pgy6pzqfa4g.cloudfront.net'
-                    : 'http://localhost:80',
+                    : 'http://localhost:5000',
             }),
             new WebpackCdnPlugin({
                 modules: [
@@ -89,6 +89,8 @@ module.exports = (_, argv) => {
         devServer: {
             open: true,
             openPage: isProduction ? 'orcaal/' : '',
+            host: '0.0.0.0',
+            disableHostCheck: true,
             contentBase: path.join(__dirname, 'dist'),
             historyApiFallback: {
                 rewrites: [

@@ -13,8 +13,8 @@
 
 Trains an h5 model stored on s3 for the given number of epochs, using labeled data from s3 as well, and returns some statistics about the training process
 
-**URL:** /train?model_url=[path]&labeled_url=[path]&img_width=[int]&img_height=[int]&epochs=[int]  
-**Method:** GET  
+**URL:** /train?model_url=[path]&labeled_url=[path]&img_width=[int]&img_height=[int]&epochs=[int]
+**Method:** GET
 **Success Response:**
 
 -   Condition: If all parameters are provided, and if model_url and labeled_url paths exist on s3
@@ -70,8 +70,8 @@ OSError: SavedModel file does not exist at: no_model_0.h5/{saved_model.pbtxt|sav
 
 Returns the predicted value of all the unlabeled images located on an s3 bucket
 
-**URL:** /predict?model_url=[path]&unlabeled_url=[path]&img_width=[int]&img_height=[int]&epochs=[int]  
-**Method:** GET  
+**URL:** /predict?model_url=[path]&unlabeled_url=[path]&img_width=[int]&img_height=[int]&epochs=[int]
+**Method:** GET
 **Success Response:**
 
 -   Condition: If all parameters are provided, and if model_url and unlabeled_url paths exist on s3
@@ -135,7 +135,7 @@ OSError: SavedModel file does not exist at: no_model_0.h5/{saved_model.pbtxt|sav
 ### Quick Method
 
 -   Make sure [Docker](https://www.docker.com/) is installed
--   Run:  
+-   Run:
     `docker run --name activelearning_ml -d -p 5001:5001 -e AWS_ACCESS_KEY_ID=<access-key-id> -e AWS_SECRET_ACCESS_KEY=<secret-access-key> --rm jdiegors/activelearning_ml:latest`
 
 ### Flexible Method
@@ -150,5 +150,5 @@ OSError: SavedModel file does not exist at: no_model_0.h5/{saved_model.pbtxt|sav
 
 ### Deployment
 
-Follow the quick start method on your server of choice.  
+Follow the quick start method on your server of choice.
 Otherwise, to push to a different docker container registry, create an account on https://hub.docker.com, login from the command line `docker login`, build the image with `docker build -t activelearning_ml .` from within the project directory, rename it to `docker tag activelearning_ml:latest <your-docker-registry-account>/activelearning_ml:latest`, push it to the Docker registry `docker push <your-docker-registry-account>/activelearning_ml:latest`. Now you can follow the quick start method.
