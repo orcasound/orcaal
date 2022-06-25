@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
-class IDataHandler(ABC):
 
+class IDataHandler(ABC):
     @abstractmethod
     def list():
         raise NotImplementedError

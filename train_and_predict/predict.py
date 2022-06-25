@@ -1,9 +1,10 @@
 import os
-import subprocess
 from datetime import datetime
 
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+
+from utils.AWSDataHandler import AWSDataHandler
 
 locations = {"orcasoundlab": "Haro Strait"}
 
@@ -17,19 +18,12 @@ def get_predictions_on_unlabeled(
 
     local_model_path = os.path.basename(s3_model_path)
     if not os.path.isfile(local_model_path):
-        subprocess.run(["aws", "s3", "cp", s3_model_path, "."])
+        AWSDataHandler.copy(s3_model_path, ".")
     model = load_model(local_model_path)
 
     # Download data from s3 to `unlabeled` directory
-    subprocess.run(
-        [
-            "aws",
-            "s3",
-            "sync",
-            f"{s3_unlabeled_path}spectrograms/",
-            local_unlabeled_path,
-            "--delete",
-        ]
+    AWSDataHandler.sync(
+        f"{s3_unlabeled_path}spectrograms/", local_unlabeled_path, "--delete"
     )
 
     image_generator = ImageDataGenerator(rescale=1.0 / 255)

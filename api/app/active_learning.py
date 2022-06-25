@@ -1,9 +1,10 @@
 import os
-import subprocess
 
 import requests
 from app import db
 from app.models import Accuracy, ConfusionMatrix, Model, Prediction
+
+from utils.AWSDataHandler import AWSDataHandler
 
 # Global
 session = {
@@ -111,22 +112,29 @@ def update_s3_dir(audio_url, orca, validation):
     calls_path = "calls" if orca else "nocalls"
     validation_path = "validation" if validation else "train"
     filename = audio_url.split("/")[-1].split(".")[0]
-    subprocess.run(
-        [
-            "aws",
-            "s3",
-            "mv",
-            f"{s3_unlabeled_path}spectrograms/{filename}.png",
-            f"{s3_labeled_path}{validation_path}/{calls_path}/",
-        ]
+    AWSDataHandler.move(
+        f"{s3_unlabeled_path}spectrograms/{filename}.png",
+        f"{s3_labeled_path}{validation_path}/{calls_path}/",
     )
-    subprocess.run(
-        [
-            "aws",
-            "s3",
-            "mv",
-            f"{s3_unlabeled_path}mp3/{filename}.mp3",
-            f"{s3_labeled_path}mp3/{calls_path}/",
-        ]
+    AWSDataHandler.move(
+        f"{s3_unlabeled_path}mp3/{filename}.mp3", f"{s3_labeled_path}mp3/{calls_path}/"
     )
+    # subprocess.run(
+    #     [
+    #         "aws",
+    #         "s3",
+    #         "mv",
+    #         f"{s3_unlabeled_path}spectrograms/{filename}.png",
+    #         f"{s3_labeled_path}{validation_path}/{calls_path}/",
+    #     ]
+    # )
+    # subprocess.run(
+    #     [
+    #         "aws",
+    #         "s3",
+    #         "mv",
+    #         f"{s3_unlabeled_path}mp3/{filename}.mp3",
+    #         f"{s3_labeled_path}mp3/{calls_path}/",
+    #     ]
+    # )
     return f"{s3_url}/mp3/{calls_path}/{filename}.mp3"
