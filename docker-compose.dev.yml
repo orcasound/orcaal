@@ -14,9 +14,9 @@ x-common-variables:
 
 x-aws-credentials:
   &aws-credentials
-  AWS_ACCESS_KEY_ID: AKIAZN2WCXIFT2PS3XEI
-  AWS_SECRET_ACCESS_KEY: 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
-  AWS_REGION: eu-west-2
+  AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+  AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+  AWS_REGION: ${AWS_REGION}
 
 services:
   ml-endpoint-dev:
