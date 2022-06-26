@@ -44,5 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: run docker compose
-        run: docker-compose -f docker-compose.test.yml up --build --exit-code-from pytest --abort-on-container-exit
+      - name: run docker compose backend
+        run: docker-compose -f docker-compose.test.backend.yml up --build --exit-code-from pytest --abort-on-container-exit
+      - name: run docker compose frontend
+        run: docker-compose -f docker-compose.test.frontend.yml up --build --exit-code-from cypress --abort-on-container-exit

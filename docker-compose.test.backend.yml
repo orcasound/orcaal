@@ -82,30 +82,6 @@ services:
     volumes:
       - ./utils:/orcagsoc/utils
 
-  webapp-test:
-    image: webapp-test
-    container_name: webapp-test
-    restart: on-failure
-    build:
-      context: ./webapp
-      dockerfile: Dockerfile
-      target: prod
-    ports:
-      - 8080:8080
-
-  cypress:
-    image: "cypress/included:4.10.0"
-    container_name: cypress
-    restart: on-failure
-    environment:
-      - CYPRESS_baseUrl=http://webapp-test:8080/orcaal
-      - CYPRESS_VIDEO=false
-    depends_on:
-      - webapp-test
-    working_dir: /e2e
-    volumes:
-      - ./webapp:/e2e
-
   pytest:
     image: pytest
     container_name: pytest
@@ -121,5 +97,5 @@ services:
     depends_on:
       api-endpoint-test:
         condition: service_healthy
-      cypress:
-        condition: service_completed_successfully
+    volumes:
+      - ./utils:/orcagsoc/utils
