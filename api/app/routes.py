@@ -115,7 +115,7 @@ def get_statistics():
             'progress': session['cur_labels'],
             'goal': session['goal']
         },
-        'confusionMatrix': confusion_matrix,
+        'confusionMatrix': list(confusion_matrix),
         'accuracy': {
             'train': train,
             'validation': validation

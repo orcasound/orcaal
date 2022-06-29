@@ -32,7 +32,9 @@ migrate = Migrate(app, db)
 
 # Handle circular imports
 from .active_learning import train_and_predict  # noqa: E402
-from app.models import LabeledFile, Model, Prediction, ConfusionMatrix, Accuracy
+from app import routes, models  # noqa: E402, F401
+from app.models import (LabeledFile, Model,  # noqa: E402
+                        Prediction, ConfusionMatrix, Accuracy)
 
 if not app.debug or os.environ.get("WERKZEUG_RUN_MAIN") == "true":
     # The app is not in debug mode or we are in the reloaded process
