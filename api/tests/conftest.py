@@ -1,8 +1,12 @@
 import pytest
-from app import app, db
+import sys
 import os
-
+from dotenv import load_dotenv
+load_dotenv()
 basedir = os.path.abspath(os.path.dirname(__file__))
+rootdir = os.path.dirname(basedir)
+sys.path.append(rootdir)
+from app import app, db  # noqa: E402
 
 
 @pytest.fixture(scope='module')
