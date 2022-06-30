@@ -1,0 +1,121 @@
+version: '3.8'
+
+x-api-common-variables:
+  &api-common-variables
+  S3_LABELED_PATH: s3://acoustic-sandbox/orcaal-dev/labeled_test/
+  S3_UNLABELED_PATH: s3://acoustic-sandbox/orcaal-dev/unlabeled_test/
+  RETRAIN_TARGET: 20
+  S3_MODEL_PATH: s3://acoustic-sandbox/orcaal-dev/models/srkw_0.h5
+  IMG_WIDTH: 607
+  IMG_HEIGHT: 617
+  EPOCHS: 1
+  DATABASE_URL: postgresql+psycopg2://postgres:password@dbserver/orcagsoc
+  ML_ENDPOINT_URL: http://ml:5001
+
+x-aws-credentials:
+  &aws-credentials
+  AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+  AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+  AWS_REGION: ${AWS_REGION}
+
+services:
+  ml-endpoint-test:
+    image: ml-endpoint-test
+    container_name: ml-endpoint-test
+    restart: on-failure
+    build:
+      context: ./train_and_predict
+      dockerfile: Dockerfile
+      target: prod
+    environment: *aws-credentials
+    ports:
+      - 5001:5001
+
+  postgres-test:
+    image: postgres
+    container_name: postgres-test
+    restart: on-failure
+    environment:
+      POSTGRES_DB: orcagsoc
+      POSTGRES_PASSWORD: password
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+
+  api-endpoint-test:
+    image: api-endpoint-test
+    container_name: api-endpoint-test
+    restart: on-failure
+    build:
+      context: ./api
+      target: dev
+    links:
+      - postgres-test:dbserver
+      - ml-endpoint-test:ml
+    environment: *api-common-variables
+    depends_on:
+      postgres-test:
+        condition: service_healthy
+      ml-endpoint-test:
+        condition: service_started
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "curl",
+          "-f",
+          "http://api-endpoint-test:5000/statistics"
+        ]
+      interval: 30s
+      timeout: 3s
+      retries: 12
+      start_period: 30s
+    ports:
+      - 5000:5000
+
+  webapp-test:
+    image: webapp-test
+    container_name: webapp-test
+    restart: on-failure
+    build:
+      context: ./webapp
+      dockerfile: Dockerfile
+      target: prod
+    ports:
+      - 8080:8080
+
+  cypress:
+    image: "cypress/included:4.10.0"
+    container_name: cypress
+    restart: on-failure
+    environment:
+      - CYPRESS_baseUrl=http://webapp-test:8080/orcaal
+      - CYPRESS_VIDEO=false
+    depends_on:
+      - webapp-test
+    working_dir: /e2e
+    volumes:
+      - ./webapp:/e2e
+
+  pytest:
+    image: pytest
+    container_name: pytest
+    restart: on-failure
+    links:
+      - postgres-test:dbserver
+      - ml-endpoint-test:ml
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+      target: test
+    environment: *api-common-variables
+    depends_on:
+      api-endpoint-test:
+        condition: service_healthy
+      cypress:
+        condition: service_completed_successfully

@@ -1,7 +1,9 @@
-import pytest
-import sys
 import os
+import sys
+
+import pytest
 from dotenv import load_dotenv
+
 load_dotenv()
 basedir = os.path.abspath(os.path.dirname(__file__))
 rootdir = os.path.dirname(basedir)
@@ -9,11 +11,12 @@ sys.path.append(rootdir)
 from app import app, db  # noqa: E402
 
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope="module")
 def test_client():
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(
-        basedir, 'test.db')
-    app.config['TESTING'] = True
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(
+        basedir, "test.db"
+    )
+    app.config["TESTING"] = True
 
     # Flask provides a way to test your application by exposing the Werkzeug
     # test Client and handling the context locals for you.
@@ -28,7 +31,7 @@ def test_client():
     ctx.pop()
 
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope="module")
 def init_database():
     # Create the database and the database table
     db.create_all()

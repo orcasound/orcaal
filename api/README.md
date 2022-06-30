@@ -10,15 +10,15 @@
 
 <img src="assets/models.jpg">
 
-**labeled_file** table:  
-Label for an audio file made by a human annotator. All the labeled files then conform the labeled dataset used by the ML model.  
-**model** table:  
-Stores data about a model after every training round, as well as the number of files that were used to train it.  
-**confusion_matrix** table:  
-Stores the confusion matrix generated after a retraining using the validation dataset.  
-**accuracy** table:  
-Stores a list of loss and accuracies after every epoch.  
-**prediction** table:  
+**labeled_file** table:
+Label for an audio file made by a human annotator. All the labeled files then conform the labeled dataset used by the ML model.
+**model** table:
+Stores data about a model after every training round, as well as the number of files that were used to train it.
+**confusion_matrix** table:
+Stores the confusion matrix generated after a retraining using the validation dataset.
+**accuracy** table:
+Stores a list of loss and accuracies after every epoch.
+**prediction** table:
 Stores the predicted value of an unlabeled file, alongside with more information about that file.
 
 ## Endpoints
@@ -34,7 +34,7 @@ Stores the predicted value of an unlabeled file, alongside with more information
 
 #### Success Response
 
-**Code:** `200 OK`  
+**Code:** `200 OK`
 **Example:**
 
 ```JSON
@@ -117,8 +117,8 @@ label = {
 
 #### Success Response
 
-**Code:** `201 CREATED`  
-**Condition:** If everything is OK  
+**Code:** `201 CREATED`
+**Condition:** If everything is OK
 **Example:**
 
 ```JSON
@@ -132,8 +132,8 @@ label = {
 
 #### Error Responses
 
-**Code:** `500 SERVER ERROR`  
-**Condition:** If fields are missing  
+**Code:** `500 SERVER ERROR`
+**Condition:** If fields are missing
 **Example:**
 
 ```JSON
@@ -145,7 +145,7 @@ label = {
 KeyError: 'extraLabel'
 ```
 
-**Code:** `415 UNSUPPORTED MEDIA TYPE`  
+**Code:** `415 UNSUPPORTED MEDIA TYPE`
 **Condition:** If the Content-Type header is missing or not supported
 **Example:**
 
@@ -164,7 +164,7 @@ headers: {
 
 #### Success Response
 
-**Code:** `200 OK`  
+**Code:** `200 OK`
 **Example:**
 
 ```JSON
@@ -220,7 +220,7 @@ This API requires a database and a ML endpoint to run, the easiest way to do tha
 ### Quick Method
 
 -   Make sure [Docker](https://www.docker.com/) is installed
--   Run the following command with your AWS access keys:  
+-   Run the following command with your AWS access keys:
     `docker run --name activelearning_api -d -p 5000:5000 -e S3_LABELED_PATH=s3://orcagsoc/labeled_test/ -e S3_UNLABELED_PATH=s3://orcagsoc/unlabeled_test/ -e RETRAIN_TARGET=20 -e S3_MODEL_PATH=s3://orcagsoc/models/srkw_cnn_0.h5 -e IMG_WIDTH=607 -e IMG_HEIGHT=617 -e EPOCHS=1 --link postgres:dbserver -e DATABASE_URL=postgresql+psycopg2://postgres:<database-password>@dbserver/orcagsoc --link activelearning_ml:ml -e ML_ENDPOINT_URL=http://ml:5001 -e AWS_ACCESS_KEY_ID=<access-key-id> -e AWS_SECRET_ACCESS_KEY=<secret-access-key> --rm jdiegors/activelearning_api:latest`
 
 ### Flexible Method
@@ -254,12 +254,12 @@ This API requires a database and a ML endpoint to run, the easiest way to do tha
 
 ### Deployment
 
-Follow the quick start method on your server of choice.  
+Follow the quick start method on your server of choice.
 Otherwise, to push to a different docker container registry, create an account on https://hub.docker.com, login from the command line `docker login`, build the image with `docker build -t activelearning_api .` from within the project directory, rename it to `docker tag activelearning_api:latest <your-docker-registry-account>/activelearning_api:latest`, push it to the Docker registry `docker push <your-docker-registry-account>/activelearning_api:latest`. Now you can follow the quick start method.
 
 ### Database Access
 
-If one wants to access the database seperately to calculate some annotation/performance statistics, one can run 
+If one wants to access the database seperately to calculate some annotation/performance statistics, one can run
 
 ```
 psql postgresql://postgres:<database-password>@localhost:5432/orcagsoc

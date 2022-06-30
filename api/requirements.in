@@ -1,0 +1,7 @@
+flask==2.1.0
+flask-sqlalchemy
+flask-cors
+python-dotenv
+flask-migrate
+requests
+psycopg2-binary
