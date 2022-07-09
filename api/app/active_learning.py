@@ -119,22 +119,4 @@ def update_s3_dir(audio_url, orca, validation):
     AWSDataHandler.move(
         f"{s3_unlabeled_path}mp3/{filename}.mp3", f"{s3_labeled_path}mp3/{calls_path}/"
     )
-    # subprocess.run(
-    #     [
-    #         "aws",
-    #         "s3",
-    #         "mv",
-    #         f"{s3_unlabeled_path}spectrograms/{filename}.png",
-    #         f"{s3_labeled_path}{validation_path}/{calls_path}/",
-    #     ]
-    # )
-    # subprocess.run(
-    #     [
-    #         "aws",
-    #         "s3",
-    #         "mv",
-    #         f"{s3_unlabeled_path}mp3/{filename}.mp3",
-    #         f"{s3_labeled_path}mp3/{calls_path}/",
-    #     ]
-    # )
     return f"{s3_url}/mp3/{calls_path}/{filename}.mp3"
