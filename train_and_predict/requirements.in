@@ -1,0 +1,5 @@
+tensorflow<=2.3.0
+Pillow
+scikit-learn
+python-dotenv
+flask==2.1.0
