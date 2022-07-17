@@ -2,10 +2,9 @@ import logging
 import os
 import threading
 
+from app.config import configs
 from flask import Flask
 from flask_cors import CORS
-
-# import sqlalchemy as sa
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine, inspect
@@ -17,9 +16,9 @@ app = Flask(__name__)
 CORS(app)
 
 # Database
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
-    "DATABASE_URL"
-) or "sqlite:///" + os.path.join(basedir, "app.db")
+app.config[
+    "SQLALCHEMY_DATABASE_URI"
+] = configs.database_url or "sqlite:///" + os.path.join(basedir, "app.db")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 # Heroku logs to stdout

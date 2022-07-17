@@ -2,28 +2,23 @@ import os
 
 from easydict import EasyDict as eDict
 
-from utils.AWSDataHandler import AWSDataHandler
-from utils.IDataHandler import IDataHandler
-from utils.LocalDataHandler import LocalDataHandler
-
-
-class DataHandlerConfig:
-    def get_datahandler(self, handler_type: str) -> IDataHandler:
-        try:
-            handler_type = handler_type.lower()
-        except AttributeError as e:
-            print(e.output)
-        if handler_type == "AWS":
-            return AWSDataHandler
-        elif handler_type == "local":
-            return LocalDataHandler
-        else:
-            raise ValueError(f"Handler type {handler_type} input is invalid")
+from utils.DataHandlerConfig import DataHandlerConfig
 
 
 def parse_env_configs():
     configs = eDict()
-    configs.data_handler = DataHandlerConfig(os.environ.get("DATA_HANDLER"))
+    configs.data_handler = DataHandlerConfig.get_datahandler(
+        os.environ.get("DATA_SOURCE")
+    )
+    configs.retrain_target = int(os.environ.get("RETRAIN_TARGET"))
+    configs.ml_endpoint_url = os.environ.get("ML_ENDPOINT_URL")
+    configs.s3_model_path = os.environ.get("S3_MODEL_PATH")
+    configs.s3_unlabeled_path = os.environ.get("S3_UNLABELED_PATH")
+    configs.s3_labeled_path = os.environ.get("S3_LABELED_PATH")
+    configs.img_width = os.environ.get("IMG_WIDTH")
+    configs.img_height = os.environ.get("IMG_HEIGHT")
+    configs.epochs = os.environ.get("EPOCHS")
+    configs.database_url = os.environ.get("DATABASE_URL")
     return configs
 
 

@@ -2,15 +2,15 @@ version: '3.8'
 
 x-common-variables:
   &api-common-variables
-  S3_LABELED_PATH: s3://acoustic-sandbox/orcaal-dev/labeled_test/
-  S3_UNLABELED_PATH: s3://acoustic-sandbox/orcaal-dev/unlabeled_test/
-  RETRAIN_TARGET: 20
-  S3_MODEL_PATH: s3://acoustic-sandbox/orcaal-dev/models/srkw_0.h5
-  IMG_WIDTH: 607
-  IMG_HEIGHT: 617
-  EPOCHS: 1
-  DATABASE_URL: postgresql+psycopg2://postgres:password@dbserver/orcagsoc
-  ML_ENDPOINT_URL: http://ml:5001
+  S3_LABELED_PATH: ${S3_LABELED_PATH}
+  S3_UNLABELED_PATH: ${S3_UNLABELED_PATH}
+  RETRAIN_TARGET: ${RETRAIN_TARGET}
+  S3_MODEL_PATH: ${S3_MODEL_PATH}
+  IMG_WIDTH: ${IMG_WIDTH}
+  IMG_HEIGHT: ${IMG_HEIGHT}
+  EPOCHS: ${EPOCHS}
+  DATABASE_URL: ${DATABASE_URL}
+  ML_ENDPOINT_URL: ${ML_ENDPOINT_URL}
   DATA_SOURCE: ${DATA_SOURCE}
 
 x-aws-credentials:

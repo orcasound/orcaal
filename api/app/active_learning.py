@@ -2,25 +2,23 @@ import os
 
 import requests
 from app import db
+from app.config import configs
 from app.models import Accuracy, ConfusionMatrix, Model, Prediction
-from config import configs
-
-# from utils.AWSDataHandler import AWSDataHandler
 
 # Global
 session = {
-    "goal": int(os.environ.get("RETRAIN_TARGET")),
+    "goal": configs.retrain_target,
     "cur_labels": 0,
     "training": False,
 }
 
-ml_endpoint_url = os.environ.get("ML_ENDPOINT_URL")
-s3_model_path = os.environ.get("S3_MODEL_PATH")
-s3_unlabeled_path = os.environ.get("S3_UNLABELED_PATH")
-s3_labeled_path = os.environ.get("S3_LABELED_PATH")
-img_width = os.environ.get("IMG_WIDTH")
-img_height = os.environ.get("IMG_HEIGHT")
-epochs = os.environ.get("EPOCHS")
+ml_endpoint_url = configs.ml_endpoint_url
+s3_model_path = configs.s3_model_path
+s3_unlabeled_path = configs.s3_unlabeled_path
+s3_labeled_path = configs.s3_labeled_path
+img_width = configs.img_width
+img_height = configs.img_height
+epochs = configs.epochs
 
 labeled_path = s3_labeled_path.split("/")[-2]
 s3_url = f'https://{s3_labeled_path.split("/")[2]}.s3.amazonaws.com/{labeled_path}'
