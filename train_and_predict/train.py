@@ -1,11 +1,10 @@
 import os
 
+from config import configs
 from sklearn.metrics import confusion_matrix
 from tensorflow.keras.callbacks import ModelCheckpoint, ReduceLROnPlateau
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-
-from utils.AWSDataHandler import AWSDataHandler
 
 
 def train(s3_model_path, s3_labeled_path, img_width, img_height, epochs):
@@ -17,10 +16,10 @@ def train(s3_model_path, s3_labeled_path, img_width, img_height, epochs):
     new_model_name = "_".join(local_model_path.split("_")[:-1] + [new_model_version])
     new_model_name = f"{new_model_name}.h5"
     if not os.path.isfile(local_model_path):
-        AWSDataHandler.copy(s3_model_path, ".")
+        configs.data_handler.copy(s3_model_path, ".")
     model = load_model(local_model_path)
     # Download data from s3 to `labeled` directory
-    AWSDataHandler.sync(s3_labeled_path, local_labeled_path)
+    configs.data_handler.sync(s3_labeled_path, local_labeled_path)
 
     train_data_path = os.path.join(local_labeled_path, "train")
     validation_data_path = os.path.join(local_labeled_path, "validation")
@@ -92,7 +91,7 @@ def train(s3_model_path, s3_labeled_path, img_width, img_height, epochs):
     model_loss, model_acc = model.evaluate(validation_generator)
 
     new_s3_model_path = f"{os.path.dirname(s3_model_path)}/{new_model_name}"
-    AWSDataHandler.copy(new_model_name, new_s3_model_path)
+    configs.data_handler.copy(new_model_name, new_s3_model_path)
 
     return (
         acc,
