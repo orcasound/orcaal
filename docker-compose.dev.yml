@@ -11,12 +11,14 @@ x-common-variables:
   EPOCHS: 1
   DATABASE_URL: postgresql+psycopg2://postgres:password@dbserver/orcagsoc
   ML_ENDPOINT_URL: http://ml:5001
+  DATA_SOURCE: ${DATA_SOURCE}
 
 x-aws-credentials:
   &aws-credentials
   AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
   AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
   AWS_REGION: ${AWS_REGION}
+  DATA_SOURCE: ${DATA_SOURCE}
 
 services:
   ml-endpoint-dev:

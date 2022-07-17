@@ -1,5 +1,7 @@
 import os
 
+from easydict import EasyDict as eDict
+
 from utils.AWSDataHandler import AWSDataHandler
 from utils.IDataHandler import IDataHandler
 from utils.LocalDataHandler import LocalDataHandler
@@ -19,4 +21,10 @@ class DataHandlerConfig:
             raise ValueError(f"Handler type {handler_type} input is invalid")
 
 
-data_handler = DataHandlerConfig(os.environ.get("DATA_HANDLER"))
+def parse_env_configs():
+    configs = eDict()
+    configs.data_handler = DataHandlerConfig(os.environ.get("DATA_HANDLER"))
+    return configs
+
+
+configs = parse_env_configs()
