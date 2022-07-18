@@ -8,7 +8,7 @@ class DataHandlerConfig:
     def get_datahandler(handler_type: str) -> IDataHandler:
         try:
             handler_type = handler_type.lower()
-        except AttributeError as e:
+        except ValueError as e:
             print(e.output)
         if handler_type == "aws":
             return AWSDataHandler

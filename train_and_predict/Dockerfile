@@ -12,7 +12,7 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     rm -rf awscliv2.zip aws/
 COPY --from=base /opt/venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
-COPY app.py train.py predict.py ./
+COPY app.py train.py predict.py config.py ./
 ENV FLASK_APP app.py
 EXPOSE 5001
 
