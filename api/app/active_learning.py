@@ -13,17 +13,17 @@ session = {
 }
 
 ml_endpoint_url = configs.ml_endpoint_url
-s3_model_path = configs.s3_model_path
-s3_unlabeled_path = configs.s3_unlabeled_path
-s3_labeled_path = configs.s3_labeled_path
+model_path = configs.model_path
+unlabeled_path = configs.unlabeled_path
+labeled_path = configs.labeled_path
 img_width = configs.img_width
 img_height = configs.img_height
 epochs = configs.epochs
 
-labeled_path = s3_labeled_path.split("/")[-2]
-s3_url = f'https://{s3_labeled_path.split("/")[2]}.s3.amazonaws.com/{labeled_path}'
+labeled_folder = labeled_path.split("/")[-2]
+s3_url = f'https://{labeled_path.split("/")[2]}.s3.amazonaws.com/{labeled_folder}'
 
-model_name = os.path.basename(s3_model_path)
+model_name = os.path.basename(model_path)
 model_name = "_".join(model_name.split("_")[:-1])
 
 
@@ -39,11 +39,11 @@ def train_and_predict():
         .first()
     )
     if latest_model is None:
-        latest_model = Model(model_name, 0, s3_model_path, 0, 0, 0)
+        latest_model = Model(model_name, 0, model_path, 0, 0, 0)
 
     url = (
         f"{ml_endpoint_url}/train?model_url={latest_model.url}"
-        f"&labeled_url={s3_labeled_path}&"
+        f"&labeled_url={labeled_path}&"
         f"img_width={img_width}&"
         f"img_height={img_height}&"
         f"epochs={epochs}"
@@ -83,7 +83,7 @@ def train_and_predict():
     print("Predicting...")
     url = (
         f"{ml_endpoint_url}/predict?model_url={latest_model.url}"
-        f"&unlabeled_url={s3_unlabeled_path}&img_width={img_width}"
+        f"&unlabeled_url={unlabeled_path}&img_width={img_width}"
         f"&img_height={img_height}"
     )
 
@@ -112,10 +112,10 @@ def update_s3_dir(audio_url, orca, validation):
     validation_path = "validation" if validation else "train"
     filename = audio_url.split("/")[-1].split(".")[0]
     configs.data_handler.move(
-        f"{s3_unlabeled_path}spectrograms/{filename}.png",
-        f"{s3_labeled_path}{validation_path}/{calls_path}/",
+        f"{unlabeled_path}spectrograms/{filename}.png",
+        f"{labeled_path}{validation_path}/{calls_path}/",
     )
     configs.data_handler.move(
-        f"{s3_unlabeled_path}mp3/{filename}.mp3", f"{s3_labeled_path}mp3/{calls_path}/"
+        f"{unlabeled_path}mp3/{filename}.mp3", f"{labeled_path}mp3/{calls_path}/"
     )
     return f"{s3_url}/mp3/{calls_path}/{filename}.mp3"

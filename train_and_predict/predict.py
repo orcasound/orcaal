@@ -8,21 +8,19 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 locations = {"orcasoundlab": "Haro Strait"}
 
 
-def get_predictions_on_unlabeled(
-    s3_model_path, s3_unlabeled_path, img_width, img_height
-):
-    local_unlabeled_path = s3_unlabeled_path.split("/")[-2]
-    s3_url = f'https://{s3_unlabeled_path.split("/")[2]}.s3.amazonaws.com/'
+def get_predictions_on_unlabeled(model_path, unlabeled_path, img_width, img_height):
+    local_unlabeled_path = unlabeled_path.split("/")[-2]
+    store_url = f'https://{unlabeled_path.split("/")[2]}.s3.amazonaws.com/'
     f"{local_unlabeled_path}"
 
-    local_model_path = os.path.basename(s3_model_path)
+    local_model_path = os.path.basename(model_path)
     if not os.path.isfile(local_model_path):
-        configs.data_handler.copy(s3_model_path, ".")
+        configs.data_handler.copy(model_path, ".")
     model = load_model(local_model_path)
 
     # Download data from s3 to `unlabeled` directory
     configs.data_handler.sync(
-        f"{s3_unlabeled_path}spectrograms/", local_unlabeled_path, "--delete"
+        f"{unlabeled_path}spectrograms/", local_unlabeled_path, "--delete"
     )
 
     image_generator = ImageDataGenerator(rescale=1.0 / 255)
@@ -46,7 +44,7 @@ def get_predictions_on_unlabeled(
         cur_prediction = {}
         cur_prediction["predicted_value"] = predictions[i][0]
         cur_file = os.path.split(data_generator.filenames[i])[1].split(".")[0]
-        cur_prediction["audio_url"] = f"{s3_url}/mp3/{cur_file}.mp3"
+        cur_prediction["audio_url"] = f"{store_url}/mp3/{cur_file}.mp3"
         location, timestamp = cur_file.split("_")
         cur_prediction["location"] = locations[location]
         cur_prediction["duration"] = 3

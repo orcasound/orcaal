@@ -7,19 +7,19 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 
-def train(s3_model_path, s3_labeled_path, img_width, img_height, epochs):
-    local_labeled_path = s3_labeled_path.split("/")[-2]
+def train(model_path, labeled_path, img_width, img_height, epochs):
+    local_labeled_path = labeled_path.split("/")[-2]
 
-    local_model_path = os.path.basename(s3_model_path)
+    local_model_path = os.path.basename(model_path)
     model_version = local_model_path.split("_")[-1].split(".")[0]
     new_model_version = str(int(model_version) + 1)
     new_model_name = "_".join(local_model_path.split("_")[:-1] + [new_model_version])
     new_model_name = f"{new_model_name}.h5"
     if not os.path.isfile(local_model_path):
-        configs.data_handler.copy(s3_model_path, ".")
+        configs.data_handler.copy(model_path, ".")
     model = load_model(local_model_path)
     # Download data from s3 to `labeled` directory
-    configs.data_handler.sync(s3_labeled_path, local_labeled_path)
+    configs.data_handler.sync(labeled_path, local_labeled_path)
 
     train_data_path = os.path.join(local_labeled_path, "train")
     validation_data_path = os.path.join(local_labeled_path, "validation")
@@ -90,7 +90,7 @@ def train(s3_model_path, s3_labeled_path, img_width, img_height, epochs):
     model = load_model(new_model_name)
     model_loss, model_acc = model.evaluate(validation_generator)
 
-    new_s3_model_path = f"{os.path.dirname(s3_model_path)}/{new_model_name}"
+    new_s3_model_path = f"{os.path.dirname(model_path)}/{new_model_name}"
     configs.data_handler.copy(new_model_name, new_s3_model_path)
 
     return (
