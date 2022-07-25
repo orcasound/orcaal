@@ -22,4 +22,4 @@ jobs:
       - name: Check postgres database
         run: |
           sudo apt-get install -y nmap
-          echo $(nmap -p 777 ${{ secrets.LIGHTSAIL_IP }}) | grep postgresql
+          echo $(nmap -p ${{ secrets.POSTGRES_PORT }} ${{ secrets.LIGHTSAIL_IP }}) | grep postgresql
