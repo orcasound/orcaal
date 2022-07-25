@@ -10,18 +10,24 @@ locations = {"orcasoundlab": "Haro Strait"}
 
 def get_predictions_on_unlabeled(model_path, unlabeled_path, img_width, img_height):
     local_unlabeled_path = unlabeled_path.split("/")[-2]
-    store_url = f'https://{unlabeled_path.split("/")[2]}.s3.amazonaws.com/'
-    f"{local_unlabeled_path}"
+    if configs.data_source == "aws":
+        db_url = f'https://{unlabeled_path.split("/")[2]}.s3.amazonaws.com/'
+        f"{local_unlabeled_path}"
+        # Sync data from s3 to `unlabeled` directory
+        configs.data_handler.sync(
+            f"{unlabeled_path}spectrograms/", local_unlabeled_path, "--delete"
+        )
+    else:
+        db_url = unlabeled_path
+        os.makedirs(local_unlabeled_path, exist_ok=True)
+        configs.data_handler.copy(
+            f"{unlabeled_path}spectrograms/", local_unlabeled_path
+        )
 
     local_model_path = os.path.basename(model_path)
     if not os.path.isfile(local_model_path):
         configs.data_handler.copy(model_path, ".")
     model = load_model(local_model_path)
-
-    # Download data from s3 to `unlabeled` directory
-    configs.data_handler.sync(
-        f"{unlabeled_path}spectrograms/", local_unlabeled_path, "--delete"
-    )
 
     image_generator = ImageDataGenerator(rescale=1.0 / 255)
     data_generator = image_generator.flow_from_directory(
@@ -44,7 +50,7 @@ def get_predictions_on_unlabeled(model_path, unlabeled_path, img_width, img_heig
         cur_prediction = {}
         cur_prediction["predicted_value"] = predictions[i][0]
         cur_file = os.path.split(data_generator.filenames[i])[1].split(".")[0]
-        cur_prediction["audio_url"] = f"{store_url}/mp3/{cur_file}.mp3"
+        cur_prediction["audio_url"] = f"{db_url}/mp3/{cur_file}.mp3"
         location, timestamp = cur_file.split("_")
         cur_prediction["location"] = locations[location]
         cur_prediction["duration"] = 3

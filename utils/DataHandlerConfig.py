@@ -6,10 +6,6 @@ from utils.LocalDataHandler import LocalDataHandler
 class DataHandlerConfig:
     @staticmethod
     def get_datahandler(handler_type: str) -> IDataHandler:
-        try:
-            handler_type = handler_type.lower()
-        except ValueError as e:
-            print(e.output)
         if handler_type == "aws":
             return AWSDataHandler
         elif handler_type == "local":

@@ -21,7 +21,10 @@ img_height = configs.img_height
 epochs = configs.epochs
 
 labeled_folder = labeled_path.split("/")[-2]
-s3_url = f'https://{labeled_path.split("/")[2]}.s3.amazonaws.com/{labeled_folder}'
+if configs.data_source == "aws":
+    db_url = f'https://{labeled_path.split("/")[2]}.s3.amazonaws.com/{labeled_folder}'
+else:
+    db_url = labeled_path
 
 model_name = os.path.basename(model_path)
 model_name = "_".join(model_name.split("_")[:-1])
@@ -118,4 +121,4 @@ def update_s3_dir(audio_url, orca, validation):
     configs.data_handler.move(
         f"{unlabeled_path}mp3/{filename}.mp3", f"{labeled_path}mp3/{calls_path}/"
     )
-    return f"{s3_url}/mp3/{calls_path}/{filename}.mp3"
+    return f"{db_url}/mp3/{calls_path}/{filename}.mp3"

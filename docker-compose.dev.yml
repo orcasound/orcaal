@@ -35,6 +35,7 @@ services:
     volumes:
       - ./train_and_predict:/orcagsoc
       - ./utils:/orcagsoc/utils
+      - ./data:/orcagsoc/data
 
   postgres-dev:
     image: postgres
@@ -86,6 +87,7 @@ services:
     volumes:
       - ./api:/orcagsoc
       - ./utils:/orcagsoc/utils
+      - ./data:/orcagsoc/data
 
   webapp-dev:
     image: webapp-dev
