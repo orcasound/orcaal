@@ -24,4 +24,4 @@ services:
     working_dir: /e2e
     volumes:
       - ./webapp:/e2e
-      - ./webapp/node_modules
+      - /webapp/node_modules

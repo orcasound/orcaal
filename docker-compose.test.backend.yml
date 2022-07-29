@@ -30,6 +30,8 @@ services:
     environment: *aws-credentials
     ports:
       - 5001:5001
+    volumes:
+      - ./train_and_predict:/orcagsoc
 
   postgres-test:
     image: postgres
