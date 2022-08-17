@@ -12,8 +12,8 @@ env.bak/
 venv.bak/
 
 #train_and_predict
-labeled*/
-unlabeled*/
+train_and_predict/labeled*/
+train_and_predict/unlabeled*/
 *.h5
 
 #preprocess

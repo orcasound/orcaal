@@ -2,10 +2,10 @@ version: '3.8'
 
 x-api-common-variables:
   &api-common-variables
-  S3_LABELED_PATH: s3://acoustic-sandbox/orcaal-dev/labeled_test/
-  S3_UNLABELED_PATH: s3://acoustic-sandbox/orcaal-dev/unlabeled_test/
+  LABELED_PATH: s3://acoustic-sandbox/orcaal-dev/labeled_test/
+  UNLABELED_PATH: s3://acoustic-sandbox/orcaal-dev/unlabeled_test/
   RETRAIN_TARGET: 20
-  S3_MODEL_PATH: s3://acoustic-sandbox/orcaal-dev/models/srkw_0.h5
+  MODEL_PATH: s3://acoustic-sandbox/orcaal-dev/models/srkw_0.h5
   IMG_WIDTH: 607
   IMG_HEIGHT: 617
   EPOCHS: 1
