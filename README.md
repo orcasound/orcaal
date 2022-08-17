@@ -36,6 +36,8 @@ AWS_REGION=eu-west-1
 
 `docker-compose -f docker-compose.dev.yml up --build`
 
+If all services start up successfully, you should be able to see the [frontend webpage](http://localhost:8080/). 
+
 3) To run testing for the services:
 
 `docker-compose -f docker-compose.test.yml up --build --exit-code-from pytest --abort-on-container-exit`
