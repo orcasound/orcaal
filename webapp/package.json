@@ -5,6 +5,7 @@
     "keywords": [],
     "scripts": {
         "start": "webpack-dev-server --mode production",
+        "dev": "webpack-dev-server --mode development",
         "build": "webpack --mode production",
         "deploy": "gh-pages -d dist",
         "lint": "eslint './src/ts/**/*.ts'",

@@ -21,7 +21,28 @@ The tool has been divided into different modules:
 -   **Preprocessing of unlabeled data:** it contains a Python script that generates mp3 files and spectrograms, given a directory containing audio data.
 -   **A Machine Learning Endpoint:** which is a small flask app that -- given an h5 file, a labeled dataset and an unlabeled dataset -- trains an ML model on the labeled data and predicts on the unlabeled data.
 
-Go into each directory to learn how to get started with it. You will want to visit the directories in this order: preprocess --> train_and_predict --> api --> webapp.
+## Installation and local setup:
+
+We highly recommend that you use [Docker](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/install/) to setup the environment, as it will save you a lot of trouble with resolving dependency conflicts and updates. 
+
+1) Create a .env file in the root of the project, minimally specifying the following variables:
+
+```
+AWS_ACCESS_KEY_ID=[YOUR_AWS_ACCESS_KEY_ID]
+AWS_SECRET_ACCESS_KEY=[YOUR_AWS_SECRET_ACCESS_KEY]
+AWS_REGION=eu-west-1
+```
+2) To run the services in development mode:
+
+`docker-compose -f docker-compose.dev.yml up --build`
+
+If all services start up successfully, you should be able to see the [frontend webpage](http://localhost:8080/). 
+
+3) To run testing for the services:
+
+`docker-compose -f docker-compose.test.yml up --build --exit-code-from pytest --abort-on-container-exit`
+
+If you still wish to setup each individual service locally, you can find more instructions by going into each directory to learn how to get started. You will want to visit the directories in this order: preprocess --> train_and_predict --> api --> webapp. Do note that some of the instructions might also be outdated so you'll likely need to fix them yourself.
 
 **Flowchart of how the tool works:**  
 ![flowchart](api/assets/flowchart.jpg)
