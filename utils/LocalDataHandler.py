@@ -21,9 +21,8 @@ class LocalDataHandler(IDataHandler):
     @staticmethod
     def copy(src: Path, dst: Path) -> None:
         try:
-            print(f"Command is: {' '.join(['cp', '-r', f'./{src}*', dst])}")
             if os.path.isdir(src):
-                subprocess.run(["cp", "-r", f"./{src}*", dst])
+                subprocess.run(["cp", "-r", f"{src}", dst])
             else:
                 subprocess.run(["cp", src, dst])
         except subprocess.CalledProcessError as e:

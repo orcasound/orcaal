@@ -19,10 +19,7 @@ def get_predictions_on_unlabeled(model_path, unlabeled_path, img_width, img_heig
         )
     else:
         db_url = unlabeled_path
-        os.makedirs(local_unlabeled_path, exist_ok=True)
-        configs.data_handler.copy(
-            f"{unlabeled_path}spectrograms/", local_unlabeled_path
-        )
+        configs.data_handler.copy(f"{unlabeled_path}", ".")
 
     local_model_path = os.path.basename(model_path)
     if not os.path.isfile(local_model_path):
