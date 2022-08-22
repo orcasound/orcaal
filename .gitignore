@@ -14,12 +14,12 @@ venv.bak/
 #train_and_predict
 train_and_predict/labeled*/
 train_and_predict/unlabeled*/
-*.h5
+train_and_predict/*.h5
 
 #preprocess
 ts/
 temp/
-unlabeled*/
+preprocess/unlabeled*/
 
 #webapp
 node_modules/
